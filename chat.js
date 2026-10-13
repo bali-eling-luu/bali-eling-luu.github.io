@@ -451,7 +451,9 @@
         if (jn.indexOf(norm(KATEGORI[k].nama)) !== -1 || jn.indexOf(k) !== -1) key = k;
       });
       if (!key) return;
-      a.setAttribute("href", "#panduan");
+      // kalau sudah ada halaman detail, biarkan link-nya jalan normal
+      if (a.getAttribute("href") && a.getAttribute("href").indexOf("edukasi.html") !== -1) return;
+      a.setAttribute("href", "edukasi.html?jenis=" + key);
       a.addEventListener("click", function (e) {
         e.preventDefault();
         bukaChat(KATEGORI[key].nama);
