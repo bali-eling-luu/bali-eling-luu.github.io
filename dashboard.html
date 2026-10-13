@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — Bali Eling Luu</title>
+    <meta name="description" content="Dashboard pengguna Bali Eling Luu: dampak harian, lokasi terdekat, dan tips memilah sampah." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"] },
+            maxWidth: { shell: "1200px" },
+            colors: {
+              primary: "#17803D",
+              forest: "#14532D",
+              deep: "#0F3D22",
+              cream: "#F5F2EA",
+              terra: "#D9A441",
+              danger: "#D64545",
+              ink: "#1E3A2A",
+              muted: "#6B7A70",
+              line: "#E3E7E1",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { -webkit-font-smoothing: antialiased; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      .link-underline { position: relative; }
+      .link-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+      .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+      .grad-dampak {
+        background: linear-gradient(120deg, #14532d 0%, #17803d 55%, #1f9a4e 100%);
+      }
+    </style>
+  </head>
+
+  <body class="bg-cream font-sans text-ink antialiased">
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+      <nav class="mx-auto flex max-w-shell items-center justify-between gap-4 px-5 py-3.5">
+        <a href="index.html" aria-label="Kembali ke beranda" class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-line text-forest transition hover:border-primary lg:hidden">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+
+        <a href="dashboard.html" class="flex items-center gap-2.5">
+          <img src="assets/logo/logo-mark.png" alt="" aria-hidden="true" class="h-9 w-9 object-contain" />
+          <span class="leading-none">
+            <span class="block text-[15px] font-extrabold text-forest">Bali Eling Luu</span>
+            <span class="mt-0.5 hidden text-[10px] font-medium text-muted sm:block">Dari Sampah, Untuk Bali</span>
+          </span>
+        </a>
+
+        <ul class="hidden items-center gap-7 text-sm font-medium text-muted lg:flex">
+          <li><a class="link-underline font-bold text-primary" href="dashboard.html" aria-current="page">Beranda</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="panduan.html">Panduan Sampah</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#tips">Tips Lingkungan</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#tentang">Tentang Kami</a></li>
+        </ul>
+
+        <div class="flex items-center gap-2.5">
+          <a href="panduan.html" class="hidden rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-forest lg:block">Mulai Belajar</a>
+          <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menu" class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-forest transition hover:border-primary lg:hidden">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </nav>
+
+      <ul id="menu" class="hidden border-t border-line bg-cream px-5 py-2 text-sm font-medium text-muted lg:hidden">
+        <li><a class="block py-3 font-bold text-primary" href="dashboard.html">Beranda</a></li>
+        <li><a class="block py-3" href="panduan.html">Panduan Sampah</a></li>
+        <li><a class="block py-3" href="index.html#tips">Tips Lingkungan</a></li>
+        <li><a class="block py-3" href="index.html#artikel">Artikel</a></li>
+        <li><a class="block py-3" href="index.html#tentang">Tentang Kami</a></li>
+      </ul>
+    </header>
+
+    <main class="mx-auto max-w-shell px-5 pb-28 pt-8 sm:pb-24 lg:pb-16 lg:pt-12">
+      <!-- ===== SAMBUTAN ===== -->
+      <div class="flex items-center gap-4">
+        <span class="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full bg-primary/12 ring-2 ring-white sm:h-16 sm:w-16" aria-hidden="true">
+          <svg viewBox="0 0 64 64" class="h-full w-full">
+            <circle cx="32" cy="32" r="32" fill="#DCEBD9"/>
+            <circle cx="32" cy="25" r="11" fill="#1E3A2A"/>
+            <path d="M12 60c2-13 10-19 20-19s18 6 20 19" fill="#1E3A2A"/>
+            <circle cx="28" cy="24" r="1.6" fill="#DCEBD9"/>
+            <circle cx="36" cy="24" r="1.6" fill="#DCEBD9"/>
+            <path d="M28 30c2 1.6 6 1.6 8 0" stroke="#DCEBD9" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <div class="min-w-0">
+          <h1 class="text-[22px] font-extrabold leading-tight tracking-tight text-forest sm:text-3xl">Halo, Putu!</h1>
+          <p class="mt-0.5 text-[12.5px] text-muted sm:text-sm">Yuk jaga lingkungan bersama.</p>
+        </div>
+      </div>
+
+      <!-- ===== GRID ===== -->
+      <div class="mt-7 grid gap-6 lg:mt-10 lg:grid-cols-12 lg:gap-8">
+        <!-- Kolom kiri: di mobile jadi konten biasa (supaya bisa di-order), di desktop satu kolom -->
+        <div class="contents lg:col-span-5 lg:flex lg:flex-col lg:gap-6">
+        <!-- Dampak -->
+        <section class="order-1">
+          <div class="grad-dampak rounded-2xl p-5 text-white shadow-lg shadow-forest/15 sm:p-7">
+            <h2 class="text-[13px] font-bold uppercase tracking-wide text-white/80">Dampakmu Hari Ini</h2>
+            <div class="mt-5 grid grid-cols-2 divide-x divide-white/20">
+              <div class="pr-4">
+                <p id="statBerat" class="text-[26px] font-extrabold leading-none sm:text-4xl">3.2 kg</p>
+                <p class="mt-2 text-[11.5px] text-white/80 sm:text-sm">Sampah terpilah</p>
+              </div>
+              <div class="pl-5">
+                <p id="statHari" class="text-[26px] font-extrabold leading-none sm:text-4xl">12</p>
+                <p class="mt-2 text-[11.5px] text-white/80 sm:text-sm">Hari berkontribusi</p>
+              </div>
+            </div>
+            <a href="#lokasi" class="mt-6 inline-flex items-center gap-1.5 text-[12px] font-bold text-white/90 underline-offset-4 hover:underline sm:text-sm">
+              Titip sampah di lokasi terdekat
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </section>
+
+        <!-- Tips hari ini -->
+        <section class="order-3">
+          <div class="rounded-2xl border border-line bg-white p-5 sm:p-6">
+            <div class="flex gap-3.5">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary/12" aria-hidden="true">
+                <svg class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              </span>
+              <div>
+                <p class="text-[13.5px] font-bold text-forest sm:text-base">Tips Hari Ini</p>
+                <p id="tipHariIni" class="mt-1 text-[12.5px] leading-relaxed text-muted sm:text-sm"></p>
+              </div>
+            </div>
+          </div>
+        </section>
+        </div>
+
+        <!-- Lokasi terdekat -->
+        <section id="lokasi" class="order-2 lg:col-span-7 lg:col-start-6 lg:row-start-1">
+          <div class="flex items-baseline justify-between gap-4">
+            <h2 class="text-[18px] font-extrabold tracking-tight text-forest sm:text-2xl">Lokasi Terdekat</h2>
+            <a href="index.html#panduan" class="text-[12px] font-bold text-primary hover:underline sm:text-sm">Lihat semua</a>
+          </div>
+
+          <ul id="daftarLokasi" class="mt-4 space-y-3"></ul>
+
+          <button
+            type="button"
+            id="ctaPeta"
+            class="mt-4 flex w-full items-center gap-3.5 rounded-2xl border border-line bg-white p-4 text-left transition hover:border-primary/40 hover:shadow-md sm:p-5"
+          >
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary/12 sm:h-11 sm:w-11" aria-hidden="true">
+              <svg class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="m9 4-6 2v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="block text-[13.5px] font-bold text-forest sm:text-base">Peta Bank Sampah &amp; TPS</span>
+              <span class="mt-0.5 block text-[11.5px] text-muted sm:text-sm">Lihat semua titik di sekitar Denpasar – Gianyar</span>
+            </span>
+            <svg class="h-5 w-5 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+
+          <p class="mt-5 rounded-2xl border border-line bg-cream px-5 py-4 text-[12px] leading-relaxed text-muted sm:text-[13px]">
+            Data lokasi pada halaman ini masih contoh. Selalu konfirmasi jam buka
+            dan jenis sampah yang diterima sebelum datang.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="hidden border-t border-line bg-white lg:block">
+      <div class="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-8 text-sm text-muted">
+        <p>© 2026 Bali Eling Luu — Jaga Alam, Lestarikan Bali.</p>
+        <ul class="flex items-center gap-6">
+          <li><a class="font-bold text-primary" href="dashboard.html">Beranda</a></li>
+          <li><a class="transition hover:text-primary" href="panduan.html">Panduan Sampah</a></li>
+          <li><a class="transition hover:text-primary" href="index.html#tips">Tips</a></li>
+          <li><a class="transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- ===== BOTTOM NAV (mobile) ===== -->
+    <nav class="fixed bottom-0 left-0 z-40 w-full border-t border-line bg-white/95 backdrop-blur lg:hidden" aria-label="Navigasi bawah">
+      <ul class="mx-auto grid max-w-shell grid-cols-4">
+        <li><a href="dashboard.html" aria-current="page" class="flex flex-col items-center gap-1 py-3 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
+        <li><a href="panduan.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Jenis Sampah</a></li>
+        <li><a href="#lokasi" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a></li>
+        <li><a href="index.html#tentang" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>Profil</a></li>
+      </ul>
+    </nav>
+
+    <script src="data_sampah.js"></script>
+    <script src="data_lokasi.js"></script>
+    <script src="chat.js"></script>
+    <script>
+      document.getElementById("menuBtn").addEventListener("click", function () {
+        var m = document.getElementById("menu");
+        var open = m.classList.toggle("hidden") === false;
+        this.setAttribute("aria-expanded", String(open));
+      });
+
+      function esc(s) {
+        return String(s).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+
+      function avatarLokasi(seed) {
+        var warna = ["#DCEBD9", "#EADFC7", "#D8E6EE"][seed % 3];
+        return (
+          '<svg viewBox="0 0 64 64" class="h-full w-full">' +
+          '<circle cx="32" cy="32" r="32" fill="' + warna + '"/>' +
+          '<circle cx="32" cy="26" r="10" fill="#14532D"/>' +
+          '<path d="M14 58c2-11 9-16 18-16s16 5 18 16" fill="#14532D"/>' +
+          "</svg>"
+        );
+      }
+
+      /* --- tips hari ini --- */
+      document.getElementById("tipHariIni").textContent = tipsHariIni();
+
+      /* --- statistik (bisa ditimpa lewat localStorage) --- */
+      function angka(key, fallback) {
+        var v = localStorage.getItem(key);
+        return v === null ? fallback : v;
+      }
+      document.getElementById("statBerat").textContent = angka("eling.berat", "3.2") + " kg";
+      document.getElementById("statHari").textContent = angka("eling.hari", "12");
+
+      /* --- daftar lokasi terdekat --- */
+      var daftar = lokasiTerdekat(3);
+      document.getElementById("daftarLokasi").innerHTML = daftar
+        .map(function (l, i) {
+          var chips = l.jenis
+            .slice(0, 3)
+            .map(function (j) {
+              return (
+                '<li class="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold text-primary sm:text-[11px]">' +
+                esc(j) +
+                "</li>"
+              );
+            })
+            .join("");
+          return (
+            '<li><a href="#lokasi" class="flex items-center gap-3.5 rounded-2xl border border-line bg-white p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md sm:p-5">' +
+            '<span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full sm:h-14 sm:w-14">' +
+            avatarLokasi(i) +
+            "</span>" +
+            '<span class="min-w-0 flex-1">' +
+            '<span class="block truncate text-[13.5px] font-bold text-forest sm:text-base">' + esc(l.nama) + "</span>" +
+            '<span class="mt-0.5 block text-[11.5px] text-muted sm:text-sm">' +
+            l.jarak.toFixed(1) + " km • Buka " + esc(l.jam) +
+            (l.buka ? "" : " (tutup)") +
+            "</span>" +
+            '<ul class="mt-2 flex flex-wrap gap-1.5">' + chips + "</ul>" +
+            "</span>" +
+            '<svg class="h-5 w-5 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
+            "</a></li>"
+          );
+        })
+        .join("");
+
+      document.getElementById("ctaPeta").addEventListener("click", function () {
+        if (window.ElingChat) window.ElingChat.buka("Bank sampah atau TPS terdekat");
+      });
+    </script>
+  </body>
+</html>

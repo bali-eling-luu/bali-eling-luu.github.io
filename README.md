@@ -16,7 +16,8 @@ Dibangun dengan **HTML + Tailwind CSS (CDN) + JavaScript vanilla** — tanpa bac
 - **Asisten Eling** — chat bot lokal yang menjawab pertanyaan seputar jenis sampah, cara memilah, dan penanganannya
 - **Panduan Memilah** (`panduan.html`) — 4 kartu kategori + langkah praktis, tampilan app-like dengan bottom nav
 - **Detail Jenis Sampah** (`edukasi.html`) — pengertian, contoh, cara menangani; 4 kategori dalam satu halaman lewat parameter `?jenis=`
-- **Responsive** — desktop 1440px & mobile 390px, dengan menu hamburger
+- **Dashboard Pengguna** (`dashboard.html`) — sambutan, statistik dampak harian, 3 lokasi terdekat, tips harian
+- **Responsive** — desktop 1440px & mobile 390px; bottom nav hanya di mobile
 
 ## Struktur
 
@@ -25,6 +26,8 @@ Bali Eling Luu/
 ├── index.html        # Halaman utama (splash, hero, section, footer)
 ├── panduan.html      # Panduan memilah + 4 kartu kategori
 ├── edukasi.html      # Detail jenis sampah (?jenis=organik|anorganik|residu|b3)
+├── dashboard.html    # Dashboard pengguna
+├── data_lokasi.js    # Data lokasi contoh + tips harian
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
 └── assets/

@@ -44,6 +44,10 @@
     ".eling-send:hover{background:#14532d;transform:scale(1.06)}",
     ".eling-send svg{width:18px;height:18px}",
     "@media(max-width:480px){.eling-panel{right:10px;left:10px;bottom:84px;width:auto;height:68vh}.eling-fab{right:14px;bottom:14px}}",
+    // halaman dengan bottom nav: tombol & panel digeser ke atas supaya tidak menutupi nav
+    ".has-nav-bawah .eling-fab{bottom:88px}",
+    ".has-nav-bawah .eling-panel{bottom:158px}",
+    "@media(max-width:480px){.has-nav-bawah .eling-fab{right:14px;bottom:78px}.has-nav-bawah .eling-panel{bottom:150px;height:58vh}}",
     "@media(prefers-reduced-motion:reduce){.eling-typing i{animation:none}}",
   ].join("\n");
 
@@ -349,6 +353,11 @@
       st.id = "eling-style";
       st.textContent = CSS_ELING;
       document.head.appendChild(st);
+    }
+
+    // kalau halaman punya bottom nav, tombol & panel digeser ke atas
+    if (document.querySelector('nav[aria-label="Navigasi bawah"]')) {
+      document.documentElement.classList.add("has-nav-bawah");
     }
 
     // tombol mengambang
