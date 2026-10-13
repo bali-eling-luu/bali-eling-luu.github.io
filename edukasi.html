@@ -17,6 +17,7 @@
         theme: {
           extend: {
             fontFamily: { sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"] },
+            maxWidth: { shell: "1200px" },
             colors: {
               primary: "#17803D",
               forest: "#14532D",
@@ -35,55 +36,97 @@
     <style>
       html { scroll-behavior: smooth; }
       body { -webkit-font-smoothing: antialiased; }
-      .shell { max-width: 460px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; }
-      .has-nav { padding-bottom: 84px; }
       @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      .link-underline { position: relative; }
+      .link-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+      .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
     </style>
   </head>
 
-  <body class="bg-line/60 font-sans text-ink antialiased">
-    <div class="shell has-nav">
-      <!-- ===== TOP BAR ===== -->
-      <header class="sticky top-0 z-40 flex items-center justify-between border-b border-line bg-white px-4 py-3">
-        <a href="panduan.html" aria-label="Kembali ke panduan" class="grid h-9 w-9 place-items-center rounded-full border border-line text-forest transition hover:border-primary">
+  <body class="bg-cream font-sans text-ink antialiased">
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+      <nav class="mx-auto flex max-w-shell items-center justify-between gap-4 px-5 py-3.5">
+        <a href="panduan.html" aria-label="Kembali ke panduan" class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-line text-forest transition hover:border-primary lg:hidden">
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
         </a>
-        <a href="index.html" class="flex items-center gap-2">
-          <img src="assets/logo/logo-mark.png" alt="" aria-hidden="true" class="h-7 w-7 object-contain" />
-          <span class="text-[13px] font-extrabold text-forest">Bali Eling Luu</span>
+
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/logo/logo-mark.png" alt="" aria-hidden="true" class="h-9 w-9 object-contain" />
+          <span class="leading-none">
+            <span class="block text-[15px] font-extrabold text-forest">Bali Eling Luu</span>
+            <span class="mt-0.5 hidden text-[10px] font-medium text-muted sm:block">Dari Sampah, Untuk Bali</span>
+          </span>
         </a>
-        <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menuTop" class="grid h-9 w-9 place-items-center rounded-full border border-line text-forest transition hover:border-primary">
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        </button>
-      </header>
 
-      <ul id="menuTop" class="hidden border-b border-line bg-white px-5 py-2 text-sm font-medium text-muted">
-        <li><a class="block py-2.5" href="index.html">Beranda</a></li>
-        <li><a class="block py-2.5" href="panduan.html">Panduan Sampah</a></li>
-        <li><a class="block py-2.5" href="index.html#tips">Tips Lingkungan</a></li>
-        <li><a class="block py-2.5" href="index.html#artikel">Artikel</a></li>
-      </ul>
-
-      <main class="px-5 pb-8 pt-6" id="isi">
-        <div class="grid h-64 place-items-center text-sm text-muted">Memuat…</div>
-      </main>
-
-      <!-- ===== BOTTOM NAV ===== -->
-      <nav class="fixed bottom-0 left-1/2 z-40 w-full max-w-[460px] -translate-x-1/2 border-t border-line bg-white/95 backdrop-blur" aria-label="Navigasi bawah">
-        <ul class="grid grid-cols-4">
-          <li><a href="index.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
-          <li><a href="panduan.html" aria-current="page" class="flex flex-col items-center gap-1 py-3 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Jenis Sampah</a></li>
-          <li><a href="index.html#panduan" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a></li>
-          <li><a href="index.html#tentang" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>Profil</a></li>
+        <ul class="hidden items-center gap-7 text-sm font-medium text-muted lg:flex">
+          <li><a class="link-underline transition hover:text-primary" href="index.html#beranda">Beranda</a></li>
+          <li><a class="link-underline font-bold text-primary" href="panduan.html" aria-current="page">Panduan Sampah</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#tips">Tips Lingkungan</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#tentang">Tentang Kami</a></li>
         </ul>
+
+        <div class="flex items-center gap-2.5">
+          <a href="panduan.html" class="hidden rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-forest lg:block">← Semua Kategori</a>
+          <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menu" class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-forest transition hover:border-primary lg:hidden">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
       </nav>
-    </div>
+
+      <ul id="menu" class="hidden border-t border-line bg-cream px-5 py-2 text-sm font-medium text-muted lg:hidden">
+        <li><a class="block py-3" href="index.html">Beranda</a></li>
+        <li><a class="block py-3 font-bold text-primary" href="panduan.html">Panduan Sampah</a></li>
+        <li><a class="block py-3" href="index.html#tips">Tips Lingkungan</a></li>
+        <li><a class="block py-3" href="index.html#artikel">Artikel</a></li>
+        <li><a class="block py-3" href="index.html#tentang">Tentang Kami</a></li>
+      </ul>
+    </header>
+
+    <main class="mx-auto max-w-shell px-5 pb-28 pt-8 sm:pb-24 lg:pb-16 lg:pt-14" id="isi">
+      <div class="grid h-64 place-items-center text-sm text-muted">Memuat…</div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="hidden border-t border-line bg-white lg:block">
+      <div class="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-8 text-sm text-muted">
+        <p>© 2026 Bali Eling Luu — Jaga Alam, Lestarikan Bali.</p>
+        <ul class="flex items-center gap-6">
+          <li><a class="transition hover:text-primary" href="index.html#beranda">Beranda</a></li>
+          <li><a class="font-bold text-primary" href="panduan.html">Panduan Sampah</a></li>
+          <li><a class="transition hover:text-primary" href="index.html#tips">Tips</a></li>
+          <li><a class="transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- ===== BOTTOM NAV (mobile) ===== -->
+    <nav class="fixed bottom-0 left-0 z-40 w-full border-t border-line bg-white/95 backdrop-blur lg:hidden" aria-label="Navigasi bawah">
+      <ul class="mx-auto grid max-w-shell grid-cols-4">
+        <li><a href="index.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
+        <li><a href="panduan.html" aria-current="page" class="flex flex-col items-center gap-1 py-3 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Jenis Sampah</a></li>
+        <li><a href="index.html#panduan" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a></li>
+        <li><a href="index.html#tentang" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>Profil</a></li>
+      </ul>
+    </nav>
 
     <script src="data_sampah.js"></script>
     <script src="chat.js"></script>
     <script>
       document.getElementById("menuBtn").addEventListener("click", function () {
-        var m = document.getElementById("menuTop");
+        var m = document.getElementById("menu");
         var open = m.classList.toggle("hidden") === false;
         this.setAttribute("aria-expanded", String(open));
       });
@@ -103,15 +146,16 @@
 
       function ilustrasi(warna) {
         return (
-          '<svg viewBox="0 0 320 120" class="h-full w-full" role="img" aria-label="Ilustrasi alam">' +
+          '<svg viewBox="0 0 320 180" class="h-full w-full" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ilustrasi alam">' +
           '<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">' +
           '<stop offset="0" stop-color="#0F3D22"/><stop offset="1" stop-color="' + warna + '"/>' +
           "</linearGradient></defs>" +
-          '<rect width="320" height="120" fill="url(#sky)"/>' +
-          '<circle cx="262" cy="34" r="16" fill="#D9A441" opacity=".9"/>' +
-          '<path d="M0 96c34-26 58-26 92 0 30-30 60-30 96 0 34-24 62-24 132 0v24H0Z" fill="#17803D" opacity=".55"/>' +
-          '<path d="M0 108c40-18 74-18 112 0 36-22 72-22 112 0 34-16 60-16 96 0v12H0Z" fill="#14532D" opacity=".8"/>' +
-          '<path d="M52 92c0-14 8-22 16-22s16 8 16 22" fill="none" stroke="#0F3D22" stroke-width="3"/>' +
+          '<rect width="320" height="180" fill="url(#sky)"/>' +
+          '<circle cx="258" cy="46" r="20" fill="#D9A441" opacity=".9"/>' +
+          '<path d="M0 128c34-30 58-30 92 0 30-34 60-34 96 0 34-28 62-28 132 0v52H0Z" fill="#17803D" opacity=".55"/>' +
+          '<path d="M0 146c40-20 74-20 112 0 36-24 72-24 112 0 34-18 60-18 96 0v34H0Z" fill="#14532D" opacity=".85"/>' +
+          '<path d="M60 126c0-18 10-28 20-28s20 10 20 28" fill="none" stroke="#0F3D22" stroke-width="4"/>' +
+          '<rect x="76" y="126" width="8" height="22" fill="#0F3D22"/>' +
           "</svg>"
         );
       }
@@ -123,7 +167,7 @@
 
         var contoh = (k.contoh || []).map(function (c) {
           return (
-            '<li class="flex gap-2.5 text-[12.5px] leading-snug text-muted">' +
+            '<li class="flex gap-2.5 text-[12.5px] leading-snug text-muted sm:text-sm">' +
             '<span class="mt-0.5 grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full bg-primary text-[9px] font-bold text-white">✓</span>' +
             "<span>" + esc(c) + "</span></li>"
           );
@@ -131,56 +175,70 @@
 
         var langkah = (k.penanganan || []).map(function (p, i) {
           return (
-            '<li class="flex gap-3">' +
+            '<li class="flex gap-3 rounded-xl border border-line bg-white p-3.5 sm:p-4">' +
             '<span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary/12 text-[11px] font-bold text-primary">' + (i + 1) + "</span>" +
-            '<p class="pt-0.5 text-[12.5px] leading-relaxed text-muted">' + esc(p) + "</p></li>"
+            '<p class="pt-0.5 text-[12.5px] leading-relaxed text-muted sm:text-sm">' + esc(p) + "</p></li>"
           );
         }).join("");
 
         var topik = TOPIK_TERKAIT[key];
 
         isi.innerHTML =
+          // breadcrumb (desktop)
+          '<nav aria-label="Breadcrumb" class="mb-6 hidden text-sm text-muted lg:block">' +
+          '<a href="index.html" class="transition hover:text-primary">Beranda</a> / ' +
+          '<a href="panduan.html" class="transition hover:text-primary">Panduan Sampah</a> / ' +
+          '<span class="font-semibold text-forest">' + esc(k.nama) + "</span></nav>" +
+
           '<span class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-[11px] font-bold text-primary">' +
           '<span aria-hidden="true">' + k.ikon + "</span> Jenis Sampah</span>" +
-          '<h1 class="mt-3 text-[26px] font-extrabold leading-tight tracking-tight text-forest">' + esc(judul) + "</h1>" +
+          '<h1 class="mt-3 text-[26px] font-extrabold leading-tight tracking-tight text-forest sm:text-4xl lg:text-5xl">' + esc(judul) + "</h1>" +
 
           // Hero card
-          '<div class="mt-5 overflow-hidden rounded-2xl shadow-lg shadow-forest/15">' +
-          '<div class="h-28 w-full overflow-hidden">' + ilustrasi(k.warna) + "</div>" +
-          '<div class="bg-forest px-5 py-4">' +
-          '<h2 class="text-[16px] font-extrabold text-white">Apa Itu Sampah ' + esc(k.nama) + "?</h2>" +
-          '<p class="mt-2 text-[12.5px] leading-relaxed text-white/85">' + esc(k.definisi) + "</p>" +
-          "</div></div>" +
+          '<div class="mt-6 overflow-hidden rounded-2xl shadow-lg shadow-forest/15 lg:mt-10 lg:flex">' +
+          '<div class="h-32 w-full overflow-hidden sm:h-44 lg:h-auto lg:w-[40%] lg:shrink-0">' + ilustrasi(k.warna) + "</div>" +
+          '<div class="bg-forest px-5 py-5 sm:px-8 sm:py-7 lg:flex lg:flex-1 lg:justify-center">' +
+          '<div class="max-w-2xl">' +
+          '<h2 class="text-[16px] font-extrabold text-white sm:text-2xl">Apa Itu Sampah ' + esc(k.nama) + "?</h2>" +
+          '<p class="mt-2 text-[12.5px] leading-relaxed text-white/85 sm:mt-3 sm:text-base">' + esc(k.definisi) + "</p>" +
+          "</div></div></div>" +
 
-          // Contoh
-          '<h2 class="mt-7 text-[16px] font-extrabold tracking-tight text-forest">Contoh Sampah ' + esc(k.nama) + ":</h2>" +
-          '<ul class="mt-3 space-y-2">' + contoh + "</ul>" +
-
-          // Penanganan
-          '<h2 class="mt-7 text-[16px] font-extrabold tracking-tight text-forest">Cara Menanganinya</h2>' +
-          '<ul class="mt-3 space-y-3">' + langkah + "</ul>" +
+          // Konten dua kolom di desktop
+          '<div class="mt-10 grid gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-14">' +
+          '<section>' +
+          '<h2 class="text-[16px] font-extrabold tracking-tight text-forest sm:text-2xl">Contoh Sampah ' + esc(k.nama) + "</h2>" +
+          '<ul class="mt-4 space-y-2.5">' + contoh + "</ul>" +
+          "</section>" +
+          '<section>' +
+          '<h2 class="text-[16px] font-extrabold tracking-tight text-forest sm:text-2xl">Cara Menanganinya</h2>' +
+          '<ul class="mt-4 space-y-3">' + langkah + "</ul>" +
+          "</section></div>" +
 
           // Peringatan
           (k.peringatan
-            ? '<div class="mt-6 rounded-xl border border-danger/30 bg-danger/8 p-4">' +
+            ? '<div class="mt-10 rounded-2xl border border-danger/30 bg-danger/8 p-5 sm:mt-14 sm:p-6">' +
               '<p class="text-[11px] font-bold uppercase tracking-wide text-danger">Perhatian</p>' +
-              '<p class="mt-1 text-[12.5px] leading-relaxed text-muted">' + esc(k.peringatan) + "</p></div>"
+              '<p class="mt-1.5 text-[12.5px] leading-relaxed text-muted sm:text-sm">' + esc(k.peringatan) + "</p></div>"
             : "") +
 
-          // Topik terkait
+          // CTA + topik terkait
+          '<div class="mt-10 grid gap-6 lg:mt-14 lg:grid-cols-2 lg:items-start lg:gap-10">' +
+          '<div class="rounded-2xl border border-line bg-white p-6 sm:p-8">' +
+          '<h2 class="text-[18px] font-extrabold tracking-tight text-forest sm:text-2xl">Lanjutkan belajar</h2>' +
+          '<p class="mt-2 text-[13px] leading-relaxed text-muted sm:text-sm">Cari tahu lokasi pembuangan untuk jenis sampah ini, atau tanya langsung ke asisten.</p>' +
+          '<div class="mt-5 flex flex-col gap-3 sm:flex-row">' +
+          '<button type="button" id="ctaLokasi" class="w-full rounded-xl bg-primary px-8 py-3.5 text-[14px] font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-forest active:scale-[0.99] sm:w-auto">Cari Lokasi Pembuangan</button>' +
+          '<a href="panduan.html" class="w-full rounded-xl border border-line bg-white px-8 py-3.5 text-center text-[14px] font-bold text-forest transition hover:border-primary hover:text-primary sm:w-auto">Semua Kategori</a>' +
+          "</div></div>" +
+
           (topik
-            ? '<div class="mt-6 rounded-2xl border border-line bg-cream p-4">' +
-              '<p class="text-[12.5px] font-bold text-forest">Baca juga</p>' +
-              '<p class="mt-0.5 text-[11.5px] text-muted">Topik yang sering ditanyakan</p>' +
-              '<button type="button" data-topik="' + esc(topik) + '" class="mt-3 rounded-xl bg-forest px-4 py-2.5 text-[12.5px] font-bold text-white transition hover:bg-primary active:scale-[0.99]">' +
+            ? '<div class="rounded-2xl border border-line bg-cream p-6 sm:p-8">' +
+              '<p class="text-[12.5px] font-bold text-forest sm:text-base">Baca juga</p>' +
+              '<p class="mt-0.5 text-[11.5px] text-muted sm:text-sm">Topik yang sering ditanyakan</p>' +
+              '<button type="button" data-topik="' + esc(topik) + '" class="mt-4 w-full rounded-xl bg-forest px-6 py-3 text-[13px] font-bold text-white transition hover:bg-primary active:scale-[0.99] sm:w-auto sm:px-8 sm:text-sm">' +
               esc(topik) + "</button></div>"
             : "") +
-
-          // CTA
-          '<button type="button" id="ctaLokasi" class="mt-7 w-full rounded-xl bg-primary px-6 py-3.5 text-[14px] font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-forest active:scale-[0.99]">' +
-          "Cari Lokasi Pembuangan</button>" +
-
-          '<a href="panduan.html" class="mt-4 block text-center text-[12.5px] font-semibold text-muted underline decoration-line underline-offset-4 hover:text-primary">Lihat panduan semua kategori</a>';
+          "</div>";
 
         document.title = judul + " — Bali Eling Luu";
 

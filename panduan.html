@@ -17,6 +17,7 @@
         theme: {
           extend: {
             fontFamily: { sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"] },
+            maxWidth: { shell: "1200px" },
             colors: {
               primary: "#17803D",
               forest: "#14532D",
@@ -35,147 +36,221 @@
     <style>
       html { scroll-behavior: smooth; }
       body { -webkit-font-smoothing: antialiased; }
-      .shell { max-width: 460px; margin: 0 auto; min-height: 100vh; background: #fff; position: relative; }
-      .has-nav { padding-bottom: 84px; }
       @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      .link-underline { position: relative; }
+      .link-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+      .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
     </style>
   </head>
 
-  <body class="bg-line/60 font-sans text-ink antialiased">
-    <div class="shell has-nav">
-      <!-- ===== TOP BAR ===== -->
-      <header class="sticky top-0 z-40 flex items-center justify-between border-b border-line bg-white px-4 py-3">
-        <a href="index.html" aria-label="Kembali ke beranda" class="grid h-9 w-9 place-items-center rounded-full border border-line text-forest transition hover:border-primary">
+  <body class="bg-cream font-sans text-ink antialiased">
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+      <nav class="mx-auto flex max-w-shell items-center justify-between gap-4 px-5 py-3.5">
+        <a href="index.html" aria-label="Kembali ke beranda" class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-line text-forest transition hover:border-primary lg:hidden">
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
         </a>
-        <a href="index.html" class="flex items-center gap-2">
-          <img src="assets/logo/logo-mark.png" alt="" aria-hidden="true" class="h-7 w-7 object-contain" />
-          <span class="text-[13px] font-extrabold text-forest">Bali Eling Luu</span>
+
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/logo/logo-mark.png" alt="" aria-hidden="true" class="h-9 w-9 object-contain" />
+          <span class="leading-none">
+            <span class="block text-[15px] font-extrabold text-forest">Bali Eling Luu</span>
+            <span class="mt-0.5 hidden text-[10px] font-medium text-muted sm:block">Dari Sampah, Untuk Bali</span>
+          </span>
         </a>
-        <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menuTop" class="grid h-9 w-9 place-items-center rounded-full border border-line text-forest transition hover:border-primary">
-          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        </button>
-      </header>
 
-      <ul id="menuTop" class="hidden border-b border-line bg-white px-5 py-2 text-sm font-medium text-muted">
-        <li><a class="block py-2.5" href="index.html">Beranda</a></li>
-        <li><a class="block py-2.5" href="panduan.html">Panduan Sampah</a></li>
-        <li><a class="block py-2.5" href="index.html#tips">Tips Lingkungan</a></li>
-        <li><a class="block py-2.5" href="index.html#artikel">Artikel</a></li>
+        <ul class="hidden items-center gap-7 text-sm font-medium text-muted lg:flex">
+          <li><a class="link-underline transition hover:text-primary" href="index.html#beranda">Beranda</a></li>
+          <li><a class="link-underline font-bold text-primary" href="panduan.html" aria-current="page">Panduan Sampah</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#tips">Tips Lingkungan</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#tentang">Tentang Kami</a></li>
+        </ul>
+
+        <div class="flex items-center gap-2.5">
+          <a href="index.html#panduan" class="hidden rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-forest lg:block">Mulai Belajar</a>
+          <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menu" class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-forest transition hover:border-primary lg:hidden">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </nav>
+
+      <ul id="menu" class="hidden border-t border-line bg-cream px-5 py-2 text-sm font-medium text-muted lg:hidden">
+        <li><a class="block py-3" href="index.html">Beranda</a></li>
+        <li><a class="block py-3 font-bold text-primary" href="panduan.html">Panduan Sampah</a></li>
+        <li><a class="block py-3" href="index.html#tips">Tips Lingkungan</a></li>
+        <li><a class="block py-3" href="index.html#artikel">Artikel</a></li>
+        <li><a class="block py-3" href="index.html#tentang">Tentang Kami</a></li>
       </ul>
+    </header>
 
-      <main class="px-5 pb-8 pt-6">
-        <!-- ===== JUDUL ===== -->
+    <main class="mx-auto max-w-shell px-5 pb-28 pt-8 sm:pb-24 lg:pb-16 lg:pt-14">
+      <!-- ===== JUDUL ===== -->
+      <div class="max-w-3xl">
         <span class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-[11px] font-bold text-primary">
           <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 20c0-5 2.5-7.5 7-8.5-.8 5-3.5 7.5-7 8.5Z"/><path d="M11 20V9"/><path d="M9 6.5 11 4l2 2.5"/></svg>
           Panduan Memilah
         </span>
 
-        <h1 class="mt-3 text-[26px] font-extrabold leading-tight tracking-tight text-forest">
+        <h1 class="mt-3 text-[26px] font-extrabold leading-tight tracking-tight text-forest sm:text-4xl lg:text-5xl">
           Pilah Sampah dengan Benar
         </h1>
-        <p class="mt-2 text-[13.5px] leading-relaxed text-muted">
+        <p class="mt-3 text-[13.5px] leading-relaxed text-muted sm:text-base">
           Empat jenis utama sampah yang perlu kamu kenali beserta pengaruh dan pengolahannya.
         </p>
+      </div>
 
-        <!-- ===== 4 KATEGORI ===== -->
-        <div class="mt-6 grid grid-cols-2 gap-3">
-          <a href="edukasi.html?jenis=organik" class="flex flex-col rounded-2xl border border-line bg-cream p-4 transition hover:-translate-y-0.5 hover:shadow-md hover:shadow-forest/10">
-            <span class="grid h-10 w-10 place-items-center rounded-xl bg-primary/12 text-xl" aria-hidden="true">🍂</span>
-            <h2 class="mt-3 text-[15px] font-bold text-forest">Organik</h2>
-            <p class="mt-1 text-[11.5px] leading-snug text-muted">Daun, sisa makanan, kertas</p>
-            <span class="mt-3 inline-flex w-fit rounded-full bg-primary/12 px-2.5 py-1 text-[10px] font-bold text-primary">Mengurai</span>
-            <p class="mt-2 text-[11px] text-muted">→ Masuk kompos</p>
-          </a>
+      <!-- ===== 4 KATEGORI ===== -->
+      <div class="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:mt-12 lg:grid-cols-4">
+        <a href="edukasi.html?jenis=organik" class="group flex flex-col rounded-2xl border border-line bg-white p-4 transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-forest/10 sm:p-6">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-primary/12 text-xl sm:h-12 sm:w-12 sm:text-2xl" aria-hidden="true">🍂</span>
+          <h2 class="mt-3 text-[15px] font-bold text-forest sm:mt-4 sm:text-lg">Organik</h2>
+          <p class="mt-1 text-[11.5px] leading-snug text-muted sm:mt-1.5 sm:text-sm sm:leading-relaxed">Daun, sisa makanan, kertas</p>
+          <span class="mt-3 inline-flex w-fit rounded-full bg-primary/12 px-2.5 py-1 text-[10px] font-bold text-primary sm:text-xs">Mengurai</span>
+          <p class="mt-2 text-[11px] text-muted sm:mt-3 sm:text-xs">→ Masuk kompos</p>
+          <span class="mt-auto pt-4 text-[12px] font-bold text-primary group-hover:underline sm:pt-5 sm:text-sm">Pelajari →</span>
+        </a>
 
-          <a href="edukasi.html?jenis=anorganik" class="flex flex-col rounded-2xl border border-line bg-cream p-4 transition hover:-translate-y-0.5 hover:shadow-md hover:shadow-forest/10">
-            <span class="grid h-10 w-10 place-items-center rounded-xl bg-terra/15 text-xl" aria-hidden="true">♻️</span>
-            <h2 class="mt-3 text-[15px] font-bold text-forest">Anorganik</h2>
-            <p class="mt-1 text-[11.5px] leading-snug text-muted">Botol, kaleng, kertas</p>
-            <span class="mt-3 inline-flex w-fit rounded-full bg-primary/12 px-2.5 py-1 text-[10px] font-bold text-primary">Daur ulang</span>
-            <p class="mt-2 text-[11px] text-muted">→ Bank sampah</p>
-          </a>
+        <a href="edukasi.html?jenis=anorganik" class="group flex flex-col rounded-2xl border border-line bg-white p-4 transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-forest/10 sm:p-6">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-terra/15 text-xl sm:h-12 sm:w-12 sm:text-2xl" aria-hidden="true">♻️</span>
+          <h2 class="mt-3 text-[15px] font-bold text-forest sm:mt-4 sm:text-lg">Anorganik</h2>
+          <p class="mt-1 text-[11.5px] leading-snug text-muted sm:mt-1.5 sm:text-sm sm:leading-relaxed">Botol, kaleng, kertas</p>
+          <span class="mt-3 inline-flex w-fit rounded-full bg-primary/12 px-2.5 py-1 text-[10px] font-bold text-primary sm:text-xs">Daur ulang</span>
+          <p class="mt-2 text-[11px] text-muted sm:mt-3 sm:text-xs">→ Bank sampah</p>
+          <span class="mt-auto pt-4 text-[12px] font-bold text-primary group-hover:underline sm:pt-5 sm:text-sm">Pelajari →</span>
+        </a>
 
-          <a href="edukasi.html?jenis=b3" class="flex flex-col rounded-2xl border border-danger/30 bg-danger/8 p-4 transition hover:-translate-y-0.5 hover:shadow-md hover:shadow-forest/10">
-            <span class="grid h-10 w-10 place-items-center rounded-xl bg-danger/15 text-xl" aria-hidden="true">⚠️</span>
-            <h2 class="mt-3 text-[15px] font-bold text-forest">B3 / Berbahaya</h2>
-            <p class="mt-1 text-[11.5px] leading-snug text-muted">Baterai, lampu, obat</p>
-            <span class="mt-3 inline-flex w-fit rounded-full bg-danger/15 px-2.5 py-1 text-[10px] font-bold text-danger">Beracun</span>
-            <p class="mt-2 text-[11px] text-muted">→ Dropbox khusus</p>
-          </a>
+        <a href="edukasi.html?jenis=b3" class="group flex flex-col rounded-2xl border border-danger/30 bg-white p-4 transition hover:-translate-y-1 hover:border-danger/50 hover:shadow-lg hover:shadow-forest/10 sm:p-6">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-danger/15 text-xl sm:h-12 sm:w-12 sm:text-2xl" aria-hidden="true">⚠️</span>
+          <h2 class="mt-3 text-[15px] font-bold text-forest sm:mt-4 sm:text-lg">B3 / Berbahaya</h2>
+          <p class="mt-1 text-[11.5px] leading-snug text-muted sm:mt-1.5 sm:text-sm sm:leading-relaxed">Baterai, lampu, obat</p>
+          <span class="mt-3 inline-flex w-fit rounded-full bg-danger/15 px-2.5 py-1 text-[10px] font-bold text-danger sm:text-xs">Beracun</span>
+          <p class="mt-2 text-[11px] text-muted sm:mt-3 sm:text-xs">→ Dropbox khusus</p>
+          <span class="mt-auto pt-4 text-[12px] font-bold text-primary group-hover:underline sm:pt-5 sm:text-sm">Pelajari →</span>
+        </a>
 
-          <a href="edukasi.html?jenis=residu" class="flex flex-col rounded-2xl border border-line bg-cream p-4 transition hover:-translate-y-0.5 hover:shadow-md hover:shadow-forest/10">
-            <span class="grid h-10 w-10 place-items-center rounded-xl bg-muted/10 text-xl" aria-hidden="true">🗑️</span>
-            <h2 class="mt-3 text-[15px] font-bold text-forest">Residu</h2>
-            <p class="mt-1 text-[11.5px] leading-snug text-muted">Styrofoam, tisu, pembalut</p>
-            <span class="mt-3 inline-flex w-fit rounded-full bg-muted/15 px-2.5 py-1 text-[10px] font-bold text-muted">Tidak terurai</span>
-            <p class="mt-2 text-[11px] text-muted">→ Lingkungan TPA</p>
-          </a>
+        <a href="edukasi.html?jenis=residu" class="group flex flex-col rounded-2xl border border-line bg-white p-4 transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-forest/10 sm:p-6">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-muted/10 text-xl sm:h-12 sm:w-12 sm:text-2xl" aria-hidden="true">🗑️</span>
+          <h2 class="mt-3 text-[15px] font-bold text-forest sm:mt-4 sm:text-lg">Residu</h2>
+          <p class="mt-1 text-[11.5px] leading-snug text-muted sm:mt-1.5 sm:text-sm sm:leading-relaxed">Styrofoam, tisu, pembalut</p>
+          <span class="mt-3 inline-flex w-fit rounded-full bg-muted/15 px-2.5 py-1 text-[10px] font-bold text-muted sm:text-xs">Tidak terurai</span>
+          <p class="mt-2 text-[11px] text-muted sm:mt-3 sm:text-xs">→ Lingkungan TPA</p>
+          <span class="mt-auto pt-4 text-[12px] font-bold text-primary group-hover:underline sm:pt-5 sm:text-sm">Pelajari →</span>
+        </a>
+      </div>
+
+      <!-- ===== LANGKAH PRAKTIS ===== -->
+      <div class="mt-12 lg:mt-20">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-terra">Praktik</p>
+          <h2 class="mt-2 text-[18px] font-extrabold tracking-tight text-forest sm:text-3xl">Langkah Praktis Hari Ini</h2>
         </div>
 
-        <!-- ===== LANGKAH PRAKTIS ===== -->
-        <h2 class="mt-8 text-[17px] font-extrabold tracking-tight text-forest">Langkah Praktis Hari Ini</h2>
-        <ul class="mt-4 space-y-3">
-          <li class="flex gap-3 rounded-xl border border-line bg-white p-3.5">
-            <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-[10px] font-bold text-white">✓</span>
+        <ul class="mt-6 grid gap-3 sm:gap-5 md:grid-cols-3">
+          <li class="flex gap-3 rounded-2xl border border-line bg-white p-4 sm:p-6">
+            <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">✓</span>
             <div>
-              <p class="text-[13.5px] font-bold text-forest">Pilah dari rumah</p>
-              <p class="mt-0.5 text-[12px] leading-relaxed text-muted">Pisahkan organik, anorganik, residu, dan B3 di tempatnya.</p>
+              <p class="text-[13.5px] font-bold text-forest sm:text-base">Pilah dari rumah</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-muted sm:mt-1.5 sm:text-sm">Pisahkan organik, anorganik, residu, dan B3 di tempatnya.</p>
             </div>
           </li>
-          <li class="flex gap-3 rounded-xl border border-line bg-white p-3.5">
-            <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-[10px] font-bold text-white">✓</span>
+          <li class="flex gap-3 rounded-2xl border border-line bg-white p-4 sm:p-6">
+            <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">✓</span>
             <div>
-              <p class="text-[13.5px] font-bold text-forest">Bilas kemasan</p>
-              <p class="mt-0.5 text-[12px] leading-relaxed text-muted">Kemasan kotor mengurangi nilai daur ulang.</p>
+              <p class="text-[13.5px] font-bold text-forest sm:text-base">Bilas kemasan</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-muted sm:mt-1.5 sm:text-sm">Kemasan kotor mengurangi nilai daur ulang.</p>
             </div>
           </li>
-          <li class="flex gap-3 rounded-xl border border-line bg-white p-3.5">
-            <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-[10px] font-bold text-white">✓</span>
+          <li class="flex gap-3 rounded-2xl border border-line bg-white p-4 sm:p-6">
+            <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">✓</span>
             <div>
-              <p class="text-[13.5px] font-bold text-forest">Cari bank sampah</p>
-              <p class="mt-0.5 text-[12px] leading-relaxed text-muted">Serahkan sampah anorganik ke bank sampah atau TPS3R terdekat.</p>
+              <p class="text-[13.5px] font-bold text-forest sm:text-base">Cari bank sampah</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-muted sm:mt-1.5 sm:text-sm">Serahkan sampah anorganik ke bank sampah atau TPS3R terdekat.</p>
             </div>
           </li>
         </ul>
+      </div>
 
-        <!-- ===== CTA ===== -->
-        <button
-          type="button"
-          id="ctaLokasi"
-          class="mt-7 w-full rounded-xl bg-primary px-6 py-3.5 text-[14px] font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-forest active:scale-[0.99]"
-        >
-          Cari Bank Sampah / TPS Terdekat
-        </button>
+      <!-- ===== CTA + CATATAN ===== -->
+      <div class="mt-12 grid gap-6 lg:mt-20 lg:grid-cols-2 lg:items-start lg:gap-10">
+        <div class="rounded-2xl border border-line bg-white p-6 sm:p-8">
+          <h2 class="text-[18px] font-extrabold tracking-tight text-forest sm:text-2xl">Siap memilah?</h2>
+          <p class="mt-2 text-[13px] leading-relaxed text-muted sm:text-sm">
+            Temukan bank sampah atau TPS terdekat dari rumahmu, atau tanya langsung ke Asisten Eling.
+          </p>
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <button
+              type="button"
+              id="ctaLokasi"
+              class="w-full rounded-xl bg-primary px-8 py-3.5 text-[14px] font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-forest active:scale-[0.99] sm:w-auto"
+            >
+              Cari Bank Sampah / TPS Terdekat
+            </button>
+            <button
+              type="button"
+              id="ctaTanya"
+              class="w-full rounded-xl border border-line bg-white px-8 py-3.5 text-[14px] font-bold text-forest transition hover:border-primary hover:text-primary sm:w-auto"
+            >
+              Tanya Asisten Eling
+            </button>
+          </div>
+        </div>
 
-        <p class="mt-5 rounded-xl border border-line bg-cream px-4 py-3 text-[11.5px] leading-relaxed text-muted">
+        <p class="rounded-2xl border border-line bg-cream px-5 py-5 text-[12.5px] leading-relaxed text-muted sm:text-sm">
           <strong class="text-ink">Catatan:</strong> Tidak semua barang dalam satu
           kategori bisa langsung didaur ulang. Selalu ikuti ketentuan dan fasilitas
           pengelolaan sampah setempat.
         </p>
-      </main>
+      </div>
+    </main>
 
-      <!-- ===== BOTTOM NAV ===== -->
-      <nav class="fixed bottom-0 left-1/2 z-40 w-full max-w-[460px] -translate-x-1/2 border-t border-line bg-white/95 backdrop-blur" aria-label="Navigasi bawah">
-        <ul class="grid grid-cols-4">
-          <li><a href="index.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
-          <li><a href="panduan.html" aria-current="page" class="flex flex-col items-center gap-1 py-3 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Jenis Sampah</a></li>
-          <li><a href="index.html#panduan" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a></li>
-          <li><a href="index.html#tentang" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>Profil</a></li>
+    <!-- ===== FOOTER ===== -->
+    <footer class="hidden border-t border-line bg-white lg:block">
+      <div class="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-8 text-sm text-muted">
+        <p>© 2026 Bali Eling Luu — Jaga Alam, Lestarikan Bali.</p>
+        <ul class="flex items-center gap-6">
+          <li><a class="transition hover:text-primary" href="index.html#beranda">Beranda</a></li>
+          <li><a class="font-bold text-primary" href="panduan.html">Panduan Sampah</a></li>
+          <li><a class="transition hover:text-primary" href="index.html#tips">Tips</a></li>
+          <li><a class="transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
         </ul>
-      </nav>
-    </div>
+      </div>
+    </footer>
+
+    <!-- ===== BOTTOM NAV (mobile) ===== -->
+    <nav class="fixed bottom-0 left-0 z-40 w-full border-t border-line bg-white/95 backdrop-blur lg:hidden" aria-label="Navigasi bawah">
+      <ul class="mx-auto grid max-w-shell grid-cols-4">
+        <li><a href="index.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
+        <li><a href="panduan.html" aria-current="page" class="flex flex-col items-center gap-1 py-3 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Jenis Sampah</a></li>
+        <li><a href="index.html#panduan" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a></li>
+        <li><a href="index.html#tentang" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>Profil</a></li>
+      </ul>
+    </nav>
 
     <script src="data_sampah.js"></script>
     <script src="chat.js"></script>
     <script>
       document.getElementById("menuBtn").addEventListener("click", function () {
-        var m = document.getElementById("menuTop");
+        var m = document.getElementById("menu");
         var open = m.classList.toggle("hidden") === false;
         this.setAttribute("aria-expanded", String(open));
       });
       document.getElementById("ctaLokasi").addEventListener("click", function () {
         if (window.ElingChat) window.ElingChat.buka("Cara mencari bank sampah atau TPS terdekat");
+      });
+      document.getElementById("ctaTanya").addEventListener("click", function () {
+        if (window.ElingChat) window.ElingChat.buka();
       });
     </script>
   </body>
