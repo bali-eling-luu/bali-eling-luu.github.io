@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bali Eling Luu — Jaga Alam, Lestarikan Bali</title>
+    <meta
+      name="description"
+      content="Platform edukasi pemilahan sampah dan pelestarian lingkungan di Bali."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"],
+            },
+            colors: {
+              primary: "#17803D",
+              forest: "#14532D",
+              deep: "#0F3D22",
+              cream: "#F5F2EA",
+              terra: "#D9A441",
+              ink: "#1E3A2A",
+              muted: "#6B7A70",
+              line: "#E3E7E1",
+            },
+            maxWidth: { shell: "1200px" },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ============ SPLASH ============ */
+      .splash {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        transition:
+          opacity 0.7s ease,
+          visibility 0.7s ease;
+      }
+      .splash.hide {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .splash-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        animation: slowzoom 6s ease-out both;
+      }
+      .splash-veil {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 55% 45% at 50% 45%,
+            rgba(255, 255, 255, 0.72),
+            rgba(255, 255, 255, 0) 70%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(15, 61, 34, 0.18),
+            rgba(15, 61, 34, 0.05) 40%,
+            rgba(15, 61, 34, 0.35)
+          );
+      }
+      .splash-inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 24px;
+        text-align: center;
+      }
+      .splash-logo {
+        width: min(70vw, 340px);
+        height: auto;
+        filter: drop-shadow(0 18px 40px rgba(15, 61, 34, 0.28));
+        animation: pop 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+      .splash-tag {
+        margin-top: 26px;
+        animation: rise 0.6s 0.35s both;
+      }
+      .splash-bar {
+        width: 132px;
+        height: 3px;
+        margin-top: 34px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(20, 83, 45, 0.22);
+        animation: rise 0.6s 0.5s both;
+      }
+      .splash-bar i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: #d9a441;
+        animation: load 2s ease-out forwards;
+      }
+
+      @keyframes pop {
+        from {
+          transform: scale(0.72);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      @keyframes rise {
+        from {
+          transform: translateY(14px);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+      @keyframes load {
+        to {
+          width: 100%;
+        }
+      }
+      @keyframes slowzoom {
+        from {
+          transform: scale(1.08);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      /* ============ APP ============ */
+      #app {
+        opacity: 0;
+        transition: opacity 0.6s ease 0.15s;
+      }
+      #app.show {
+        opacity: 1;
+      }
+      body.locked {
+        overflow: hidden;
+      }
+
+      .hero-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 55%;
+      }
+      .hero-veil {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(245, 242, 234, 0.94) 0%,
+          rgba(245, 242, 234, 0.82) 42%,
+          rgba(245, 242, 234, 0.55) 72%,
+          rgba(245, 242, 234, 0.9) 100%
+        );
+      }
+
+      .field {
+        width: 100%;
+        border-radius: 14px;
+        background: #fff;
+        border: 1px solid #e3e7e1;
+        box-shadow: 0 8px 24px rgba(20, 83, 45, 0.08);
+        padding: 15px 18px;
+        font-size: 15px;
+        color: #1e3a2a;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .field::placeholder {
+        color: #9aa79f;
+      }
+      .field:focus {
+        outline: none;
+        border-color: #17803d;
+        box-shadow:
+          0 0 0 4px rgba(23, 128, 61, 0.14),
+          0 8px 24px rgba(20, 83, 45, 0.08);
+      }
+
+      .link-underline {
+        background-image: linear-gradient(currentColor, currentColor);
+        background-size: 0% 1.5px;
+        background-repeat: no-repeat;
+        background-position: left 100%;
+        transition: background-size 0.3s ease;
+      }
+      .link-underline:hover {
+        background-size: 100% 1.5px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .splash-logo,
+        .splash-tag,
+        .splash-bar,
+        .splash-bg,
+        .splash-bar i {
+          animation: none !important;
+        }
+        .splash-bg {
+          transform: none;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="locked bg-cream font-sans text-ink antialiased">
+    <!-- ============ SPLASH ============ -->
+    <div id="splash" class="splash" role="status" aria-label="Memuat">
+      <img
+        class="splash-bg"
+        src="assets/photo01.jpeg"
+        alt=""
+        aria-hidden="true"
+      />
+      <div class="splash-veil"></div>
+
+      <div class="splash-inner">
+        <img
+          class="splash-logo"
+          src="assets/logo/Logo%26tulisan.png"
+          alt="Bali Eling Luu"
+        />
+        <p
+          class="splash-tag text-sm font-semibold tracking-[0.22em] text-deep/70"
+        >
+          JAGA ALAM, LESTARIKAN BALI
+        </p>
+        <div class="splash-bar"><i></i></div>
+      </div>
+    </div>
+
+    <div id="app">
+      <!-- ============ HEADER ============ -->
+      <header
+        class="sticky top-0 z-50 border-b border-line bg-cream/90 backdrop-blur-md"
+      >
+        <nav
+          class="mx-auto flex max-w-shell items-center justify-between px-5 py-3.5"
+          aria-label="Navigasi utama"
+        >
+          <a href="#beranda" class="flex items-center gap-2.5">
+            <img
+              src="assets/logo/logo-mark.png"
+              alt=""
+              aria-hidden="true"
+              class="h-9 w-9 object-contain"
+            />
+            <span class="leading-none">
+              <span class="block text-[15px] font-extrabold text-forest">
+                Bali Eling Luu
+              </span>
+              <span class="mt-0.5 block text-[10px] font-medium text-muted">
+                Dari Sampah, Untuk Bali
+              </span>
+            </span>
+          </a>
+
+          <ul
+            class="hidden items-center gap-7 text-sm font-medium text-muted lg:flex"
+          >
+            <li>
+              <a
+                class="link-underline transition hover:text-primary"
+                href="#beranda"
+                >Beranda</a
+              >
+            </li>
+            <li>
+              <a
+                class="link-underline transition hover:text-primary"
+                href="#kategori"
+                >Panduan Sampah</a
+              >
+            </li>
+            <li>
+              <a
+                class="link-underline transition hover:text-primary"
+                href="#tips"
+                >Tips Lingkungan</a
+              >
+            </li>
+            <li>
+              <a
+                class="link-underline transition hover:text-primary"
+                href="#artikel"
+                >Artikel</a
+              >
+            </li>
+            <li>
+              <a
+                class="link-underline transition hover:text-primary"
+                href="#tentang"
+                >Tentang Kami</a
+              >
+            </li>
+          </ul>
+
+          <div class="flex items-center gap-2.5">
+            <button
+              type="button"
+              aria-label="Cari"
+              class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-muted transition hover:border-primary hover:text-primary"
+            >
+              <svg
+                class="h-[18px] w-[18px]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.5-3.5" />
+              </svg>
+            </button>
+            <a
+              href="#panduan"
+              class="hidden rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-forest sm:block"
+            >
+              Mulai Belajar
+            </a>
+            <button
+              type="button"
+              id="menuBtn"
+              aria-label="Buka menu"
+              aria-expanded="false"
+              aria-controls="menu"
+              class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-forest transition hover:border-primary lg:hidden"
+            >
+              <svg
+                class="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            </button>
+          </div>
+        </nav>
+
+        <ul
+          id="menu"
+          class="hidden border-t border-line bg-cream px-5 py-2 text-sm font-medium text-muted lg:hidden"
+        >
+          <li><a class="block py-3" href="#beranda">Beranda</a></li>
+          <li><a class="block py-3" href="#kategori">Panduan Sampah</a></li>
+          <li><a class="block py-3" href="#tips">Tips Lingkungan</a></li>
+          <li><a class="block py-3" href="#artikel">Artikel</a></li>
+          <li><a class="block py-3" href="#tentang">Tentang Kami</a></li>
+        </ul>
+      </header>
+
+      <main id="beranda">
+        <!-- ============ HERO ============ -->
+        <section class="relative overflow-hidden">
+          <img
+            class="hero-photo"
+            src="assets/photo02.jpeg"
+            alt="Jalan setapak di tengah persawahan dan pura tradisional Bali"
+          />
+          <div class="hero-veil"></div>
+
+          <div
+            class="relative mx-auto max-w-shell px-5 pb-16 pt-14 sm:pb-24 sm:pt-20"
+          >
+            <div class="max-w-2xl">
+              <span
+                class="inline-block rounded-full bg-primary/12 px-4 py-2 text-xs font-bold text-primary ring-1 ring-primary/25"
+              >
+                Langkah Kecil untuk Bali
+              </span>
+
+              <h1
+                class="mt-5 text-[2rem] font-extrabold leading-[1.12] tracking-tight text-forest sm:text-5xl lg:text-6xl"
+              >
+                Yuk, Mulai Pilah Sampah dari Rumah.
+              </h1>
+
+              <p
+                class="mt-4 max-w-xl text-base leading-relaxed text-ink/75 sm:text-lg"
+              >
+                Kenali cara memilah dan membuang sampah dengan benar supaya alam
+                Bali tetap bersih dan nyaman dilihat.
+              </p>
+
+              <!-- Search + filter -->
+              <form
+                id="panduan"
+                class="mt-8 max-w-xl space-y-3"
+                aria-label="Cari jenis sampah"
+                onsubmit="return false;"
+              >
+                <div class="relative">
+                  <svg
+                    class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <path d="m20 20-3.5-3.5" />
+                  </svg>
+                  <label for="q" class="sr-only">Cari jenis sampah</label>
+                  <input
+                    id="q"
+                    class="field pl-12"
+                    type="search"
+                    placeholder="Cari jenis sampah..."
+                    autocomplete="off"
+                  />
+                </div>
+
+                <div class="relative">
+                  <label for="kat" class="sr-only">Pilih kategori</label>
+                  <select id="kat" class="field appearance-none pr-11">
+                    <option value="">Pilih Kategori</option>
+                    <option value="organik">Organik</option>
+                    <option value="anorganik">Anorganik</option>
+                    <option value="residu">Residu</option>
+                    <option value="b3">B3 / Sampah Khusus</option>
+                  </select>
+                  <svg
+                    class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </div>
+
+                <button
+                  type="submit"
+                  class="w-full rounded-xl bg-primary px-7 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-forest active:scale-[0.99]"
+                >
+                  Cari Tahu
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ MENGAPA PEDULI ============ -->
+        <section class="mx-auto max-w-shell px-5 py-16 sm:py-24">
+          <div class="grid items-center gap-10 lg:grid-cols-2">
+            <div class="order-2 lg:order-1">
+              <p
+                class="text-xs font-bold uppercase tracking-[0.18em] text-terra"
+              >
+                Mengapa Penting
+              </p>
+              <h2
+                class="mt-3 text-3xl font-extrabold tracking-tight text-forest sm:text-4xl"
+              >
+                Mengapa Kita Harus Peduli?
+              </h2>
+              <p class="mt-5 leading-relaxed text-muted">
+                Kebersihan lingkungan menentukan kesehatan, kenyamanan, dan
+                keindahan tempat kita tinggal. Dengan memilah sampah dari
+                sumbernya, mengurangi plastik sekali pakai, dan tidak membuang
+                sampah sembarangan, kita ikut menjaga ekosistem Bali tetap
+                sehat.
+              </p>
+              <ul class="mt-7 space-y-3 text-sm text-ink">
+                <li class="flex gap-3">
+                  <span
+                    class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-[10px] font-bold text-white"
+                    >✓</span
+                  >
+                  Memilah sampah dari rumah
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-[10px] font-bold text-white"
+                    >✓</span
+                  >
+                  Mengurangi plastik sekali pakai
+                </li>
+                <li class="flex gap-3">
+                  <span
+                    class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary text-[10px] font-bold text-white"
+                    >✓</span
+                  >
+                  Tidak meninggalkan sampah di pantai dan sungai
+                </li>
+              </ul>
+            </div>
+
+            <div class="order-1 lg:order-2">
+              <img
+                src="assets/photo01.jpeg"
+                alt="Panorama danau, pura, dan persawahan Bali"
+                class="aspect-[4/3] w-full rounded-3xl object-cover shadow-xl shadow-forest/10"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ KATEGORI SAMPAH ============ -->
+        <section
+          id="kategori"
+          class="border-y border-line bg-white py-16 sm:py-24"
+        >
+          <div class="mx-auto max-w-shell px-5">
+            <div class="max-w-2xl">
+              <p
+                class="text-xs font-bold uppercase tracking-[0.18em] text-terra"
+              >
+                Panduan Sampah
+              </p>
+              <h2
+                class="mt-3 text-3xl font-extrabold tracking-tight text-forest sm:text-4xl"
+              >
+                Kenali Jenis Sampah
+              </h2>
+              <p class="mt-4 text-muted">
+                Empat kategori utama yang perlu kamu pahami sebelum memilah.
+              </p>
+            </div>
+
+            <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              <article
+                class="flex flex-col rounded-2xl border border-line bg-cream p-6 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-forest/10"
+              >
+                <span
+                  class="grid h-12 w-12 place-items-center rounded-xl bg-primary/12 text-2xl"
+                  aria-hidden="true"
+                  >🍂</span
+                >
+                <h3 class="mt-4 text-lg font-bold text-forest">Organik</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted">
+                  Sampah yang mudah terurai secara alami.
+                </p>
+                <p class="mt-3 text-xs text-muted">
+                  <strong class="text-ink">Contoh:</strong> daun, sisa makanan.
+                </p>
+                <a
+                  href="#"
+                  class="mt-5 inline-block text-sm font-bold text-primary hover:underline"
+                  >Pelajari →</a
+                >
+              </article>
+
+              <article
+                class="flex flex-col rounded-2xl border border-line bg-cream p-6 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-forest/10"
+              >
+                <span
+                  class="grid h-12 w-12 place-items-center rounded-xl bg-terra/15 text-2xl"
+                  aria-hidden="true"
+                  >♻️</span
+                >
+                <h3 class="mt-4 text-lg font-bold text-forest">Anorganik</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted">
+                  Material yang berpotensi didaur ulang.
+                </p>
+                <p class="mt-3 text-xs text-muted">
+                  <strong class="text-ink">Contoh:</strong> botol plastik,
+                  kaleng.
+                </p>
+                <a
+                  href="#"
+                  class="mt-5 inline-block text-sm font-bold text-primary hover:underline"
+                  >Pelajari →</a
+                >
+              </article>
+
+              <article
+                class="flex flex-col rounded-2xl border border-line bg-cream p-6 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-forest/10"
+              >
+                <span
+                  class="grid h-12 w-12 place-items-center rounded-xl bg-muted/10 text-2xl"
+                  aria-hidden="true"
+                  >🗑️</span
+                >
+                <h3 class="mt-4 text-lg font-bold text-forest">Residu</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted">
+                  Tidak dapat diproses lewat jalur daur ulang yang tersedia.
+                </p>
+                <p class="mt-3 text-xs text-muted">
+                  <strong class="text-ink">Contoh:</strong> tisu bekas,
+                  pembalut.
+                </p>
+                <a
+                  href="#"
+                  class="mt-5 inline-block text-sm font-bold text-primary hover:underline"
+                  >Pelajari →</a
+                >
+              </article>
+
+              <article
+                class="flex flex-col rounded-2xl border border-terra/45 bg-terra/12 p-6 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-forest/10"
+              >
+                <span
+                  class="grid h-12 w-12 place-items-center rounded-xl bg-terra/25 text-2xl"
+                  aria-hidden="true"
+                  >⚠️</span
+                >
+                <h3 class="mt-4 text-lg font-bold text-forest">B3 / Khusus</h3>
+                <p class="mt-1.5 text-sm leading-relaxed text-muted">
+                  Perlu penanganan khusus, jangan dicampur sampah biasa.
+                </p>
+                <p class="mt-3 text-xs text-muted">
+                  <strong class="text-ink">Contoh:</strong> baterai, lampu
+                  tertentu.
+                </p>
+                <a
+                  href="#"
+                  class="mt-5 inline-block text-sm font-bold text-primary hover:underline"
+                  >Pelajari →</a
+                >
+              </article>
+            </div>
+
+            <p
+              class="mt-8 rounded-xl border border-line bg-cream px-5 py-4 text-xs leading-relaxed text-muted"
+            >
+              <strong class="text-ink">Catatan:</strong> Tidak semua barang
+              dalam satu kategori bisa langsung didaur ulang. Selalu ikuti
+              ketentuan dan fasilitas pengelolaan sampah setempat.
+            </p>
+          </div>
+        </section>
+
+        <!-- ============ TIPS ============ -->
+        <section id="tips" class="mx-auto max-w-shell px-5 py-16 sm:py-24">
+          <div class="max-w-2xl">
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-terra">
+              Tips Lingkungan
+            </p>
+            <h2
+              class="mt-3 text-3xl font-extrabold tracking-tight text-forest sm:text-4xl"
+            >
+              Langkah Kecil, Dampak Besar
+            </h2>
+          </div>
+
+          <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold text-forest">Bawa botol & tas sendiri</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Kebiasaan paling sederhana untuk mengurangi sampah plastik.
+              </p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold text-forest">
+                Kurangi plastik sekali pakai
+              </h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Pilih kemasan yang bisa digunakan ulang atau diisi ulang.
+              </p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold text-forest">Pilah dari sumbernya</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Pisahkan organik, anorganik, residu, dan B3 di rumah.
+              </p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold text-forest">Jangan tinggalkan sampah</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Bawa pulang sampahmu dari pantai, sungai, dan tempat wisata.
+              </p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold text-forest">Hormati alam & tempat suci</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Berperilaku sesuai kesakralan tempat yang dikunjungi.
+              </p>
+            </li>
+            <li class="rounded-2xl border border-line bg-white p-6">
+              <h3 class="font-bold text-forest">Gunakan kembali</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">
+                Manfaatkan barang yang masih layak sebelum membeli baru.
+              </p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- ============ ARTIKEL ============ -->
+        <section
+          id="artikel"
+          class="border-t border-line bg-white py-16 sm:py-24"
+        >
+          <div class="mx-auto max-w-shell px-5">
+            <div class="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p
+                  class="text-xs font-bold uppercase tracking-[0.18em] text-terra"
+                >
+                  Artikel
+                </p>
+                <h2
+                  class="mt-3 text-3xl font-extrabold tracking-tight text-forest sm:text-4xl"
+                >
+                  Cerita dan Inspirasi untuk Bali
+                </h2>
+              </div>
+              <a
+                href="#"
+                class="text-sm font-bold text-primary hover:underline"
+              >
+                Lihat semua →
+              </a>
+            </div>
+
+            <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <article
+                class="group overflow-hidden rounded-2xl border border-line bg-cream"
+              >
+                <div class="aspect-video overflow-hidden bg-line/60">
+                  <img
+                    src="assets/photo02.jpeg"
+                    alt=""
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div class="p-5">
+                  <span
+                    class="rounded-full bg-primary/12 px-3 py-1 text-[11px] font-bold text-primary"
+                    >Pemilahan</span
+                  >
+                  <h3
+                    class="mt-3 font-bold leading-snug text-forest group-hover:text-primary transition"
+                  >
+                    Cara Memilah Sampah di Rumah
+                  </h3>
+                  <p class="mt-2 text-sm leading-relaxed text-muted">
+                    Langkah praktis memisahkan sampah tanpa ribet.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-4 inline-block text-sm font-bold text-primary hover:underline"
+                    >Baca Selengkapnya</a
+                  >
+                </div>
+              </article>
+
+              <article
+                class="group overflow-hidden rounded-2xl border border-line bg-cream"
+              >
+                <div class="aspect-video overflow-hidden bg-line/60">
+                  <img
+                    src="assets/photo01.jpeg"
+                    alt=""
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div class="p-5">
+                  <span
+                    class="rounded-full bg-terra/20 px-3 py-1 text-[11px] font-bold text-forest"
+                    >Wisata</span
+                  >
+                  <h3
+                    class="mt-3 font-bold leading-snug text-forest group-hover:text-primary transition"
+                  >
+                    Mengurangi Sampah Plastik Saat Berwisata
+                  </h3>
+                  <p class="mt-2 text-sm leading-relaxed text-muted">
+                    Checklist sederhana sebelum berangkat.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-4 inline-block text-sm font-bold text-primary hover:underline"
+                    >Baca Selengkapnya</a
+                  >
+                </div>
+              </article>
+
+              <article
+                class="group overflow-hidden rounded-2xl border border-line bg-cream"
+              >
+                <div class="aspect-video overflow-hidden bg-line/60">
+                  <img
+                    src="assets/photo02.jpeg"
+                    alt=""
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div class="p-5">
+                  <span
+                    class="rounded-full bg-primary/12 px-3 py-1 text-[11px] font-bold text-primary"
+                    >Pantai</span
+                  >
+                  <h3
+                    class="mt-3 font-bold leading-snug text-forest group-hover:text-primary transition"
+                  >
+                    Menjaga Kebersihan Pantai Bali
+                  </h3>
+                  <p class="mt-2 text-sm leading-relaxed text-muted">
+                    Peran kecil pengunjung untuk ekosistem pesisir.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-4 inline-block text-sm font-bold text-primary hover:underline"
+                    >Baca Selengkapnya</a
+                  >
+                </div>
+              </article>
+
+              <article
+                class="group overflow-hidden rounded-2xl border border-line bg-cream"
+              >
+                <div class="aspect-video overflow-hidden bg-line/60">
+                  <img
+                    src="assets/photo01.jpeg"
+                    alt=""
+                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div class="p-5">
+                  <span
+                    class="rounded-full bg-terra/20 px-3 py-1 text-[11px] font-bold text-forest"
+                    >B3</span
+                  >
+                  <h3
+                    class="mt-3 font-bold leading-snug text-forest group-hover:text-primary transition"
+                  >
+                    Mengenal Sampah B3 dan Penanganannya
+                  </h3>
+                  <p class="mt-2 text-sm leading-relaxed text-muted">
+                    Kenapa baterai dan lampu tak boleh sembarangan.
+                  </p>
+                  <a
+                    href="#"
+                    class="mt-4 inline-block text-sm font-bold text-primary hover:underline"
+                    >Baca Selengkapnya</a
+                  >
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ TENTANG ============ -->
+        <section id="tentang" class="mx-auto max-w-shell px-5 py-16 sm:py-24">
+          <div
+            class="relative overflow-hidden rounded-3xl bg-forest px-6 py-14 sm:px-14"
+          >
+            <div
+              class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/30 blur-3xl"
+              aria-hidden="true"
+            ></div>
+            <div class="relative">
+              <p
+                class="text-xs font-bold uppercase tracking-[0.18em] text-terra"
+              >
+                Tentang Kami
+              </p>
+              <h2
+                class="mt-3 max-w-2xl text-3xl font-extrabold tracking-tight text-cream sm:text-4xl"
+              >
+                Jaga Alam, Lestarikan Bali.
+              </h2>
+              <p class="mt-5 max-w-2xl leading-relaxed text-cream/80">
+                Bali Eling Luu adalah platform edukasi lingkungan yang fokus
+                pada pemilahan sampah, pengurangan plastik, dan kebiasaan ramah
+                lingkungan — untuk masyarakat, wisatawan, dan pelajar di Bali.
+              </p>
+              <a
+                href="#kategori"
+                class="mt-8 inline-block rounded-xl bg-cream px-7 py-3.5 text-sm font-bold text-forest transition hover:bg-white"
+              >
+                Pelajari Lebih Lanjut
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- ============ FOOTER ============ -->
+      <footer class="border-t border-line bg-white">
+        <div
+          class="mx-auto grid max-w-shell gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          <div>
+            <div class="flex items-center gap-2.5">
+              <img
+                src="assets/logo/logo-mark.png"
+                alt=""
+                aria-hidden="true"
+                class="h-10 w-10 object-contain"
+              />
+              <span class="text-base font-extrabold text-forest"
+                >Bali Eling Luu</span
+              >
+            </div>
+            <p class="mt-4 text-sm leading-relaxed text-muted">
+              Platform edukasi pemilahan sampah dan pelestarian lingkungan di
+              Bali.
+            </p>
+          </div>
+
+          <nav aria-label="Navigasi footer">
+            <p class="text-sm font-bold text-ink">Navigasi</p>
+            <ul class="mt-4 space-y-2.5 text-sm text-muted">
+              <li><a class="hover:text-primary" href="#beranda">Beranda</a></li>
+              <li>
+                <a class="hover:text-primary" href="#kategori"
+                  >Panduan Sampah</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary" href="#tips">Tips Lingkungan</a>
+              </li>
+              <li><a class="hover:text-primary" href="#artikel">Artikel</a></li>
+            </ul>
+          </nav>
+
+          <div>
+            <p class="text-sm font-bold text-ink">Sumber Edukasi</p>
+            <ul class="mt-4 space-y-2.5 text-sm text-muted">
+              <li><a class="hover:text-primary" href="#">KLHK</a></li>
+              <li>
+                <a class="hover:text-primary" href="#"
+                  >Dinas Lingkungan Hidup Bali</a
+                >
+              </li>
+              <li><a class="hover:text-primary" href="#">Bank Sampah</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="text-sm font-bold text-ink">Terhubung</p>
+            <ul class="mt-4 space-y-2.5 text-sm text-muted">
+              <li><a class="hover:text-primary" href="#">Instagram</a></li>
+              <li><a class="hover:text-primary" href="#">YouTube</a></li>
+              <li><a class="hover:text-primary" href="#">Email</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-line">
+          <p class="mx-auto max-w-shell px-5 py-5 text-xs text-muted">
+            © 2026 Bali Eling Luu. Jaga Alam, Lestarikan Bali.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var splash = document.getElementById("splash");
+        var app = document.getElementById("app");
+        var logo = splash.querySelector("img.splash-logo");
+        var bg = splash.querySelector("img.splash-bg");
+        var closed = false;
+
+        function reveal() {
+          if (closed) return;
+          closed = true;
+          splash.classList.add("hide");
+          document.body.classList.remove("locked");
+          app.classList.add("show");
+          setTimeout(function () {
+            splash.remove();
+          }, 800);
+        }
+
+        // tunggu logo & background termuat, minimal tampil 1.8s
+        var start = Date.now();
+        var imgs = [logo, bg];
+        var pending = imgs.filter(function (i) {
+          return i && !i.complete;
+        });
+
+        if (pending.length === 0) {
+          setTimeout(reveal, 2200);
+        } else {
+          var left = pending.length;
+          pending.forEach(function (i) {
+            var done = function () {
+              if (--left === 0) {
+                var wait = Math.max(0, 1800 - (Date.now() - start));
+                setTimeout(reveal, wait);
+              }
+            };
+            i.addEventListener("load", done);
+            i.addEventListener("error", done);
+          });
+        }
+        // jaring pengaman kalau gambar gagal total
+        setTimeout(reveal, 4000);
+
+        // menu mobile
+        var btn = document.getElementById("menuBtn");
+        var menu = document.getElementById("menu");
+        btn.addEventListener("click", function () {
+          var hidden = menu.classList.toggle("hidden");
+          btn.setAttribute("aria-expanded", String(!hidden));
+        });
+        menu.querySelectorAll("a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            menu.classList.add("hidden");
+            btn.setAttribute("aria-expanded", "false");
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
