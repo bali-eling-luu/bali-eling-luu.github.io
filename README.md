@@ -31,11 +31,15 @@ Bali Eling Luu/
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
 └── assets/
-    ├── photo01.jpeg
-    ├── photo02.jpeg
+    ├── photo01..05.jpeg          # foto alam & budaya Bali
+    ├── foto-jenis-sampah/        # foto contoh tiap kategori
+    │   ├── organik.jpeg
+    │   ├── anorganik.jpeg
+    │   ├── residu.jpeg
+    │   └── b3.jpeg
     └── logo/
         ├── logo-mark.png
-        ├── Logo&tulisan.png
+        ├── logo-tulisan.png
         └── tulisan.png
 ```
 

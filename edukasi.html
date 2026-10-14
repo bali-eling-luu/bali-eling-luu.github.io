@@ -144,21 +144,12 @@
         });
       }
 
-      function ilustrasi(warna) {
-        return (
-          '<svg viewBox="0 0 320 180" class="h-full w-full" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ilustrasi alam">' +
-          '<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">' +
-          '<stop offset="0" stop-color="#0F3D22"/><stop offset="1" stop-color="' + warna + '"/>' +
-          "</linearGradient></defs>" +
-          '<rect width="320" height="180" fill="url(#sky)"/>' +
-          '<circle cx="258" cy="46" r="20" fill="#D9A441" opacity=".9"/>' +
-          '<path d="M0 128c34-30 58-30 92 0 30-34 60-34 96 0 34-28 62-28 132 0v52H0Z" fill="#17803D" opacity=".55"/>' +
-          '<path d="M0 146c40-20 74-20 112 0 36-24 72-24 112 0 34-18 60-18 96 0v34H0Z" fill="#14532D" opacity=".85"/>' +
-          '<path d="M60 126c0-18 10-28 20-28s20 10 20 28" fill="none" stroke="#0F3D22" stroke-width="4"/>' +
-          '<rect x="76" y="126" width="8" height="22" fill="#0F3D22"/>' +
-          "</svg>"
-        );
-      }
+      var FOTO = {
+        organik: "assets/foto-jenis-sampah/organik.jpeg",
+        anorganik: "assets/foto-jenis-sampah/anorganik.jpeg",
+        residu: "assets/foto-jenis-sampah/residu.jpeg",
+        b3: "assets/foto-jenis-sampah/b3.jpeg",
+      };
 
       function render(key) {
         var k = KATEGORI[key] || KATEGORI.anorganik;
@@ -196,7 +187,9 @@
 
           // Hero card
           '<div class="mt-6 overflow-hidden rounded-2xl shadow-lg shadow-forest/15 lg:mt-10 lg:flex">' +
-          '<div class="h-32 w-full overflow-hidden sm:h-44 lg:h-auto lg:w-[40%] lg:shrink-0">' + ilustrasi(k.warna) + "</div>" +
+          '<div class="h-32 w-full overflow-hidden sm:h-44 lg:h-auto lg:w-[40%] lg:shrink-0">' +
+          '<img src="' + (FOTO[key] || "") + '" alt="Foto contoh sampah ' + esc(k.nama) + '" class="h-full w-full object-cover" />' +
+          "</div>" +
           '<div class="bg-forest px-5 py-5 sm:px-8 sm:py-7 lg:flex lg:flex-1 lg:justify-center">' +
           '<div class="max-w-2xl">' +
           '<h2 class="text-[16px] font-extrabold text-white sm:text-2xl">Apa Itu Sampah ' + esc(k.nama) + "?</h2>" +
