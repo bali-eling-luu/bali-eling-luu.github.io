@@ -1,9 +1,28 @@
 /* Bali Eling Luu — Link afiliasi (SEMUA link di file ini saja)
    ---------------------------------------------------------------
+   BERAPA BESAR KOMISINYA? (angka nyata, bukan perkiraan kosong)
+   Program afiliasi Shopee Indonesia memberi komisi kecil:
+   - Basic Partnership (kreator baru) : 1% per transaksi, maks Rp10.000
+   - Premium Partnership              : 2% per transaksi, maks Rp20.000
+     (naik setelah mencapai Rp5 juta penjualan dalam 3 bulan)
+   - Lewat jaringan seperti ACCESSTRADE (per 15 Sep 2025):
+     Non-KOL direct 3,5% / indirect 1,5%
+     Tier 1         5% / 1%
+     Tier 2        10% / 2%
+     (maks Rp11.500–Rp35.000 per transaksi)
+   - Tambahan Komisi XTRA dari toko, tanpa batas maksimum.
+     Standar rekomendasi Shopee: FMCG & fashion 8–10%,
+     lifestyle 6–8%, elektronik 2–6%.
+
+   Artinya, dengan komisi 1–2%, botol stainless seharga Rp80.000
+   hanya menghasilkan Rp800–Rp1.600 per pembelian. Affiliate bukan
+   penghasilan utama — jalankan bersama listing & sponsor.
+
+   ---------------------------------------------------------------
    CARA PAKAI:
    1. Daftar program afiliasi (Shopee Affiliate / Tokopedia Affiliate /
-      TikTok Shop Affiliate). Kamu akan dapat link khusus milikmu.
-   2. Tempel link itu ke kolom `url` di bawah. Jangan ubah `id`-nya.
+      atau lewat ACCESSTRADE untuk rate yang lebih tinggi).
+   2. Tempel link milikmu ke kolom `url` di bawah. Jangan ubah `id`-nya.
    3. Semua halaman otomatis pakai link baru — tidak perlu buka HTML.
    ---------------------------------------------------------------
    Catatan: atribut rel="nofollow sponsored" sudah dipasang otomatis

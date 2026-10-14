@@ -31,11 +31,12 @@ Bali Eling Luu/
 ├── panduan.html      # Panduan memilah + 4 kartu kategori
 ├── edukasi.html      # Detail jenis sampah (?jenis=organik|anorganik|residu|b3)
 ├── dashboard.html    # Dashboard pengguna
-├── data_lokasi.js    # Data lokasi contoh + tips harian
+├── data_lokasi.js    # 6 lokasi nyata (Denpasar & Badung) + tips harian
 ├── data_artikel.js   # Isi 4 artikel (paragraf, tabel, catatan)
 ├── artikel.html      # Arsip & halaman baca artikel
 ├── kerja-sama.html   # Halaman kerja sama + formulir
 ├── afiliasi.js       # Daftar link afiliasi (satu-satunya tempat edit)
+├── data_statistik.js # Statistik sampah Bali + sumbernya
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
 └── assets/
@@ -103,6 +104,42 @@ colors: {
 
 Font: **Plus Jakarta Sans** (Google Fonts).
 
+## Sumber data
+
+Agar situs ini bisa dipercaya, angka dan lokasi yang ditampilkan diambil dari
+sumber publik — bukan karangan:
+
+**Statistik** (`data_statistik.js`, tampil di `index.html` bagian "Mengapa Kita
+Harus Peduli?"):
+
+| Angka | Nilai | Sumber |
+|---|---|---|
+| Timbulan sampah Bali | 3.436 ton/hari | SIPSN Kementerian Lingkungan Hidup (data 2024) |
+| Sampah terkelola | 29% (≈916 ton/hari) | Rapat koordinasi pengelolaan sampah Bali, 26 Agustus 2025 |
+| Target nasional | 51,21% | idem |
+| Komposisi | >60% organik, 17% plastik | UPTD Pengelolaan Sampah DKLH Provinsi Bali, Juli 2025 |
+| Sebaran | Denpasar 1.005, Gianyar 562, Badung 547 ton/hari | idem |
+
+**Lokasi** (`data_lokasi.js`, tampil di `dashboard.html`):
+
+| Nama | Alamat |
+|---|---|
+| Bank Sampah Budi Alami | Jl. Kertasan No. 12, Denpasar Selatan |
+| Bank Sampah Tri Manunggal (Sekar Puri) | Jl. Tukad Yeh Aya, Panjer, Denpasar Selatan |
+| Bank Sampah Melati | Perumnas Sandebaya, Jl. Kebo Iwa No. 8, Denpasar Timur |
+| Bank Sampah Bina Ayu | Jl. Pulau Nusa Penida, Sanur Kaja, Denpasar Selatan |
+| Bank Sampah Jukung Nusa Sedaya | Jl. Pura Segara, Kedonganan, Kuta Selatan, Badung |
+| TPS3R Banjar Anyar Kelod | Jl. Raya Tuban No. 88, Tuban, Kuta, Badung |
+
+Rujukan: BaliPost (09/05/2024), ANTARA Bali (27/09/2024), Dinas Pariwisata Badung.
+
+**Yang belum diverifikasi** dan sengaja ditandai apa adanya di situs:
+jam buka, nomor telepon, tarif, dan jarak (jarak hanya perkiraan dari pusat
+Kota Denpasar). Field `jam` diisi `null` sehingga tampil sebagai
+"Jam buka perlu dikonfirmasi".
+
+Sebelum memakai data ini di depan umum, konfirmasi dulu ke pengelola masing-masing.
+
 ## Menjalankan monetisasi
 
 ### 1. Link afiliasi
@@ -113,6 +150,11 @@ semua artikel langsung memakai link terbaru.
 
 Setiap link sudah memakai `rel="nofollow sponsored"` supaya tidak dihitung sebagai
 link biasa oleh mesin pencari.
+
+Komisi Shopee Affiliate relatif kecil: **1%** (Basic, maks Rp10.000/transaksi)
+atau **2%** (Premium). Rincian rate terbaru ada di komentar paling atas
+`afiliasi.js`. Karena itu affiliate sebaiknya dijalankan bersama listing dan
+sponsor, bukan sebagai satu-satunya sumber pemasukan.
 
 ### 2. Formulir kerja sama
 

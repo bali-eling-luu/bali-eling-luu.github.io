@@ -177,14 +177,17 @@
             </span>
             <span class="min-w-0 flex-1">
               <span class="block text-[13.5px] font-bold text-forest sm:text-base">Peta Bank Sampah &amp; TPS</span>
-              <span class="mt-0.5 block text-[11.5px] text-muted sm:text-sm">Lihat semua titik di sekitar Denpasar – Gianyar</span>
+              <span class="mt-0.5 block text-[11.5px] text-muted sm:text-sm">Lihat semua titik di sekitar Denpasar &amp; Badung</span>
             </span>
             <svg class="h-5 w-5 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
           </button>
 
           <p class="mt-5 rounded-2xl border border-line bg-cream px-5 py-4 text-[12px] leading-relaxed text-muted sm:text-[13px]">
-            Data lokasi pada halaman ini masih contoh. Selalu konfirmasi jam buka
-            dan jenis sampah yang diterima sebelum datang.
+            Nama dan alamat enam lokasi ini bersumber dari pemberitaan BaliPost,
+            ANTARA Bali, dan Dinas Pariwisata Badung. Jarak adalah perkiraan dari
+            pusat Kota Denpasar. <strong class="text-ink">Jam buka, nomor
+            telepon, dan tarif belum kami verifikasi</strong> — konfirmasi dulu ke
+            pengelola sebelum datang.
           </p>
         </section>
       </div>
@@ -273,8 +276,7 @@
             '<span class="min-w-0 flex-1">' +
             '<span class="block truncate text-[13.5px] font-bold text-forest sm:text-base">' + esc(l.nama) + "</span>" +
             '<span class="mt-0.5 block text-[11.5px] text-muted sm:text-sm">' +
-            l.jarak.toFixed(1) + " km • Buka " + esc(l.jam) +
-            (l.buka ? "" : " (tutup)") +
+            l.jarak.toFixed(1) + " km • " + statusJam(l) +
             "</span>" +
             '<ul class="mt-2 flex flex-wrap gap-1.5">' + chips + "</ul>" +
             "</span>" +

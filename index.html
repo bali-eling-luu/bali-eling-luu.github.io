@@ -547,6 +547,9 @@
               />
             </div>
           </div>
+
+          <!-- Statistik Bali (angka nyata dari SIPSN & Pemprov Bali) -->
+          <div id="statistikBali"></div>
         </section>
 
         <!-- ============ KATEGORI SAMPAH ============ -->
@@ -1068,6 +1071,15 @@
     </script>
 
     <script src="data_sampah.js"></script>
+    <script src="data_statistik.js"></script>
     <script src="chat.js"></script>
+    <script>
+      (function () {
+        var el = document.getElementById("statistikBali");
+        if (el && typeof kartuStatistik === "function") {
+          el.innerHTML = kartuStatistik();
+        }
+      })();
+    </script>
   </body>
 </html>
