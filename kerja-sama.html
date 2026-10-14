@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kerja Sama &amp; Listing — Bali Eling Luu</title>
+    <meta
+      name="description"
+      content="Masuk direktori Bali Eling Luu, atau dukung kami sebagai sponsor konten edukasi lingkungan di Bali."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['"Plus Jakarta Sans"', "system-ui", "sans-serif"] },
+            maxWidth: { shell: "1200px" },
+            colors: {
+              primary: "#17803D",
+              forest: "#14532D",
+              deep: "#0F3D22",
+              cream: "#F5F2EA",
+              terra: "#D9A441",
+              danger: "#D64545",
+              ink: "#1E3A2A",
+              muted: "#6B7A70",
+              line: "#E3E7E1",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { -webkit-font-smoothing: antialiased; }
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+      .link-underline { position: relative; }
+      .link-underline::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 100%;
+        height: 1.5px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease;
+      }
+      .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+      .fld {
+        width: 100%;
+        border: 1px solid #e3e7e1;
+        border-radius: 0.75rem;
+        background: #fff;
+        padding: 0.7rem 0.9rem;
+        font-size: 14px;
+        color: #1e3a2a;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .fld::placeholder { color: #6b7a70; }
+      .fld:focus {
+        border-color: #17803d;
+        box-shadow: 0 0 0 3px rgba(23, 128, 61, 0.14);
+      }
+      .lbl { display: block; margin-bottom: 0.35rem; font-size: 12px; font-weight: 700; color: #1e3a2a; }
+      .hp { position: absolute; left: -9999px; height: 1px; width: 1px; overflow: hidden; }
+    </style>
+  </head>
+
+  <body class="bg-cream font-sans text-ink antialiased">
+    <!-- ===== HEADER ===== -->
+    <header class="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
+      <nav class="mx-auto flex max-w-shell items-center justify-between gap-4 px-5 py-3.5">
+        <a href="index.html" aria-label="Kembali ke beranda" class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-line text-forest transition hover:border-primary lg:hidden">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+
+        <a href="index.html" class="flex items-center gap-2.5">
+          <img src="assets/logo/logo-mark.png" alt="" aria-hidden="true" class="h-9 w-9 object-contain" />
+          <span class="leading-none">
+            <span class="block text-[15px] font-extrabold text-forest">Bali Eling Luu</span>
+            <span class="mt-0.5 hidden text-[10px] font-medium text-muted sm:block">Dari Sampah, Untuk Bali</span>
+          </span>
+        </a>
+
+        <ul class="hidden items-center gap-7 text-sm font-medium text-muted lg:flex">
+          <li><a class="link-underline transition hover:text-primary" href="index.html#beranda">Beranda</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="panduan.html">Panduan Sampah</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#tentang">Tentang Kami</a></li>
+          <li><a class="link-underline font-bold text-primary" href="kerja-sama.html" aria-current="page">Kerja Sama</a></li>
+        </ul>
+
+        <div class="flex items-center gap-2.5">
+          <a href="#formulir" class="hidden rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-forest lg:block">Ajukan Kerja Sama</a>
+          <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menu" class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-forest transition hover:border-primary lg:hidden">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </nav>
+
+      <ul id="menu" class="hidden border-t border-line bg-cream px-5 py-2 text-sm font-medium text-muted lg:hidden">
+        <li><a class="block py-3" href="index.html">Beranda</a></li>
+        <li><a class="block py-3" href="panduan.html">Panduan Sampah</a></li>
+        <li><a class="block py-3" href="index.html#artikel">Artikel</a></li>
+        <li><a class="block py-3" href="index.html#tentang">Tentang Kami</a></li>
+        <li><a class="block py-3 font-bold text-primary" href="kerja-sama.html">Kerja Sama</a></li>
+      </ul>
+    </header>
+
+    <main class="mx-auto max-w-shell px-5 pb-28 pt-8 sm:pb-24 lg:pb-16 lg:pt-14">
+      <!-- ===== HERO ===== -->
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-terra/15 px-3 py-1.5 text-[11px] font-bold text-terra">
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M5 8h14M5 16h14"/></svg>
+          Kerja Sama
+        </span>
+
+        <h1 class="mt-3 text-[26px] font-extrabold leading-tight tracking-tight text-forest sm:text-4xl lg:text-5xl">
+          Tumbuh Bersama untuk Bali yang Lebih Bersih
+        </h1>
+        <p class="mt-3 text-[13.5px] leading-relaxed text-muted sm:text-base">
+          Bali Eling Luu membantu warga menemukan bank sampah, TPS 3R, dan pelaku usaha
+          ramah lingkungan. Kamu bisa masuk direktori kami, atau mendukung edukasi ini
+          sebagai sponsor konten.
+        </p>
+
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a href="#formulir" class="w-full rounded-xl bg-primary px-8 py-3.5 text-center text-[14px] font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-forest active:scale-[0.99] sm:w-auto">Ajukan Kerja Sama</a>
+          <a href="#paket" class="w-full rounded-xl border border-line bg-white px-8 py-3.5 text-center text-[14px] font-bold text-forest transition hover:border-primary hover:text-primary sm:w-auto">Lihat Paketnya</a>
+        </div>
+      </div>
+
+      <!-- ===== 3 PAKET ===== -->
+      <div id="paket" class="mt-12 lg:mt-20">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-terra">Pilihan</p>
+          <h2 class="mt-2 text-[18px] font-extrabold tracking-tight text-forest sm:text-3xl">Tiga Cara Mendukung</h2>
+        </div>
+
+        <div class="mt-6 grid gap-4 sm:gap-5 lg:mt-8 lg:grid-cols-3">
+          <!-- Paket 1 -->
+          <article class="flex flex-col rounded-2xl border border-line bg-white p-5 sm:p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-primary/12 text-xl sm:h-12 sm:w-12 sm:text-2xl" aria-hidden="true">📍</span>
+            <h3 class="mt-4 text-[16px] font-extrabold text-forest sm:text-xl">Listing Lokasi</h3>
+            <p class="mt-1 text-[12px] font-semibold text-primary sm:text-[13px]">Rp 150.000 <span class="text-muted">/ bulan</span></p>
+            <p class="mt-3 text-[12.5px] leading-relaxed text-muted sm:text-sm">
+              Untuk bank sampah, TPS 3R, pengepul, dan pengumpul limbah. Tampil di
+              direktori lokasi yang dibuka warga setiap hari.
+            </p>
+            <ul class="mt-4 space-y-2 text-[12.5px] text-muted sm:text-[13px]">
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Kartu lokasi lengkap (alamat, jam, kontak)</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Foto utama usaha kamu</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Tampil di posisi atas selama 1 bulan</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Diperbarui setiap bulan</li>
+            </ul>
+            <a href="#formulir" data-paket="listing-lokasi" class="jsPilih mt-auto w-full rounded-xl bg-primary px-5 py-3 text-center text-[13px] font-bold text-white transition hover:bg-forest sm:text-sm">Pilih Paket Ini</a>
+          </article>
+
+          <!-- Paket 2 -->
+          <article class="flex flex-col rounded-2xl border border-line bg-white p-5 sm:p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-terra/15 text-xl sm:h-12 sm:w-12 sm:text-2xl" aria-hidden="true">🛍️</span>
+            <h3 class="mt-4 text-[16px] font-extrabold text-forest sm:text-xl">Listing UMKM Ramah Lingkungan</h3>
+            <p class="mt-1 text-[12px] font-semibold text-primary sm:text-[13px]">Rp 200.000 <span class="text-muted">/ bulan</span></p>
+            <p class="mt-3 text-[12.5px] leading-relaxed text-muted sm:text-sm">
+              Untuk refill station, pengrajin bambu, eco shop, dan produk pakai ulang.
+              Cocok untuk kamu yang menjual solusi, bukan sekadar barang.
+            </p>
+            <ul class="mt-4 space-y-2 text-[12.5px] text-muted sm:text-[13px]">
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Semua benefit Listing Lokasi</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Logo &amp; katalog 3 produk</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Ditautkan dari artikel terkait</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Konsultasi penyusunan deskripsi</li>
+            </ul>
+            <a href="#formulir" data-paket="listing-umkm" class="jsPilih mt-auto w-full rounded-xl bg-primary px-5 py-3 text-center text-[13px] font-bold text-white transition hover:bg-forest sm:text-sm">Pilih Paket Ini</a>
+          </article>
+
+          <!-- Paket 3 -->
+          <article class="flex flex-col rounded-2xl border border-primary/40 bg-white p-5 ring-2 ring-primary/15 sm:p-7">
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-primary/12 text-xl sm:h-12 sm:w-12 sm:text-2xl" aria-hidden="true">📝</span>
+            <h3 class="mt-4 text-[16px] font-extrabold text-forest sm:text-xl">Sponsor Artikel</h3>
+            <p class="mt-1 text-[12px] font-semibold text-primary sm:text-[13px]">Rp 1.500.000 <span class="text-muted">/ artikel</span></p>
+            <p class="mt-3 text-[12.5px] leading-relaxed text-muted sm:text-sm">
+              Untuk brand, hotel, bank, atau lembaga yang punya program CSR edukasi
+              lingkungan. Konten tetap kami tulis dengan bahasa yang jujur.
+            </p>
+            <ul class="mt-4 space-y-2 text-[12.5px] text-muted sm:text-[13px]">
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> 1 artikel tulisan khusus, 800–1.200 kata</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Penanda "Didukung oleh …" di pembuka</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Tautan ke laman resmi kamu</li>
+              <li class="flex gap-2"><span class="text-primary" aria-hidden="true">✓</span> Tayang permanen di arsip artikel</li>
+            </ul>
+            <a href="#formulir" data-paket="sponsor-artikel" class="jsPilih mt-auto w-full rounded-xl bg-primary px-5 py-3 text-center text-[13px] font-bold text-white transition hover:bg-forest sm:text-sm">Pilih Paket Ini</a>
+          </article>
+        </div>
+
+        <p class="mt-4 rounded-2xl border border-line bg-cream px-5 py-4 text-[12px] leading-relaxed text-muted sm:text-[13px]">
+          <strong class="text-ink">Harga di atas adalah contoh.</strong> Sesuaikan dengan
+          kemampuan dan kesepakatan bersama. Untuk organisasi nirlaba atau komunitas
+          banjar, kami terbuka untuk kerja sama tanpa biaya.
+        </p>
+      </div>
+
+      <!-- ===== CARA KERJANYA ===== -->
+      <div class="mt-12 lg:mt-20">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-terra">Proses</p>
+          <h2 class="mt-2 text-[18px] font-extrabold tracking-tight text-forest sm:text-3xl">Cara Kerjanya</h2>
+        </div>
+
+        <ul class="mt-6 grid gap-3 sm:gap-5 md:grid-cols-3">
+          <li class="flex gap-3 rounded-2xl border border-line bg-white p-4 sm:p-6">
+            <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">1</span>
+            <div>
+              <p class="text-[13.5px] font-bold text-forest sm:text-base">Isi formulir</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-muted sm:mt-1.5 sm:text-sm">Pilih paket, tulis nama usaha dan cerita singkat kamu.</p>
+            </div>
+          </li>
+          <li class="flex gap-3 rounded-2xl border border-line bg-white p-4 sm:p-6">
+            <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">2</span>
+            <div>
+              <p class="text-[13.5px] font-bold text-forest sm:text-base">Kami hubungi</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-muted sm:mt-1.5 sm:text-sm">Kami balas lewat WhatsApp atau email dalam 1×24 jam kerja.</p>
+            </div>
+          </li>
+          <li class="flex gap-3 rounded-2xl border border-line bg-white p-4 sm:p-6">
+            <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">3</span>
+            <div>
+              <p class="text-[13.5px] font-bold text-forest sm:text-base">Tayang</p>
+              <p class="mt-1 text-[12px] leading-relaxed text-muted sm:mt-1.5 sm:text-sm">Kami siapkan desain dan tulisan, lalu tayang di web ini.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ===== FORMULIR ===== -->
+      <div id="formulir" class="mt-12 scroll-mt-24 lg:mt-20">
+        <div class="grid gap-6 lg:grid-cols-[1fr_380px] lg:items-start lg:gap-10">
+          <form
+            action="https://formspree.io/f/GANTI_ID_FORMSPREE"
+            method="POST"
+            class="rounded-2xl border border-line bg-white p-5 sm:p-8"
+          >
+            <h2 class="text-[18px] font-extrabold tracking-tight text-forest sm:text-2xl">Formulir Kerja Sama</h2>
+            <p class="mt-2 text-[12.5px] leading-relaxed text-muted sm:text-sm">
+              Semua data hanya dipakai untuk keperluan kerja sama ini.
+            </p>
+
+            <!-- honeypot anti-spam -->
+            <div class="hp" aria-hidden="true">
+              <label>Jangan diisi<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+            </div>
+
+            <div class="mt-5 grid gap-4 sm:grid-cols-2">
+              <div>
+                <label class="lbl" for="nama">Nama lengkap</label>
+                <input class="fld" id="nama" name="nama" type="text" required placeholder="Nama kamu" />
+              </div>
+              <div>
+                <label class="lbl" for="usaha">Nama usaha / lembaga</label>
+                <input class="fld" id="usaha" name="usaha" type="text" required placeholder="Contoh: Bank Sampah Melati" />
+              </div>
+              <div>
+                <label class="lbl" for="kontak">Email atau WhatsApp</label>
+                <input class="fld" id="kontak" name="kontak" type="text" required placeholder="08xxxxxxxxxx" />
+              </div>
+              <div>
+                <label class="lbl" for="lokasi">Lokasi (kabupaten/kota)</label>
+                <input class="fld" id="lokasi" name="lokasi" type="text" placeholder="Contoh: Gianyar" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="lbl" for="pilihanPaket">Paket yang diminati</label>
+                <select class="fld" id="pilihanPaket" name="paket">
+                  <option value="listing-lokasi">Listing Lokasi — Rp 150.000/bulan</option>
+                  <option value="listing-umkm">Listing UMKM Ramah Lingkungan — Rp 200.000/bulan</option>
+                  <option value="sponsor-artikel">Sponsor Artikel — Rp 1.500.000/artikel</option>
+                  <option value="lainnya">Lainnya / masih mau tanya-tanya</option>
+                </select>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="lbl" for="pesan">Ceritakan singkat tentang kamu</label>
+                <textarea class="fld" id="pesan" name="pesan" rows="4" placeholder="Barang atau layanan apa yang ditangani? Sudah berjalan berapa lama?"></textarea>
+              </div>
+            </div>
+
+            <button type="submit" class="mt-5 w-full rounded-xl bg-primary px-8 py-3.5 text-[14px] font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-forest active:scale-[0.99] sm:w-auto">
+              Kirim Pengajuan
+            </button>
+            <p class="mt-3 text-[11.5px] text-muted">
+              Dengan mengirim, kamu setuju kami menghubungi kamu kembali terkait kerja sama ini.
+            </p>
+          </form>
+
+          <!-- Kontak alternatif -->
+          <aside class="space-y-4">
+            <div class="rounded-2xl border border-line bg-white p-5 sm:p-6">
+              <h3 class="text-[15px] font-bold text-forest">Lebih nyawa langsung?</h3>
+              <p class="mt-2 text-[12.5px] leading-relaxed text-muted">
+                Kirim pesan langsung — jawabannya biasanya lebih cepat.
+              </p>
+              <a href="https://wa.me/62XXXXXXXXXXX" target="_blank" rel="noopener" class="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-white px-5 py-3 text-[13px] font-bold text-forest transition hover:border-primary hover:text-primary">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.2c-.2.7-1.3 1.3-1.8 1.4-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.1-.2.3 0 .5.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.2.1.4.1.5-.1l.7-.9c.2-.2.4-.2.5-.1l2 .9c.2.1.3.2.4.3.1.2.1.9-.1 1.5Z"/></svg>
+                WhatsApp
+              </a>
+              <a href="mailto:halo@balielingluu.id" class="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-[13px] font-bold text-white transition hover:bg-forest">
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                halo@balielingluu.id
+              </a>
+            </div>
+
+            <div class="rounded-2xl border border-line bg-cream p-5 sm:p-6">
+              <h3 class="text-[15px] font-bold text-ink">Yang kami jaga</h3>
+              <ul class="mt-3 space-y-2 text-[12.5px] leading-relaxed text-muted">
+                <li>• Tulisan tetap apa adanya — kami tidak menghapus fakta yang tidak nyaman.</li>
+                <li>• Kemitraan hanya kami tayangkan pada topik yang memang kami percayai.</li>
+                <li>• Data kamu tidak kami jual ke pihak ketiga.</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- ===== FAQ ===== -->
+      <div class="mt-12 lg:mt-20">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-terra">FAQ</p>
+          <h2 class="mt-2 text-[18px] font-extrabold tracking-tight text-forest sm:text-3xl">Pertanyaan Umum</h2>
+        </div>
+
+        <dl class="mt-6 space-y-3">
+          <div class="rounded-2xl border border-line bg-white p-5">
+            <dt class="text-[13.5px] font-bold text-forest sm:text-[15px]">Kalau usaha saya masih kecil?</dt>
+            <dd class="mt-1.5 text-[12.5px] leading-relaxed text-muted sm:text-[13.5px]">Tidak masalah. Ukuran bukan syarat — yang kami lihat adalah manfaatnya untuk warga sekitar.</dd>
+          </div>
+          <div class="rounded-2xl border border-line bg-white p-5">
+            <dt class="text-[13.5px] font-bold text-forest sm:text-[15px]">Bisa dicoba dulu sebelum bayar?</dt>
+            <dd class="mt-1.5 text-[12.5px] leading-relaxed text-muted sm:text-[13.5px]">Bisa. Kamu boleh ajukan dulu, kami kirim rancangan kartu lokasinya, baru setelah itu kita bahas pembayaran.</dd>
+          </div>
+          <div class="rounded-2xl border border-line bg-white p-5">
+            <dt class="text-[13.5px] font-bold text-forest sm:text-[15px]">Komunitas banjar atau sekolah?</dt>
+            <dd class="mt-1.5 text-[12.5px] leading-relaxed text-muted sm:text-[13.5px]">Untuk banjar, sekolah, dan organisasi nirlaba, listing gratis — cukup isi formulir dan pilih "Lainnya".</dd>
+          </div>
+          <div class="rounded-2xl border border-line bg-white p-5">
+            <dt class="text-[13.5px] font-bold text-forest sm:text-[15px]">Berapa lama listing bertahan?</dt>
+            <dd class="mt-1.5 text-[12.5px] leading-relaxed text-muted sm:text-[13.5px]">Sesuai paket. Untuk sponsor artikel, tayang permanen di arsip Bali Eling Luu.</dd>
+          </div>
+        </dl>
+      </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="hidden border-t border-line bg-white lg:block">
+      <div class="mx-auto flex max-w-shell items-center justify-between gap-6 px-5 py-8 text-sm text-muted">
+        <p>© 2026 Bali Eling Luu — Jaga Alam, Lestarikan Bali.</p>
+        <ul class="flex items-center gap-6">
+          <li><a class="transition hover:text-primary" href="index.html#beranda">Beranda</a></li>
+          <li><a class="transition hover:text-primary" href="panduan.html">Panduan Sampah</a></li>
+          <li><a class="transition hover:text-primary" href="index.html#artikel">Artikel</a></li>
+          <li><a class="font-bold text-primary" href="kerja-sama.html">Kerja Sama</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- ===== BOTTOM NAV (mobile) ===== -->
+    <nav class="fixed bottom-0 left-0 z-40 w-full border-t border-line bg-white/95 backdrop-blur lg:hidden" aria-label="Navigasi bawah">
+      <ul class="mx-auto grid max-w-shell grid-cols-4">
+        <li><a href="index.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
+        <li><a href="panduan.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Jenis Sampah</a></li>
+        <li><a href="dashboard.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a></li>
+        <li><a href="kerja-sama.html" aria-current="page" class="flex flex-col items-center gap-1 py-3 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg>Kerja Sama</a></li>
+      </ul>
+    </nav>
+
+    <script src="data_sampah.js"></script>
+    <script src="chat.js"></script>
+    <script>
+      document.getElementById("menuBtn").addEventListener("click", function () {
+        var m = document.getElementById("menu");
+        var open = m.classList.toggle("hidden") === false;
+        this.setAttribute("aria-expanded", String(open));
+      });
+
+      // tombol "Pilih Paket Ini" langsung pindahkan pilihan di dropdown
+      var selPaket = document.getElementById("pilihanPaket");
+      Array.prototype.forEach.call(document.querySelectorAll(".jsPilih"), function (btn) {
+        btn.addEventListener("click", function () {
+          var v = btn.getAttribute("data-paket");
+          if (selPaket) selPaket.value = v;
+          // dorong ke pilihan "lainnya" kalau nilai tidak ada di dropdown
+          if (selPaket && selPaket.value !== v) selPaket.value = "lainnya";
+          var f = document.getElementById("nama");
+          if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 420);
+        });
+      });
+    </script>
+  </body>
+</html>

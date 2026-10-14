@@ -18,6 +18,9 @@ Dibangun dengan **HTML + Tailwind CSS (CDN) + JavaScript vanilla** — tanpa bac
 - **Panduan Memilah** (`panduan.html`) — 4 kartu kategori + langkah praktis, tampilan app-like dengan bottom nav
 - **Detail Jenis Sampah** (`edukasi.html`) — pengertian, contoh, cara menangani; 4 kategori dalam satu halaman lewat parameter `?jenis=`
 - **Dashboard Pengguna** (`dashboard.html`) — sambutan, statistik dampak harian, 3 lokasi terdekat, tips harian
+- **Kerja Sama & Listing** (`kerja-sama.html`) — 3 paket (listing lokasi, listing UMKM, sponsor artikel),
+  formulir pendaftaran, dan FAQ
+- **Link afiliasi** — rekomendasi produk di tiap artikel, semua URL dikelola di satu file `afiliasi.js`
 - **Responsive** — desktop 1440px & mobile 390px; bottom nav hanya di mobile
 
 ## Struktur
@@ -31,6 +34,8 @@ Bali Eling Luu/
 ├── data_lokasi.js    # Data lokasi contoh + tips harian
 ├── data_artikel.js   # Isi 4 artikel (paragraf, tabel, catatan)
 ├── artikel.html      # Arsip & halaman baca artikel
+├── kerja-sama.html   # Halaman kerja sama + formulir
+├── afiliasi.js       # Daftar link afiliasi (satu-satunya tempat edit)
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
 └── assets/
@@ -97,6 +102,31 @@ colors: {
 ```
 
 Font: **Plus Jakarta Sans** (Google Fonts).
+
+## Menjalankan monetisasi
+
+### 1. Link afiliasi
+
+Daftar ke program afiliasi (Shopee Affiliate / Tokopedia Affiliate), lalu tempel
+link milikmu ke kolom `url` di `afiliasi.js`. Tidak perlu membuka file HTML mana pun —
+semua artikel langsung memakai link terbaru.
+
+Setiap link sudah memakai `rel="nofollow sponsored"` supaya tidak dihitung sebagai
+link biasa oleh mesin pencari.
+
+### 2. Formulir kerja sama
+
+Halaman `kerja-sama.html` mengirim formulir ke **Formspree** (gratis, 50 kiriman/bulan).
+Ganti `GANTI_ID_FORMSPREE` di dalam tag `<form>` dengan ID milikmu:
+
+1. Daftar di https://formspree.io
+2. Buat form baru, salin ID-nya (format: `f/xxxxxxxx`)
+3. Buka `kerja-sama.html`, cari `https://formspree.io/f/GANTI_ID_FORMSPREE`
+
+Selama ID belum diganti, form akan memberi pesan error dari Formspree — itu normal.
+
+Kontak alternatif (WhatsApp & email) sudah disiapkan di `<aside>` kanan.
+Ganti `62XXXXXXXXXXX` dan `halo@balielingluu.id` dengan milikmu.
 
 ## Catatan
 

@@ -13,6 +13,7 @@ const ARTIKEL = [
     menit: 6,
     tanggal: "14 Oktober 2026",
     penulis: "Tim Bali Eling Luu",
+    produk: ["wadah_pilah", "komposter", "kotak_baterai"],
     isi: [
       {
         t: "p",
@@ -119,6 +120,7 @@ const ARTIKEL = [
     menit: 5,
     tanggal: "14 Oktober 2026",
     penulis: "Tim Bali Eling Luu",
+    produk: ["botol", "tas_belanja", "sedotan"],
     isi: [
       {
         t: "p",
@@ -211,6 +213,7 @@ const ARTIKEL = [
     menit: 5,
     tanggal: "14 Oktober 2026",
     penulis: "Tim Bali Eling Luu",
+    produk: ["botol", "tas_belanja"],
     isi: [
       {
         t: "p",
@@ -294,6 +297,7 @@ const ARTIKEL = [
     menit: 6,
     tanggal: "14 Oktober 2026",
     penulis: "Tim Bali Eling Luu",
+    produk: ["kotak_baterai"],
     isi: [
       {
         t: "p",
