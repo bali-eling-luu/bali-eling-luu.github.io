@@ -158,36 +158,21 @@
         </section>
         </div>
 
-        <!-- Lokasi terdekat -->
+        <!-- Jenis tempat penerima sampah -->
         <section id="lokasi" class="order-2 lg:col-span-7 lg:col-start-6 lg:row-start-1">
-          <div class="flex items-baseline justify-between gap-4">
-            <h2 class="text-[18px] font-extrabold tracking-tight text-forest sm:text-2xl">Lokasi Terdekat</h2>
-            <a href="index.html#panduan" class="text-[12px] font-bold text-primary hover:underline sm:text-sm">Lihat semua</a>
-          </div>
+          <h2 class="text-[18px] font-extrabold tracking-tight text-forest sm:text-2xl">Ke Mana Sampahmu Pergi?</h2>
+          <p class="mt-1.5 text-[12.5px] leading-relaxed text-muted sm:text-[13.5px]">
+            Enam jenis tempat yang menerima sampah. Nama, layanan, dan jam buka
+            tiap daerah berbeda — cari yang paling dekat denganmu.
+          </p>
 
-          <ul id="daftarLokasi" class="mt-4 space-y-3"></ul>
-
-          <button
-            type="button"
-            id="ctaPeta"
-            class="mt-4 flex w-full items-center gap-3.5 rounded-2xl border border-line bg-white p-4 text-left transition hover:border-primary/40 hover:shadow-md sm:p-5"
-          >
-            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary/12 sm:h-11 sm:w-11" aria-hidden="true">
-              <svg class="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="m9 4-6 2v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>
-            </span>
-            <span class="min-w-0 flex-1">
-              <span class="block text-[13.5px] font-bold text-forest sm:text-base">Peta Bank Sampah &amp; TPS</span>
-              <span class="mt-0.5 block text-[11.5px] text-muted sm:text-sm">Lihat semua titik di sekitar Denpasar &amp; Badung</span>
-            </span>
-            <svg class="h-5 w-5 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-          </button>
+          <ul id="daftarTempat" class="mt-4 space-y-3"></ul>
 
           <p class="mt-5 rounded-2xl border border-line bg-cream px-5 py-4 text-[12px] leading-relaxed text-muted sm:text-[13px]">
-            Nama dan alamat enam lokasi ini bersumber dari pemberitaan BaliPost,
-            ANTARA Bali, dan Dinas Pariwisata Badung. Jarak adalah perkiraan dari
-            pusat Kota Denpasar. <strong class="text-ink">Jam buka, nomor
-            telepon, dan tarif belum kami verifikasi</strong> — konfirmasi dulu ke
-            pengelola sebelum datang.
+            <strong class="text-ink">Situs ini tidak menampilkan nama usaha tertentu.</strong>
+            Jam buka, layanan, dan tarif tiap tempat bisa berubah sewaktu-waktu.
+            Tanyakan langsung ke balai banjar, kelurahan, atau kantor desa di
+            daerahmu untuk mengetahui lokasi yang masih beroperasi.
           </p>
         </section>
       </div>
@@ -232,17 +217,6 @@
         });
       }
 
-      function avatarLokasi(seed) {
-        var warna = ["#DCEBD9", "#EADFC7", "#D8E6EE"][seed % 3];
-        return (
-          '<svg viewBox="0 0 64 64" class="h-full w-full">' +
-          '<circle cx="32" cy="32" r="32" fill="' + warna + '"/>' +
-          '<circle cx="32" cy="26" r="10" fill="#14532D"/>' +
-          '<path d="M14 58c2-11 9-16 18-16s16 5 18 16" fill="#14532D"/>' +
-          "</svg>"
-        );
-      }
-
       /* --- tips hari ini --- */
       document.getElementById("tipHariIni").textContent = tipsHariIni();
 
@@ -254,41 +228,37 @@
       document.getElementById("statBerat").textContent = angka("eling.berat", "3.2") + " kg";
       document.getElementById("statHari").textContent = angka("eling.hari", "12");
 
-      /* --- daftar lokasi terdekat --- */
-      var daftar = lokasiTerdekat(3);
-      document.getElementById("daftarLokasi").innerHTML = daftar
-        .map(function (l, i) {
-          var chips = l.jenis
-            .slice(0, 3)
-            .map(function (j) {
+      /* --- jenis tempat penerima sampah --- */
+      document.getElementById("daftarTempat").innerHTML = JENIS_TEMPAT
+        .map(function (t) {
+          var chips = t.terima
+            .map(function (x) {
               return (
                 '<li class="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold text-primary sm:text-[11px]">' +
-                esc(j) +
+                esc(x) +
                 "</li>"
               );
             })
             .join("");
           return (
-            '<li><a href="#lokasi" class="flex items-center gap-3.5 rounded-2xl border border-line bg-white p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md sm:p-5">' +
-            '<span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full sm:h-14 sm:w-14">' +
-            avatarLokasi(i) +
+            '<li class="rounded-2xl border border-line bg-white p-4 sm:p-5">' +
+            '<div class="flex items-start gap-3">' +
+            '<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-lg sm:h-11 sm:w-11 sm:text-xl" style="background:' +
+            t.warna +
+            '1f" aria-hidden="true">' +
+            t.ikon +
             "</span>" +
-            '<span class="min-w-0 flex-1">' +
-            '<span class="block truncate text-[13.5px] font-bold text-forest sm:text-base">' + esc(l.nama) + "</span>" +
-            '<span class="mt-0.5 block text-[11.5px] text-muted sm:text-sm">' +
-            l.jarak.toFixed(1) + " km • " + statusJam(l) +
-            "</span>" +
-            '<ul class="mt-2 flex flex-wrap gap-1.5">' + chips + "</ul>" +
-            "</span>" +
-            '<svg class="h-5 w-5 shrink-0 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>' +
-            "</a></li>"
+            '<div class="min-w-0 flex-1">' +
+            '<p class="text-[13.5px] font-bold text-forest sm:text-base">' + esc(t.nama) + "</p>" +
+            '<p class="mt-1 text-[12px] leading-relaxed text-muted sm:text-[13px]">' + esc(t.cara) + "</p>" +
+            '<ul class="mt-2.5 flex flex-wrap gap-1.5">' + chips + "</ul>" +
+            '<p class="mt-2.5 text-[11.5px] leading-relaxed sm:text-[12.5px]"><strong class="text-forest">Cara menemukan:</strong> ' +
+            esc(t.caraCari) +
+            "</p>" +
+            "</div></div></li>"
           );
         })
         .join("");
-
-      document.getElementById("ctaPeta").addEventListener("click", function () {
-        if (window.ElingChat) window.ElingChat.buka("Bank sampah atau TPS terdekat");
-      });
     </script>
   </body>
 </html>

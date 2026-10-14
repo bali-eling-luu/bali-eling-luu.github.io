@@ -17,10 +17,8 @@ Dibangun dengan **HTML + Tailwind CSS (CDN) + JavaScript vanilla** — tanpa bac
 - **Asisten Eling** — chat bot lokal yang menjawab pertanyaan seputar jenis sampah, cara memilah, dan penanganannya
 - **Panduan Memilah** (`panduan.html`) — 4 kartu kategori + langkah praktis, tampilan app-like dengan bottom nav
 - **Detail Jenis Sampah** (`edukasi.html`) — pengertian, contoh, cara menangani; 4 kategori dalam satu halaman lewat parameter `?jenis=`
-- **Dashboard Pengguna** (`dashboard.html`) — sambutan, statistik dampak harian, 3 lokasi terdekat, tips harian
-- **Kerja Sama & Listing** (`kerja-sama.html`) — 3 paket (listing lokasi, listing UMKM, sponsor artikel),
-  formulir pendaftaran, dan FAQ
-- **Link afiliasi** — rekomendasi produk di tiap artikel, semua URL dikelola di satu file `afiliasi.js`
+- **Dashboard Pengguna** (`dashboard.html`) — sambutan, statistik dampak harian, tips harian,
+  dan 6 jenis tempat penerima sampah
 - **Responsive** — desktop 1440px & mobile 390px; bottom nav hanya di mobile
 
 ## Struktur
@@ -31,11 +29,9 @@ Bali Eling Luu/
 ├── panduan.html      # Panduan memilah + 4 kartu kategori
 ├── edukasi.html      # Detail jenis sampah (?jenis=organik|anorganik|residu|b3)
 ├── dashboard.html    # Dashboard pengguna
-├── data_lokasi.js    # 6 lokasi nyata (Denpasar & Badung) + tips harian
+├── data_lokasi.js    # 6 jenis tempat penerima sampah + tips harian
 ├── data_artikel.js   # Isi 4 artikel (paragraf, tabel, catatan)
 ├── artikel.html      # Arsip & halaman baca artikel
-├── kerja-sama.html   # Halaman kerja sama + formulir
-├── afiliasi.js       # Daftar link afiliasi (satu-satunya tempat edit)
 ├── data_statistik.js # Statistik sampah Bali + sumbernya
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
@@ -120,59 +116,21 @@ Harus Peduli?"):
 | Komposisi | >60% organik, 17% plastik | UPTD Pengelolaan Sampah DKLH Provinsi Bali, Juli 2025 |
 | Sebaran | Denpasar 1.005, Gianyar 562, Badung 547 ton/hari | idem |
 
-**Lokasi** (`data_lokasi.js`, tampil di `dashboard.html`):
+**Jenis tempat penerima sampah** (`data_lokasi.js`, tampil di `dashboard.html`):
 
-| Nama | Alamat |
-|---|---|
-| Bank Sampah Budi Alami | Jl. Kertasan No. 12, Denpasar Selatan |
-| Bank Sampah Tri Manunggal (Sekar Puri) | Jl. Tukad Yeh Aya, Panjer, Denpasar Selatan |
-| Bank Sampah Melati | Perumnas Sandebaya, Jl. Kebo Iwa No. 8, Denpasar Timur |
-| Bank Sampah Bina Ayu | Jl. Pulau Nusa Penida, Sanur Kaja, Denpasar Selatan |
-| Bank Sampah Jukung Nusa Sedaya | Jl. Pura Segara, Kedonganan, Kuta Selatan, Badung |
-| TPS3R Banjar Anyar Kelod | Jl. Raya Tuban No. 88, Tuban, Kuta, Badung |
+Situs ini **sengaja tidak menampilkan nama usaha atau alamat tertentu**.
+Jam buka, layanan, dan tarif tiap tempat berubah sewaktu-waktu dan berbeda
+antardaerah. Yang ditampilkan adalah *jenis* tempatnya — Bank Sampah, TPS 3R,
+Drop Box B3, TPS Terpadu, Pengepul, dan Komunitas Daur Ulang — beserta cara
+menemukannya di daerah masing-masing (tanya balai banjar, kelurahan, kantor desa).
 
-Rujukan: BaliPost (09/05/2024), ANTARA Bali (27/09/2024), Dinas Pariwisata Badung.
+Kalau kelak butuh direktori lokasi nyata, tambahkan terpisah — jangan menimpa
+`JENIS_TEMPAT`, karena bagian "Cara menemukan" bergantung pada formatnya.
 
-**Yang belum diverifikasi** dan sengaja ditandai apa adanya di situs:
-jam buka, nomor telepon, tarif, dan jarak (jarak hanya perkiraan dari pusat
-Kota Denpasar). Field `jam` diisi `null` sehingga tampil sebagai
-"Jam buka perlu dikonfirmasi".
-
-Sebelum memakai data ini di depan umum, konfirmasi dulu ke pengelola masing-masing.
-
-## Menjalankan monetisasi
-
-### 1. Link afiliasi
-
-Daftar ke program afiliasi (Shopee Affiliate / Tokopedia Affiliate), lalu tempel
-link milikmu ke kolom `url` di `afiliasi.js`. Tidak perlu membuka file HTML mana pun —
-semua artikel langsung memakai link terbaru.
-
-Setiap link sudah memakai `rel="nofollow sponsored"` supaya tidak dihitung sebagai
-link biasa oleh mesin pencari.
-
-Komisi Shopee Affiliate relatif kecil: **1%** (Basic, maks Rp10.000/transaksi)
-atau **2%** (Premium). Rincian rate terbaru ada di komentar paling atas
-`afiliasi.js`. Karena itu affiliate sebaiknya dijalankan bersama listing dan
-sponsor, bukan sebagai satu-satunya sumber pemasukan.
-
-### 2. Formulir kerja sama
-
-Halaman `kerja-sama.html` mengirim formulir ke **Formspree** (gratis, 50 kiriman/bulan).
-Ganti `GANTI_ID_FORMSPREE` di dalam tag `<form>` dengan ID milikmu:
-
-1. Daftar di https://formspree.io
-2. Buat form baru, salin ID-nya (format: `f/xxxxxxxx`)
-3. Buka `kerja-sama.html`, cari `https://formspree.io/f/GANTI_ID_FORMSPREE`
-
-Selama ID belum diganti, form akan memberi pesan error dari Formspree — itu normal.
-
-Kontak alternatif (WhatsApp & email) sudah disiapkan di `<aside>` kanan.
-Ganti `62XXXXXXXXXXX` dan `halo@balielingluu.id` dengan milikmu.
 
 ## Catatan teknis (jangan dilepas)
 
-`KATEGORI`, `ARTIKEL`, dan `LOKASI` adalah objek/array biasa. Objek biasa
+`KATEGORI`, `ARTIKEL`, dan `JENIS_TEMPAT` adalah objek/array biasa. Objek biasa
 **mewarisi** `__proto__`, `toString`, `constructor`, dll. dari
 `Object.prototype`. Maka cek seperti `if (!KATEGORI[param])` akan menganggap
 kunci-kunci warisan itu "valid" dan merusak halaman.

@@ -126,7 +126,6 @@
 
     <script src="data_sampah.js"></script>
     <script src="data_artikel.js"></script>
-    <script src="afiliasi.js"></script>
     <script src="chat.js"></script>
     <script>
       document.getElementById("menuBtn").addEventListener("click", function () {
@@ -276,9 +275,6 @@
           '<div class="isi-artikel mt-9 lg:mt-12">' +
           a.isi.map(renderBlok).join("") +
           "</div></div>" +
-
-          // rekomendasi produk (link afiliasi)
-          kartuRekomendasi(a.produk) +
 
           // artikel lainnya
           '<section class="mt-14 border-t border-line pt-10 lg:mt-20 lg:pt-14">' +
