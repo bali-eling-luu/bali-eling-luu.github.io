@@ -274,6 +274,15 @@
     };
   }
 
+  /* KATEGORI mewarisi __proto__/toString/dll. dari Object.prototype,
+     jadi kita harus cek kepemilikan sendiri sebelum memakai kuncinya. */
+  function katValid(key) {
+    return (
+      typeof key === "string" &&
+      Object.prototype.hasOwnProperty.call(KATEGORI, key)
+    );
+  }
+
   /* ---------- UI ---------- */
   var panel, body, input, btn, floating;
 
@@ -438,6 +447,7 @@
         e.preventDefault();
         var q = (document.getElementById("q") || {}).value || "";
         var kat = (document.getElementById("kat") || {}).value || "";
+        if (!katValid(kat)) kat = "";
         var tanya;
         if (q.trim() && kat) tanya = q.trim() + " " + KATEGORI[kat].nama;
         else if (q.trim()) tanya = q.trim();

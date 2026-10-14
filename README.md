@@ -170,6 +170,23 @@ Selama ID belum diganti, form akan memberi pesan error dari Formspree — itu no
 Kontak alternatif (WhatsApp & email) sudah disiapkan di `<aside>` kanan.
 Ganti `62XXXXXXXXXXX` dan `halo@balielingluu.id` dengan milikmu.
 
+## Catatan teknis (jangan dilepas)
+
+`KATEGORI`, `ARTIKEL`, dan `LOKASI` adalah objek/array biasa. Objek biasa
+**mewarisi** `__proto__`, `toString`, `constructor`, dll. dari
+`Object.prototype`. Maka cek seperti `if (!KATEGORI[param])` akan menganggap
+kunci-kunci warisan itu "valid" dan merusak halaman.
+
+Pernah terjadi: `edukasi.html?jenis=__proto__` menghasilkan halaman penuh
+teks `undefined`. Karena itu `edukasi.html` dan `chat.js` memakai
+`kategoriValid()` / `katValid()` berbasis
+`Object.prototype.hasOwnProperty.call(...)`. Jangan ganti kembali dengan cek
+truthiness biasa.
+
+Bottom nav juga sudah distandarkan seragam di 5 halaman
+(Beranda → Jenis Sampah → Lokasi → Artikel). Kalau menambah halaman baru,
+salin pola nav dari `panduan.html`, jangan tulis ulang sendiri.
+
 ## Catatan
 
 Konten edukasi (definisi kategori, contoh, cara penanganan) disusun sebagai panduan umum.
