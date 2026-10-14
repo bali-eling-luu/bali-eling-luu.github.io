@@ -12,7 +12,8 @@ Dibangun dengan **HTML + Tailwind CSS (CDN) + JavaScript vanilla** — tanpa bac
 - **Splash screen** — foto alam Bali + logo, otomatis fade ke halaman utama
 - **Hero pencarian** — cari jenis sampah atau pilih kategori
 - **4 kategori sampah** — Organik, Anorganik, Residu, B3/Khusus
-- **6 tips lingkungan** & **4 kartu artikel**
+- **6 tips lingkungan**
+- **4 artikel lengkap** (`artikel.html?id=…`) — pemilahan, wisata, pantai, B3; teks asli di `data_artikel.js` + halaman arsip
 - **Asisten Eling** — chat bot lokal yang menjawab pertanyaan seputar jenis sampah, cara memilah, dan penanganannya
 - **Panduan Memilah** (`panduan.html`) — 4 kartu kategori + langkah praktis, tampilan app-like dengan bottom nav
 - **Detail Jenis Sampah** (`edukasi.html`) — pengertian, contoh, cara menangani; 4 kategori dalam satu halaman lewat parameter `?jenis=`
@@ -28,6 +29,8 @@ Bali Eling Luu/
 ├── edukasi.html      # Detail jenis sampah (?jenis=organik|anorganik|residu|b3)
 ├── dashboard.html    # Dashboard pengguna
 ├── data_lokasi.js    # Data lokasi contoh + tips harian
+├── data_artikel.js   # Isi 4 artikel (paragraf, tabel, catatan)
+├── artikel.html      # Arsip & halaman baca artikel
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
 └── assets/
