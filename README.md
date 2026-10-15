@@ -36,16 +36,15 @@ Bali Eling Luu/
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
 └── assets/
-    ├── photo01..05.jpeg          # foto alam & budaya Bali
-    ├── foto-jenis-sampah/        # foto contoh tiap kategori
-    │   ├── organik.jpeg
-    │   ├── anorganik.jpeg
-    │   ├── residu.jpeg
-    │   └── b3.jpeg
+    ├── photo01..05.webp          # foto alam & budaya Bali
+    ├── foto-jenis-sampah/        # foto sampul tiap artikel
+    │   ├── organik.webp
+    │   ├── anorganik.webp
+    │   ├── residu.webp
+    │   └── b3.webp
     └── logo/
-        ├── logo-mark.png
-        ├── logo-tulisan.png
-        └── tulisan.png
+        ├── logo-mark.webp
+        └── logo-tulisan.webp
 ```
 
 ## Menjalankan
@@ -153,3 +152,22 @@ Selalu rujuk ketentuan dan fasilitas pengelolaan sampah setempat — terutama un
 ## Lisensi
 
 Digunakan untuk keperluan edukasi dan portofolio.
+
+
+## Gambar (format WebP)
+
+Seluruh gambar disimpan sebagai **WebP**, bukan JPEG/PNG. Total aset turun dari
+**9,3 MB menjadi 1,2 MB (-87%)** sehingga halaman tidak lambat dimuat.
+
+Aturan ukuran yang sudah dipakai — jangan diubah sembarangan:
+
+| Aset | Dimensi | Ditampilkan |
+|---|---|---|
+| `photo01..05` | 768 × 1376 | latar splash/hero, kartu `aspect-video` |
+| `foto-jenis-sampah/*` | lebar 800 | kartu artikel (~282px di desktop) |
+| `logo-mark` | 128 × 128 | header `h-9 w-9` (36px) |
+| `logo-tulisan` | lebar 680 | splash `min(70vw, 340px)` |
+
+Kalau menambah gambar baru: ekspor langsung ke WebP (misal `cwebp -q 75`),
+ukurkan sesuai tabel di atas, dan jangan menaruh file JPEG/PNG di `assets/` —
+semua referensi memakai akhiran `.webp`.

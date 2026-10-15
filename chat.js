@@ -377,7 +377,7 @@
     floating.setAttribute("aria-expanded", "false");
     floating.setAttribute("aria-controls", "eling-panel");
     floating.innerHTML =
-      '<img src="assets/logo/logo-mark.png" alt="" aria-hidden="true">' +
+      '<img src="assets/logo/logo-mark.webp" alt="" aria-hidden="true">' +
       '<span class="eling-fab-badge">1</span>';
 
     // panel
@@ -388,7 +388,7 @@
 
     panel.innerHTML =
       '<div class="eling-head">' +
-      '<img src="assets/logo/logo-mark.png" alt="" aria-hidden="true">' +
+      '<img src="assets/logo/logo-mark.webp" alt="" aria-hidden="true">' +
       "<div><p class='eling-head-judul'>Eling Assistant</p>" +
       "<p class='eling-head-status'><span></span> Siap membantu</p></div>" +
       '<button type="button" class="eling-close" aria-label="Tutup asisten">&times;</button>' +
