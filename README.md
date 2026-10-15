@@ -14,7 +14,7 @@ Dibangun dengan **HTML + Tailwind CSS (CDN) + JavaScript vanilla** — tanpa bac
 - **4 kategori sampah** — Organik, Anorganik, Residu, B3/Khusus
 - **6 tips lingkungan**
 - **4 artikel lengkap** (`artikel.html?id=…`) — pemilahan, wisata, pantai, B3; teks asli di `data_artikel.js` + halaman arsip
-- **Asisten Eling** — chat bot lokal yang menjawab pertanyaan seputar jenis sampah, cara memilah, dan penanganannya
+- **Asisten Eling** — hibrida: basis pengetahuan lokal (instan, offline) + AI sungguhan via Puter.js untuk pertanyaan di luar topik, lengkap dengan ingatan percakapan
 - **Panduan Memilah** (`panduan.html`) — 4 kartu kategori + langkah praktis, tampilan app-like dengan bottom nav
 - **Detail Jenis Sampah** (`edukasi.html`) — pengertian, contoh, cara menangani; 4 kategori dalam satu halaman lewat parameter `?jenis=`
 - **Dashboard Pengguna** (`dashboard.html`) — sambutan, statistik dampak harian, tips harian,
@@ -60,17 +60,48 @@ python3 -m http.server 8000
 
 ## Cara kerja Asisten Eling
 
-Asisten ini **bukan AI berbasis API** — semua jawaban diambil dari data lokal di `data_sampah.js`,
-sehingga tidak butuh API key, tidak ada biaya, dan tetap berjalan offline.
+Asisten memakai pendekatan **hibrida**: basis pengetahuan lokal lebih dulu,
+baru AI sungguhan untuk sisanya.
 
-Pencocokan dilakukan berurutan:
+```
+pertanyaan
+   │
+   ├─ 1. Sapaan / terima kasih / "siapa kamu"  → jawaban tetap
+   │
+   ├─ 2. butuhAI()?  harga, berapa, kapan, pantun, berita, dll.
+   │        └─ ya → lompat ke 5
+   │
+   ├─ 3. TOPIK   → "gimana bikin kompos", "residu vs B3", "bank sampah"
+   ├─ 4. ITEM / KATEGORI → kartu spesifik ("botol plastik" → Anorganik)
+   │        └─ tidak ketemu → lompat ke 5
+   │
+   └─ 5. AI sungguhan (Puter.js) — streaming, dengan ingatan 8 langkah terakhir
+            └─ gagal / dibatalkan → pesan fallback + pilihan kategori
+```
 
-1. **Item** — mencocokkan nama & alias (mis. "aqua", "botol mineral" → *Botol plastik*)
-2. **Topik** — pertanyaan umum (cara memilah, residu vs B3, bank sampah, dll.)
-3. **Kategori** — Organik / Anorganik / Residu / B3
-4. **Fallback** — menawarkan pilihan kategori
+**Mengapa lokal dulu:** instan, gratis, tanpa login, dan tidak mungkin mengarang.
+Khusus untuk situs edukasi soal sampah, jawaban yang salah soal cara memilah B3
+jauh lebih berbahaya daripada jawaban yang terbatas.
 
-Menambah pengetahuan baru cukup dengan menambah entri ke object `ITEM` atau `TOPIK`:
+**Mengapa AI untuk sisanya:** pertanyaan seperti harga jual terkini, pantun, atau
+"yang tadi aku tanya apa" tidak ada di basis data. Inilah satu-satunya tempat
+`puter.ai.chat()` dipanggil.
+
+### Yang perlu diketahui soal AI (Puter.js)
+
+- **Tanpa API key, tanpa backend** — skrip dimuat dari `https://js.puter.com/v2/`,
+  hanya saat pertama dibutuhkan, sehingga bobot halaman awal tidak bertambah.
+- **Pengunjung baru akan diminta masuk akun Puter** (Google / Apple / email) lewat
+  jendela pop-up. Ini gratis dan cukup sekali — sesudahnya token disimpan di
+  peramban. Tidak ada mode tamu.
+- Kalau pop-up ditutup atau diblokir, panggilan dibatasi **45 detik per percobaan**
+  lalu jatuh ke pesan fallback + pilihan kategori. Tidak akan menggantung.
+- Jawaban AI diberi label **"Eling AI"** supaya pembaca tahu itu bukan data resmi situs.
+
+### Menambah pengetahuan lokal
+
+Menambah entri ke `ITEM` atau `TOPIK` di `data_sampah.js` membuat pertanyaan itu
+dijawab instan tanpa perlu menyentuh AI:
 
 ```js
 {

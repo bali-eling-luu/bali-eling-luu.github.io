@@ -30,6 +30,10 @@
     ".eling-kartu-label{margin-top:8px;margin-bottom:3px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7a70}",
     ".eling-kartu ul{margin:0;padding-left:16px;font-size:12.5px;color:#4b5a51}.eling-kartu li{margin-bottom:2px}",
     ".eling-kartu-peringatan{margin-top:9px;padding:8px 10px;border-radius:9px;background:#fef3e2;color:#92400e;font-size:12px;line-height:1.45}",
+    ".eling-ai{border-left:3px solid #d9a441;background:#fffdf6}",
+    ".eling-ai-label{display:inline-block;margin-bottom:6px;padding:2px 8px;border-radius:999px;background:#d9a441;color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}",
+    ".eling-ai-teks{display:block}",
+    ".eling-ai .eling-chips{margin-top:9px}",
     ".eling-typing{display:flex;gap:4px;padding:14px 16px}",
     ".eling-typing i{width:6px;height:6px;border-radius:999px;background:#9aa79f;animation:elingdot 1.1s infinite ease-in-out}",
     ".eling-typing i:nth-child(2){animation-delay:.16s}.eling-typing i:nth-child(3){animation-delay:.32s}",
@@ -76,6 +80,32 @@
       .replace(/"/g, "&quot;");
   }
 
+  /* Cocok kata kunci sebagai kata UTUH, bukan potongan di dalam kata lain.
+     Tanpa ini, "kacang" akan cocok dengan "kaca" karena memakai indexOf biasa. */
+  function adaKata(t, kunci) {
+    if (!kunci) return false;
+    var i = t.indexOf(kunci);
+    while (i !== -1) {
+      var sebelum = i === 0 ? " " : t.charAt(i - 1);
+      var akhir = i + kunci.length;
+      var sesudah = akhir >= t.length ? " " : t.charAt(akhir);
+      if (!/[a-z0-9]/.test(sebelum) && !/[a-z0-9]/.test(sesudah)) return true;
+      i = t.indexOf(kunci, i + 1);
+    }
+    return false;
+  }
+
+  /* Pertanyaan yang jawabannya tidak ada di basis data lokal —
+     harga terkini, waktu, berita, sastra, atau pertanyaan umum.
+     Ini dialihkan ke AI, bukan dijawab paksa oleh kartu sampah. */
+  function butuhAI(t) {
+    return (
+      /harga|\bberapa\b|\brupiah|\brp\s?\d|kapan|\bbaru\b|terbaru|berita|hari ini|besok|kemarin|cuaca|jam berapa|pantun|puisi|gurindam|resep|\blagu\b|terjemah/.test(
+        t
+      )
+    );
+  }
+
   /* ---------- logika jawaban ---------- */
   function cariItem(t) {
     var best = null;
@@ -85,10 +115,8 @@
       kandidat.forEach(function (k) {
         var kn = norm(k);
         if (!kn) return;
-        var skor = 0;
-        if (t.indexOf(kn) !== -1) skor = kn.length;
-        if (skor > bestScore) {
-          bestScore = skor;
+        if (adaKata(t, kn) && kn.length > bestScore) {
+          bestScore = kn.length;
           best = it;
         }
       });
@@ -101,7 +129,7 @@
     KATEGORI_KEYS.forEach(function (k) {
       var kat = KATEGORI[k];
       var nama = norm(kat.nama);
-      if (t.indexOf(nama) !== -1 || t.indexOf(k) !== -1) ditemukan = k;
+      if (adaKata(t, nama) || adaKata(t, k)) ditemukan = k;
     });
     return ditemukan;
   }
@@ -113,7 +141,7 @@
       var skor = 0;
       (top.cocok || []).forEach(function (c) {
         var cn = norm(c);
-        if (cn && t.indexOf(cn) !== -1) skor = Math.max(skor, cn.length);
+        if (cn && adaKata(t, cn)) skor = Math.max(skor, cn.length);
       });
       if (skor > bestScore) {
         bestScore = skor;
@@ -221,7 +249,9 @@
   }
 
   /* hasilkan jawaban dari satu pertanyaan */
-  function jawab(t) {
+  /* Jawaban dari basis data lokal. Mengembalikan null kalau pertanyaan
+     tidak bisa dijawab dengan yakin di sini — artinya harus ke AI. */
+  function jawabLokal(t) {
     var t2 = norm(t);
     if (!t2) return { html: esc(SAPAAN.halo), chips: sapaChips() };
 
@@ -231,47 +261,31 @@
     if (/(makasih|terima kasih|thanks|thx|tengkyu)/.test(t2)) {
       return { html: esc(SAPAAN.makasih), chips: sapaChips() };
     }
-    if (/(siapa kamu|siapa kamu|kamu siapa|nama kamu|fungsi kamu)/.test(t2)) {
+    if (/(siapa kamu|kamu siapa|nama kamu|fungsi kamu)/.test(t2)) {
       return {
         html:
           "Saya <strong>Eling</strong>, asisten digital Bali Eling Luu. " +
-          "Saya membantu menjelaskan jenis sampah, cara memilah, dan penanganannya — " +
-          "jawaban diambil dari panduan resmi di website ini.",
+          "Saya menjelaskan jenis sampah, cara memilah, dan penanganannya — " +
+          "pertanyaan umum di luar itu saya teruskan ke AI.",
         chips: sapaChips(),
       };
     }
 
-    var item = cariItem(t2);
-    if (item) return { html: kartuItem(item), chips: sapaChips() };
+    // pertanyaan yang jawabannya tidak ada di basis data → serahkan ke AI
+    if (butuhAI(t2)) return null;
 
+    // TOPIK dulu: pertanyaan "gimana/kenapa" lebih cocok dijelaskan panjang,
+    // bukan dibalas kartu satu item ("gimana bikin kompos" -> panduan kompos).
     var topik = cariTopik(t2);
     if (topik) return { html: kartuTopik(topik), chips: sapaChips() };
+
+    var item = cariItem(t2);
+    if (item) return { html: kartuItem(item), chips: sapaChips() };
 
     var kat = cariKategori(t2);
     if (kat) return { html: kartuKategori(kat), chips: sapaChips() };
 
-    // fallback
-    var chips = KATEGORI_KEYS.map(function (k) {
-      return KATEGORI[k].nama;
-    });
-    return {
-      html:
-        esc(SAPAAN.default) +
-        '<div class="eling-chips">' +
-        chips
-          .map(function (c) {
-            return (
-              '<button type="button" class="eling-chip" data-tanya="' +
-              esc(c) +
-              '">' +
-              esc(c) +
-              "</button>"
-            );
-          })
-          .join("") +
-        "</div>",
-      chips: [],
-    };
+    return null;
   }
 
   /* KATEGORI mewarisi __proto__/toString/dll. dari Object.prototype,
@@ -281,6 +295,198 @@
       typeof key === "string" &&
       Object.prototype.hasOwnProperty.call(KATEGORI, key)
     );
+  }
+
+  /* ---------- ingatan percakapan ---------- */
+  var riwayat = []; // {peran:"user"|"assistant", teks:"..."}
+  var MODEL_AI = "gemini-3.5-flash-lite";
+
+  var SISTEM = [
+    "Kamu adalah Eling, asisten digital situs Bali Eling Luu — situs edukasi",
+    "tentang pemilahan dan pengelolaan sampah di Bali, Indonesia.",
+    "",
+    "Aturan wajib:",
+    "1. Selalu jawab dalam bahasa Indonesia yang ramah dan sederhana.",
+    "   Pembacanya pelajar dan masyarakat umum.",
+    "2. Fokus ke sampah, pemilahan, daur ulang, kompos, dan kebersihan lingkungan.",
+    "   Pertanyaan di luar topik: jawab singkat dengan sopan, lalu arahkan kembali",
+    "   ke topik sampah.",
+    "3. JANGAN mengarang. Kalau tidak yakin soal angka atau fakta, tulis terus terang",
+    '   bahwa kamu tidak yakin, lalu sarankan cek ke SIPSN Kementerian Lingkungan',
+    "   Hidup atau Dinas Lingkungan Hidup setempat.",
+    "4. Untuk sampah B3 (baterai, lampu, obat, elektronik, jarum suntik) selalu",
+    "   tekankan jangan dicampur sampah rumah tangga biasa.",
+    "5. Jawaban 3-6 kalimat. Pakai daftar bernomor kalau menjelaskan langkah.",
+    "6. Tutup dengan menawarkan pertanyaan lanjutan.",
+    "7. Kamu Eling — jangan mengaku sebagai ChatGPT, Gemini, Claude, atau model lain.",
+    "8. Situs ini murni edukasi: jangan menawarkan jasa, harga produk, atau promosi.",
+    "",
+    "Konteks data lokal yang sudah diketahui pengguna (sudah dijawab situs ini,",
+    "tidak perlu diulang panjang lebar):",
+    "4 kategori sampah = Organik, Anorganik, Residu, B3/Khusus.",
+  ].join("\n");
+
+  /* Muat Puter.js hanya saat dibutuhkan, supaya bobot halaman tetap ringan. */
+  var puterJanji = null;
+  function muatPuter() {
+    if (window.puter && window.puter.ai) return Promise.resolve(true);
+    if (puterJanji) return puterJanji;
+    puterJanji = new Promise(function (selesai) {
+      var s = document.createElement("script");
+      s.src = "https://js.puter.com/v2/";
+      s.async = true;
+      s.onload = function () {
+        var coba = 0;
+        (function tunggu() {
+          if (window.puter && window.puter.ai) return selesai(true);
+          if (++coba > 50) return selesai(false); // ±5 detik
+          setTimeout(tunggu, 100);
+        })();
+      };
+      s.onerror = function () {
+        selesai(false);
+      };
+      document.head.appendChild(s);
+    });
+    return puterJanji;
+  }
+
+  function bubbleAI() {
+    var wrap = el("div", "eling-baris bot");
+    var b = el("div", "eling-bubble eling-ai");
+    b.innerHTML =
+      '<span class="eling-ai-label">Eling AI</span><span class="eling-ai-teks"></span>';
+    wrap.appendChild(b);
+    body.appendChild(wrap);
+    body.scrollTop = body.scrollHeight;
+    return b.querySelector(".eling-ai-teks");
+  }
+
+  function tampilAI(span, teks) {
+    span.innerHTML = esc(teks).replace(/\n/g, "<br>");
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function gagalAI(span) {
+    span.classList.remove("eling-ai-pakai");
+    span.innerHTML =
+      "AI belum bisa diakses dari peramban ini. Kamu tetap bisa bertanya soal " +
+      "jenis sampah lewat pilihan di bawah, atau buka langsung " +
+      '<a href="panduan.html" style="font-weight:700;color:#17803d">Panduan Memilah</a>.' +
+      '<div class="eling-chips">' +
+      KATEGORI_KEYS.map(function (k) {
+        return KATEGORI[k].nama;
+      })
+        .map(function (c) {
+          return (
+            '<button type="button" class="eling-chip" data-tanya="' +
+            esc(c) +
+            '">' +
+            esc(c) +
+            "</button>"
+          );
+        })
+        .join("") +
+      "</div>";
+  }
+
+  /* Batasi waktu tiap panggilan AI. Kalau pengguna menutup jendela izin Puter,
+     janjinya tidak pernah selesai — tanpa ini balon akan berhenti di "…". */
+  function denganBatas(janji, detik) {
+    return Promise.race([
+      janji,
+      new Promise(function (_, tolak) {
+        setTimeout(function () {
+          tolak(new Error("waktu habis"));
+        }, detik * 1000);
+      }),
+    ]);
+  }
+
+  /* Teruskan ke AI sungguhan, lalu tampilkan jawabannya perlahan (streaming). */
+  function kirimKeAI() {
+    var span = bubbleAI();
+    span.textContent = "…";
+
+    // kalau lebih dari 4 dtk belum ada jawaban, beri tahu soal jendela izin
+    var petunjuk = setTimeout(function () {
+      if (span.textContent.trim() === "…") {
+        span.innerHTML =
+          "Menghubungi AI…<br><span style='font-size:12px;color:#6b7a70'>" +
+          "Kalau muncul jendela izin Puter, selesaikan dulu ya — itu gratis " +
+          "dan cukup sekali saja.</span>";
+      }
+    }, 4000);
+
+    var pesan = [{ role: "system", content: SISTEM }].concat(
+      riwayat.slice(-8).map(function (r) {
+        return { role: r.peran, content: r.teks };
+      })
+    );
+
+    muatPuter().then(function (siap) {
+      if (!siap) {
+        clearTimeout(petunjuk);
+        return gagalAI(span);
+      }
+
+      function selesai(teks) {
+        if (!teks || !teks.trim()) throw new Error("kosong");
+        clearTimeout(petunjuk);
+        riwayat.push({ peran: "assistant", teks: teks });
+        tampilAI(span, teks);
+      }
+
+      function gagal() {
+        clearTimeout(petunjuk);
+        gagalAI(span);
+      }
+
+      function tanpaModel() {
+        return denganBatas(
+          window.puter.ai.chat(pesan, { normalize: true }),
+          45
+        ).then(function (res) {
+          var isi = res && res.message && res.message.content;
+          if (Array.isArray(isi)) {
+            isi = isi
+              .map(function (p) {
+                return p && p.text ? p.text : "";
+              })
+              .join("");
+          }
+          return isi;
+        });
+      }
+
+      denganBatas(
+        window.puter.ai.chat(pesan, { model: MODEL_AI, stream: true, normalize: true }),
+        45
+      )
+        .then(function (res) {
+          if (!res || typeof res[Symbol.asyncIterator] !== "function") {
+            throw new Error("bukan stream");
+          }
+          var teks = "";
+          return (async function () {
+            for await (var bagian of res) {
+              var k = bagian && bagian.text;
+              if (k) {
+                teks += k;
+                clearTimeout(petunjuk);
+                tampilAI(span, teks);
+              }
+            }
+            return teks;
+          })();
+        })
+        .then(selesai)
+        .catch(function () {
+          // mode streaming gagal → coba mode biasa tanpa model khusus
+          return tanpaModel().then(selesai);
+        })
+        .catch(gagal);
+    });
   }
 
   /* ---------- UI ---------- */
@@ -331,16 +537,35 @@
     if (!teks) return;
     input.value = "";
     bubble(esc(teks), "user");
+    riwayat.push({ peran: "user", teks: teks });
+    if (riwayat.length > 24) riwayat = riwayat.slice(-24);
     typing(function () {
-      var r = jawab(teks);
-      bubble(r.html, "bot");
-      chipsKe(r.chips);
+      var r = jawabLokal(teks);
+      if (r) {
+        bubble(r.html, "bot");
+        chipsKe(r.chips);
+        riwayat.push({
+          peran: "assistant",
+          teks: r.html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(),
+        });
+        return;
+      }
+      kirimKeAI();
     });
   }
 
   function bukaChat(prompt) {
     panel.classList.add("buka");
     floating.setAttribute("aria-expanded", "true");
+    // panaskan Puter di belakang layar supaya jawaban AI tidak menunggu muat skrip
+    muatPuter().then(function (siap) {
+      var st = panel.querySelector(".eling-head-status");
+      if (st) {
+        st.innerHTML = siap
+          ? "<span></span> Dibantu AI, jawab instan untuk topik sampah"
+          : "<span></span> Mode luring — hanya topik sampah";
+      }
+    });
     if (prompt) {
       kirim(prompt);
     } else {
