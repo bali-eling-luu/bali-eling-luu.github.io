@@ -34,6 +34,11 @@
     ".eling-ai-label{display:inline-block;margin-bottom:6px;padding:2px 8px;border-radius:999px;background:#d9a441;color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}",
     ".eling-ai-teks{display:block}",
     ".eling-ai .eling-chips{margin-top:9px}",
+    ".eling-ai-aksi{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}",
+    ".eling-ai-aksi .eling-ai-btn{margin-top:0}",
+    ".eling-ai-aksi .eling-ai-btn-utama{background:#17803d;border-color:#17803d;color:#fff}",
+    ".eling-ai-aksi .eling-ai-btn-utama:hover{background:#14532d;border-color:#14532d;color:#fff}",
+    ".eling-ai-aksi .eling-ai-btn:disabled{opacity:.6;cursor:default;transform:none}",
     ".eling-typing{display:flex;gap:4px;padding:14px 16px}",
     ".eling-typing i{width:6px;height:6px;border-radius:999px;background:#9aa79f;animation:elingdot 1.1s infinite ease-in-out}",
     ".eling-typing i:nth-child(2){animation-delay:.16s}.eling-typing i:nth-child(3){animation-delay:.32s}",
@@ -301,6 +306,31 @@
   var riwayat = []; // {peran:"user"|"assistant", teks:"..."}
   var MODEL_AI = "gemini-3.5-flash-lite";
 
+  /* Pengunjung di tawari AI dulu — pop-up izin Puter tidak muncul diam-diam.
+     Dianggap aktif setelah jawaban AI pertama berhasil, lalu disimpan di
+     peramban supaya tidak ditanya lagi. */
+  var aiIzin = false;
+  try {
+    aiIzin = localStorage.getItem("eling_ai_izin") === "1";
+  } catch (e) {}
+  function setujuiAI() {
+    aiIzin = true;
+    try {
+      localStorage.setItem("eling_ai_izin", "1");
+    } catch (e) {}
+    perbaruiStatus();
+  }
+
+  /* Isi baris status di kepala panel, mengikuti apakah AI sudah disetujui. */
+  function perbaruiStatus() {
+    if (!panel) return;
+    var st = panel.querySelector(".eling-head-status");
+    if (!st) return;
+    st.innerHTML = aiIzin
+      ? "<span></span> Dibantu AI — jawab instan untuk topik sampah"
+      : "<span></span> Topik sampah dijawab instan · AI opsional";
+  }
+
   var SISTEM = [
     "Kamu adalah Eling, asisten digital situs Bali Eling Luu — situs edukasi",
     "tentang pemilahan dan pengelolaan sampah di Bali, Indonesia.",
@@ -390,6 +420,59 @@
       "</div>";
   }
 
+  /* Jalan keluar yang tetap membantu saat AI tidak dipakai / gagal. */
+  function fallbackTanpaAI() {
+    bubble(
+      "Tidak apa-apa. Kamu tetap bisa bertanya soal jenis sampah lewat " +
+        'pilihan di bawah, atau buka langsung <a href="panduan.html" style="font-weight:700;color:#17803d">Panduan Memilah</a>.',
+      "bot"
+    );
+    chipsKe(
+      KATEGORI_KEYS.map(function (k) {
+        return KATEGORI[k].nama;
+      })
+    );
+  }
+
+  /* Tawarkan AI sebelum memanggil Puter, supaya jendela izin tidak muncul
+     diam-diam di tengah percakapan. */
+  function tawarAI() {
+    var wrap = el("div", "eling-baris bot");
+    var b = el("div", "eling-bubble eling-ai");
+    b.innerHTML =
+      '<span class="eling-ai-label">Eling AI</span>' +
+      '<span class="eling-ai-teks">Pertanyaan ini di luar materi sampah di situs ini, ' +
+      "jadi jawaban datanya tidak ada di basis kami. Eling bisa menjawabnya " +
+      "dengan AI gratis — hanya perlu izin sekali saja, sesudahnya tidak " +
+      "ditanya lagi.</span>";
+
+    var aksi = el("div", "eling-ai-aksi");
+
+    var ya = el("button", "eling-chip eling-ai-btn eling-ai-btn-utama");
+    ya.type = "button";
+    ya.textContent = "Aktifkan AI";
+    ya.addEventListener("click", function () {
+      ya.disabled = true;
+      wrap.remove();
+      kirimKeAI();
+    });
+
+    var tidak = el("button", "eling-chip eling-ai-btn");
+    tidak.type = "button";
+    tidak.textContent = "Nanti saja";
+    tidak.addEventListener("click", function () {
+      wrap.remove();
+      fallbackTanpaAI();
+    });
+
+    aksi.appendChild(ya);
+    aksi.appendChild(tidak);
+    b.appendChild(aksi);
+    wrap.appendChild(b);
+    body.appendChild(wrap);
+    body.scrollTop = body.scrollHeight;
+  }
+
   /* Batasi waktu tiap panggilan AI. Kalau pengguna menutup jendela izin Puter,
      janjinya tidak pernah selesai — tanpa ini balon akan berhenti di "…". */
   function denganBatas(janji, detik) {
@@ -433,6 +516,7 @@
       function selesai(teks) {
         if (!teks || !teks.trim()) throw new Error("kosong");
         clearTimeout(petunjuk);
+        setujuiAI();
         riwayat.push({ peran: "assistant", teks: teks });
         tampilAI(span, teks);
       }
@@ -550,6 +634,10 @@
         });
         return;
       }
+      if (!aiIzin) {
+        tawarAI();
+        return;
+      }
       kirimKeAI();
     });
   }
@@ -557,15 +645,12 @@
   function bukaChat(prompt) {
     panel.classList.add("buka");
     floating.setAttribute("aria-expanded", "true");
-    // panaskan Puter di belakang layar supaya jawaban AI tidak menunggu muat skrip
-    muatPuter().then(function (siap) {
-      var st = panel.querySelector(".eling-head-status");
-      if (st) {
-        st.innerHTML = siap
-          ? "<span></span> Dibantu AI, jawab instan untuk topik sampah"
-          : "<span></span> Mode luring — hanya topik sampah";
-      }
-    });
+    perbaruiStatus();
+    // panaskan Puter hanya kalau pengunjung sudah setuju, supaya
+    // pengunjung baru tidak langsung memuat skrip pihak ketiga
+    if (aiIzin) {
+      muatPuter();
+    }
     if (prompt) {
       kirim(prompt);
     } else {

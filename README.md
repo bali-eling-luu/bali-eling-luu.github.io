@@ -14,7 +14,7 @@ Dibangun dengan **HTML + Tailwind CSS (CDN) + JavaScript vanilla** — tanpa bac
 - **4 kategori sampah** — Organik, Anorganik, Residu, B3/Khusus
 - **6 tips lingkungan**
 - **4 artikel lengkap** (`artikel.html?id=…`) — pemilahan, wisata, pantai, B3; teks asli di `data_artikel.js` + halaman arsip
-- **Asisten Eling** — hibrida: basis pengetahuan lokal (instan, offline) + AI sungguhan via Puter.js untuk pertanyaan di luar topik, lengkap dengan ingatan percakapan
+- **Asisten Eling** — hibrida: basis pengetahuan lokal (instan, offline) + AI sungguhan via Puter.js untuk pertanyaan di luar topik, dengan izin sekali dari pengunjung dan ingatan percakapan
 - **Panduan Memilah** (`panduan.html`) — 4 kartu kategori + langkah praktis, tampilan app-like dengan bottom nav
 - **Detail Jenis Sampah** (`edukasi.html`) — pengertian, contoh, cara menangani; 4 kategori dalam satu halaman lewat parameter `?jenis=`
 - **Dashboard Pengguna** (`dashboard.html`) — sambutan, statistik dampak harian, tips harian,
@@ -75,8 +75,15 @@ pertanyaan
    ├─ 4. ITEM / KATEGORI → kartu spesifik ("botol plastik" → Anorganik)
    │        └─ tidak ketemu → lompat ke 5
    │
-   └─ 5. AI sungguhan (Puter.js) — streaming, dengan ingatan 8 langkah terakhir
-            └─ gagal / dibatalkan → pesan fallback + pilihan kategori
+   ├─ 5. AI sudah disetujui sebelumnya?  (`eling_ai_izin` di peramban)
+   │        ├─ ya  → langsung ke 6
+   │        └─ belum → tawarkan dulu:  [Aktifkan AI]  [Nanti saja]
+   │                      ├─ Aktifkan → 6  (pop-up izin baru muncul di sini)
+   │                      └─ Nanti    → jawaban lokal: kartu kategori + panduan
+   │
+   └─ 6. AI sungguhan (Puter.js) — streaming, dengan ingatan 8 langkah terakhir
+            ├─ sukses → izin disimpan, tidak ditawari lagi
+            └─ gagal  → pesan fallback + pilihan kategori
 ```
 
 **Mengapa lokal dulu:** instan, gratis, tanpa login, dan tidak mungkin mengarang.
@@ -89,11 +96,17 @@ jauh lebih berbahaya daripada jawaban yang terbatas.
 
 ### Yang perlu diketahui soal AI (Puter.js)
 
+- **Opt-in, bukan pop-up diam-diam.** Pengunjung baru tidak langsung diminta izin —
+  dia ditawari dulu lewat kartu **[Aktifkan AI] [Nanti saja]**. Jendela login Puter
+  baru muncul setelah dia sendiri yang menekan tombolnya. Ini bukan sekadar sopan;
+  juga teknis: `puter.ai.chat()` harus dipanggil dari respons klik pengguna
+  supaya browser tidak memblokir jendelanya.
 - **Tanpa API key, tanpa backend** — skrip dimuat dari `https://js.puter.com/v2/`,
-  hanya saat pertama dibutuhkan, sehingga bobot halaman awal tidak bertambah.
-- **Pengunjung baru akan diminta masuk akun Puter** (Google / Apple / email) lewat
-  jendela pop-up. Ini gratis dan cukup sekali — sesudahnya token disimpan di
-  peramban. Tidak ada mode tamu.
+  hanya setelah disetujui. Pengunjung yang tidak memakai AI tidak memuat
+  skrip pihak ketiga sama sekali.
+- **Masuk akun Puter** (Google / Microsoft / Apple / email) diminta sekali saja,
+  gratis, lalu disimpan di peramban (`eling_ai_izin`) dan tidak ditanya lagi.
+  Tidak ada mode tamu.
 - Kalau pop-up ditutup atau diblokir, panggilan dibatasi **45 detik per percobaan**
   lalu jatuh ke pesan fallback + pilihan kategori. Tidak akan menggantung.
 - Jawaban AI diberi label **"Eling AI"** supaya pembaca tahu itu bukan data resmi situs.
