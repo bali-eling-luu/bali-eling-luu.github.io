@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detail Jenis Sampah — Bali Eling Luu</title>
     <meta name="description" content="Pengertian, contoh, dan cara menangani jenis sampah." />
+    <link rel="canonical" href="https://bali-eling-luu.github.io/edukasi.html" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="theme-color" content="#17803D" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Bali Eling Luu" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content="Detail Jenis Sampah — Bali Eling Luu" />
+    <meta property="og:description" content="Pengertian, contoh, dan cara menangani jenis sampah." />
+    <meta property="og:url" content="https://bali-eling-luu.github.io/edukasi.html" />
+    <meta property="og:image" content="https://bali-eling-luu.github.io/assets/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Bali Eling Luu — Jaga Alam, Lestarikan Bali" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Detail Jenis Sampah — Bali Eling Luu" />
+    <meta name="twitter:description" content="Pengertian, contoh, dan cara menangani jenis sampah." />
+    <meta name="twitter:image" content="https://bali-eling-luu.github.io/assets/og-image.jpg" />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/webp" href="/assets/logo/logo-mark.webp" />
+    <link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -52,7 +76,8 @@
       }
       .link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
     </style>
-  </head>
+      <script src="seo.js"></script>
+    </head>
 
   <body class="bg-cream font-sans text-ink antialiased">
     <!-- ===== HEADER ===== -->
@@ -247,6 +272,7 @@
           "</div>";
 
         document.title = judul + " — Bali Eling Luu";
+        seoEdukasi(key, k, judul, seoDipakai);
 
         document.getElementById("ctaLokasi").addEventListener("click", function () {
           if (window.ElingChat) window.ElingChat.buka("Lokasi pembuangan " + k.nama + " terdekat");
@@ -260,7 +286,63 @@
         }
       }
 
+      /* Setiap jenis sampah dihalaman yang sama, jadi tanpa bantuan ini
+         Google menganggap keempatnya satu halaman yang sama.
+         dipakai = param ?jenis= benar-benar ada; kalau tidak, canonical
+         halaman polos dibiarkan apa adanya supaya cocok dengan entri
+         /edukasi.html di sitemap. */
+      function seoEdukasi(key, k, judul, dipakai) {
+        var halaman = dipakai
+          ? "/edukasi.html?jenis=" + encodeURIComponent(key)
+          : "/edukasi.html";
+        var url = SEO.BASE + halaman;
+        var gambar = SEO.BASE + "/" + (FOTO[key] || "assets/og-image.jpg");
+        var deskripsi = k.ringkas || k.definisi || "";
+
+        SEO.terapkanURL(halaman, "article", judul + " — Bali Eling Luu", deskripsi, gambar);
+        document.title = judul + " — Bali Eling Luu";
+
+        SEO.ld("seo-edukasi", {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          mainEntityOfPage: { "@type": "WebPage", "@id": url },
+          headline: judul,
+          description: deskripsi,
+          image: [gambar],
+          inLanguage: "id",
+          articleSection: "Edukasi Jenis Sampah",
+          author: {
+            "@type": "Organization",
+            name: "Tim Bali Eling Luu",
+            url: SEO.BASE + "/",
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "Bali Eling Luu",
+            logo: {
+              "@type": "ImageObject",
+              url: SEO.BASE + "/assets/logo/logo-tulisan.webp",
+              width: 680,
+              height: 680,
+            },
+          },
+          breadcrumb: { "@id": url + "#breadcrumb" },
+        });
+
+        SEO.ld("seo-breadcrumb", {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "@id": url + "#breadcrumb",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Beranda", item: SEO.BASE + "/" },
+            { "@type": "ListItem", position: 2, name: "Panduan Sampah", item: SEO.BASE + "/panduan.html" },
+            { "@type": "ListItem", position: 3, name: k.nama, item: url },
+          ],
+        });
+      }
+
       var param = new URLSearchParams(location.search).get("jenis");
+      var seoDipakai = kategoriValid(param); // ?jenis= asli, sebelum diganti default
       if (!kategoriValid(param)) param = "anorganik";
       render(param);
     </script>

@@ -35,7 +35,12 @@ Bali Eling Luu/
 ├── data_statistik.js # Statistik sampah Bali + sumbernya
 ├── data_sampah.js    # Basis pengetahuan: 4 kategori, 30 item, 7 topik
 ├── chat.js           # UI & logika asisten Eling
+├── seo.js            # bantuan SEO halaman yang isinya diisi JS
+├── robots.txt        # izin perayapan + arah ke sitemap
+├── sitemap.xml       # 13 URL untuk mesin telusur
+├── favicon.ico       # ikon tab (16/32/48/64 px)
 └── assets/
+    ├── og-image.jpg                # kartu Open Graph 1200×630
     ├── photo01..05.webp          # foto alam & budaya Bali
     ├── foto-jenis-sampah/        # foto sampul tiap artikel
     │   ├── organik.webp
@@ -44,7 +49,8 @@ Bali Eling Luu/
     │   └── b3.webp
     └── logo/
         ├── logo-mark.webp
-        └── logo-tulisan.webp
+        ├── logo-tulisan.webp
+        └── apple-touch-icon.png   # 180×180 untuk iOS
 ```
 
 ## Menjalankan
@@ -124,6 +130,52 @@ dijawab instan tanpa perlu menyentuh AI:
   tips: "Bilas, kupas label kalau bisa, lalu masukkan ke plastik daur ulang."
 }
 ```
+
+## SEO & indeks mesin telusur
+
+Supaya situs muncul saat dicari di Google, semua ini ikut ter-commit:
+
+| Berkas | Isi |
+|---|---|
+| `robots.txt` | izinkan semua perayap + arahkan ke sitemap |
+| `sitemap.xml` | **13 URL** — 5 halaman, 4 artikel, 4 varian `edukasi.html?jenis=` |
+| `favicon.ico` | dibuat dari `logo-mark.webp` (16/32/48/64 px) |
+| `assets/og-image.jpg` | kartu Open Graph 1200×630 (foto Bali + judul) |
+| `seo.js` | bantuan untuk halaman yang isinya diisi JS |
+
+### Meta di tiap halaman
+
+Lima halaman statis sudah punya lengkap di HTML-nya:
+`canonical`, `robots`, `og:*` (type/site_name/locale/title/description/url/image),
+`twitter:card`, serta favicon & apple-touch-icon.
+
+### Structured data (JSON-LD)
+
+- **`index.html`** — `Organization` + `WebSite`
+- **`panduan.html`** — `ItemList` 4 jenis sampah
+- **`dashboard.html`** — `WebPage` + `BreadcrumbList`
+- **`artikel.html?id=…`** — `Article` + `BreadcrumbList`, diisi JS setelah artikel tampil
+- **`edukasi.html?jenis=…`** — `Article` + `BreadcrumbList`, diisi JS
+
+> **Kenapa dibantu JS:** artikel & jenis sampah diisi dari data, jadi
+> tanpa bantuan ini Google hanya melihat satu URL untuk keempat artikel.
+> `seo.js` menyesuaikan `canonical`, `og:url`, dan JSON-LD per varian.
+> **Catatan:** perayap media sosial (WhatsApp/Facebook) tidak menjalankan JS,
+> jadi tautan artikel tetap memakai pratinjau umum halaman.
+
+**Sengaja tidak dipasang:** `SearchAction` di `WebSite` — kotak pencarian
+situs ini berjalan lewat JS tanpa parameter URL, jadi menuliskannya di
+structured data akan berbohong dan bisa membuat Google menandai data itu tidak valid.
+
+### Yang masih perlu dilakukan manual
+
+1. Daftar di **[Google Search Console](https://search.google.com/search-console)** — metode termudah **HTML tag** (salin meta tag ke `<head>` `index.html`) atau **DNS TXT record**.
+2. Tambahkan properti `https://bali-eling-luu.github.io/`, verifikasi.
+3. Menuju **Sitemaps** → masukkan `sitemap.xml` → **Kirim**.
+4. Ulangi di **[Bing Webmaster Tools](https://www.bing.com/webmasters)** (otomatis mencakup DuckDuckGo).
+
+Setelah itu pakai **URL Inspection** di GSC untuk meminta pengindeksan
+segera pada halaman pertama.
 
 ## Menyesuaikan desain
 
