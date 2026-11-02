@@ -371,7 +371,7 @@
       previewImg.classList.remove("hidden");
       placeholder.classList.add("hidden");
       
-      prosesScanAI("canang-sari"); // Cerdas infer
+      runRoboflowVisionAPI(dataUrl, "scan");
     });
 
     // Upload file foto
@@ -397,12 +397,8 @@
         stopCamera();
         const targetId = btn.getAttribute("data-target");
         const item = CONTOH_DEMO_JURI.find(i => i.idTarget === targetId);
-        if (item && item.simulasiUrl) {
-          previewImg.src = item.simulasiUrl;
-          previewImg.classList.remove("hidden");
-          placeholder.classList.add("hidden");
-        }
-        prosesScanAI(targetId);
+        // Demo disabled - gunakan kamera/upload untuk AI scan real
+        alert("⚠️ Demo non-aktif. Pakai tombol Kamera atau Upload untuk scan AI real via Roboflow.");
       });
     });
 
@@ -562,7 +558,7 @@ const ROBOFLOW = {
 };
 
 function runRoboflowVisionAPI(dataUrl, sourceType) {
-  const scanOut = document.getElementById("scan-result");
+  const scanOut = document.getElementById("scannerResult");
   if (scanOut) {
     scanOut.innerHTML = `\
       <div class="text-xs text-muted mb-2">AI sedang memindai (${sourceType})...</div>
@@ -639,7 +635,7 @@ function mapToBaliWaste(aiResult) {
 }
 
 function displayScanResult(wasteItem, raw) {
-  const resultDiv = document.getElementById("scan-result");
+  const resultDiv = document.getElementById("scannerResult");
   if (!resultDiv || !wasteItem) return;
 
   const tindakan = Array.isArray(wasteItem.tindakan) ? wasteItem.tindakan.slice(0, 3) : [];
