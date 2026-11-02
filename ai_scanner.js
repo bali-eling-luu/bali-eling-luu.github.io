@@ -386,16 +386,7 @@
         previewImg.classList.remove("hidden");
         placeholder.classList.add("hidden");
 
-        // Identifikasi cerdas dari nama file atau fallback
-        const fname = (file.name || "").toLowerCase();
-        let targetId = "canang-sari";
-        if (fname.includes("botol") || fname.includes("plastik")) targetId = "botol-pet";
-        else if (fname.includes("kardus") || fname.includes("box")) targetId = "kardus-karton";
-        else if (fname.includes("baterai") || fname.includes("lampu")) targetId = "baterai-elektronik";
-        else if (fname.includes("makanan") || fname.includes("sayur")) targetId = "sisa-makanan";
-        else if (fname.includes("kaca") || fname.includes("arak")) targetId = "botol-kaca-arak";
-
-        prosesScanAI(targetId);
+        runRoboflowVisionAPI(event.target.result, "upload");
       };
       reader.readAsDataURL(file);
     });
@@ -560,3 +551,136 @@
   }
 
 })();
+
+// Roboflow Vision AI Inference (Client-side)
+// NOTE: API key client-side = expose key. Untuk demo MVP sampai deadline, dipakai dulu.
+// Upgrade path: proxy serverless/Cloudflare Worker agar key tidak bocor.
+const ROBOFLOW = {
+  API_KEY: "I7TkXw2LXxTlfKaRibgr",
+  WORKSPACE: "lanang-work",
+  WORKFLOW_ID: "general-segmentation-api",
+};
+
+function runRoboflowVisionAPI(dataUrl, sourceType) {
+  const scanOut = document.getElementById("scan-result");
+  if (scanOut) {
+    scanOut.innerHTML = `\
+      <div class="text-xs text-muted mb-2">AI sedang memindai (${sourceType})...</div>
+      <div class="h-2 w-full bg-ink/10 rounded-full overflow-hidden">
+        <div class="h-full w-1/3 bg-primary animate-pulse"></div>
+      </div>`;
+  }
+
+  // Roboflow endpoint:
+  // - Serverless Cloud API uses inference server POST JSON.
+  // - Di beberapa workflow UI, model_id dipakai sebagai `model_id`.
+  // ponytail: jika format workflow berbeda, ganti `model_id` sesuai Roboflow response/workflow.
+  const model_id = `${ROBOFLOW.WORKSPACE}/${ROBOFLOW.WORKFLOW_ID}/1`;
+
+  const payload = {
+    image: dataUrl,
+    model_id,
+    // Beberapa deployment butuh api_key header; client-side JSON tetap dipakai dulu.
+    api_key: ROBOFLOW.API_KEY,
+  };
+
+  fetch("https://serverless.roboflow.com", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((r) => {
+      if (!r.ok) throw new Error(`Roboflow HTTP ${r.status}`);
+      return r.json();
+    })
+    .then((result) => {
+      console.log("Roboflow result:", result);
+      const wasteItem = mapToBaliWaste(result);
+      displayScanResult(wasteItem, result);
+    })
+    .catch((err) => {
+      console.error("Roboflow scan error:", err);
+      displayScanResult({ id: "unknown", nama: "Tidak diketahui", kategori: "lainnya", warna: "#6B7A70", ikon: "❓" }, null);
+    });
+}
+
+function mapToBaliWaste(aiResult) {
+  // Minimal mapping: ambil label/top class dari response.
+  // roboflow output beda-beda: cari dari `predictions`, `output`, atau `label`.
+  const label = (aiResult?.label || aiResult?.predictions?.[0]?.class || aiResult?.predictions?.[0]?.class_name || "").toLowerCase();
+
+  const categories = [
+    { key: ["canang", "banten", "janur"], hit: "canang-sari" },
+    { key: ["pet", "pet1", "botol"], hit: "botol-pet" },
+    { key: ["dupa", "incense", "abu"], hit: "dupa-bekas" },
+    { key: ["kardus", "karton", "box"], hit: "kardus-karton" },
+    { key: ["battery", "baterai", "aki", "lampu"], hit: "baterai-elektronik" },
+    { key: ["kaca", "arak", "beling"], hit: "botol-kaca-arak" },
+    { key: ["sachet", "multilayer"], hit: "plastik-kemasan-sachet" },
+    { key: ["kelapa"], hit: "kelapa" },
+  ];
+
+  let idTarget = "unknown";
+  for (const c of categories) {
+    if (c.key.some((k) => label.includes(k))) {
+      idTarget = c.hit;
+      break;
+    }
+  }
+
+  // KNOWLEDGE_BASE_BALI ada di file atas.
+  const item = (typeof KNOWLEDGE_BASE_BALI !== "undefined")
+    ? KNOWLEDGE_BASE_BALI.find((x) => x.id === idTarget)
+    : null;
+
+  return item || { id: "unknown", nama: "Tidak diketahui", kategori: "lainnya", warna: "#6B7A70", ikon: "❓" };
+}
+
+function displayScanResult(wasteItem, raw) {
+  const resultDiv = document.getElementById("scan-result");
+  if (!resultDiv || !wasteItem) return;
+
+  const tindakan = Array.isArray(wasteItem.tindakan) ? wasteItem.tindakan.slice(0, 3) : [];
+  const keywords = Array.isArray(wasteItem.keywords) ? wasteItem.keywords.slice(0, 4) : [];
+
+  const badgeColor = wasteItem.warna || "#6B7A70";
+
+  resultDiv.innerHTML = `\
+    <div class="flex items-start gap-3">
+      <div class="h-12 w-12 rounded-2xl grid place-items-center" style="background:${badgeColor}1A; border:1px solid ${badgeColor}33;">
+        <div class="text-2xl">${wasteItem.ikon || "❓"}</div>
+      </div>
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center justify-between gap-2">
+          <h4 class="text-base font-extrabold text-forest truncate">${wasteItem.nama || "Tidak diketahui"}</h4>
+          <span class="text-[10px] font-bold uppercase px-2 py-1 rounded-full" style="background:${badgeColor}22; color:${badgeColor}; border:1px solid ${badgeColor}55;">${wasteItem.kategori || "lainnya"}</span>
+        </div>
+        ${keywords.length ? `<div class="mt-1 text-[11px] text-muted">Keyword: ${keywords.join(", ")}</div>` : ""}
+        ${tindakan.length ? `
+          <div class="mt-3">
+            <div class="text-xs font-bold text-forest mb-1">Tindakan cepat (3 langkah)</div>
+            <ol class="text-xs text-muted list-decimal pl-4 space-y-1">
+              ${tindakan.map((t, i) => `<li>${t}</li>`).join("")}
+            </ol>
+          </div>
+        ` : ""}
+        ${wasteItem.regulasi ? `<div class="mt-3 text-[11px] text-muted">Regulasi: ${wasteItem.regulasi}</div>` : ""}
+        ${wasteItem.fasilitasRekomendasi ? `<div class="mt-1 text-[11px] text-muted">Saran fasilitas: ${wasteItem.fasilitasRekomendasi}</div>` : ""}
+        ${raw ? `<div class="mt-3 text-[10px] text-ink/60">debug: ${escapeHtml(JSON.stringify(raw).slice(0, 200))}...</div>` : ""}
+      </div>
+    </div>`;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+window.runRoboflowVisionAPI = runRoboflowVisionAPI;
+
