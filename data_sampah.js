@@ -295,6 +295,30 @@ const ITEM = [
     kategori: "residu",
     tips: "Bungkus rapat dan hubungi pengelola setempat.",
   },
+  {
+    nama: "Canang sari & sisa banten",
+    alias: ["canang", "canang sari", "banten", "sesari", "janur", "porosan", "bunga canang", "sampah upacara"],
+    kategori: "organik",
+    tips: "PISAHKAN koin kepeng, permen, dupa, atau plastik pembungkus sebelum dikomposkan atau dimasukkan ke lubang biopori.",
+  },
+  {
+    nama: "Sisa dupa & abu",
+    alias: ["dupa", "abu dupa", "batang dupa", "sembahyang", "hio"],
+    kategori: "residu",
+    tips: "Pastikan bara api sudah padam. Abu dingin bisa ditabur ke tanah tanaman, tangkai bambunya masuk residu.",
+  },
+  {
+    nama: "Botol arak / botol kaca Bali",
+    alias: ["botol arak", "arak", "botol kaca tebal", "arak bali"],
+    kategori: "anorganik",
+    tips: "Simpan utuh tanpa pecah, sangat dicari untuk siklus guna ulang (refill) atau dijual ke Bank Sampah.",
+  },
+  {
+    nama: "Kelapa & danyuk (kulit kelapa)",
+    alias: ["kelapa", "danyuk", "sabut kelapa", "batok kelapa", "tapas"],
+    kategori: "organik",
+    tips: "Sabut dan batok kelapa sangat baik dijadikan mulsa tanaman, arang briket ramah lingkungan, atau kompos.",
+  },
 ];
 
 /* Pertanyaan umum → jawaban. cocok: kata kunci pemicu. */
@@ -382,6 +406,24 @@ const TOPIK = [
     cocok: ["bank sampah", "pengepul", "jual sampah", "tukar sampah", "poin"],
     jawaban:
       "Bank sampah menerima sampah anorganik terpilah dan mencatat nilainya dalam buku tabungan.\n\nCara memulai:\n1. Pilah dan bersihkan sampah anorganik di rumah.\n2. Datang ke bank sampah terdekat (biasanya di desa/banjar).\n3. Timbang dan catat nilainya.\n4. Nilainya bisa ditabung atau ditukar barang.\n\nSampah bernilai: botol PET, kaleng aluminium, kardus, kertas, botol kaca.",
+  },
+  {
+    judul: "Pengelolaan sampah canang & banten upacara",
+    cocok: ["canang", "banten", "upacara", "sesari", "janur", "sampah canang", "bunga canang"],
+    jawaban:
+      "Sisa upacara/canang sari adalah penyumbang volume sampah organik terbesar di Bali. Cara penanganan yang benar:\n1. Pisahkan koin kepeng/sesari, dupa, permen, dan plastik pembungkus.\n2. Masukkan janur dan bunga ke komposter, lubang biopori teba, atau serahkan ke TPS3R desa adat.\n3. Jangan membuang canang terbungkus kantong plastik kresek ke sungai atau laut, karena bertentangan dengan ajaran Palemahan (Tri Hita Karana).",
+  },
+  {
+    judul: "Regulasi sampah di Bali (Pergub 97 & Pergub 47)",
+    cocok: ["pergub", "aturan bali", "hukum", "regulasi", "larangan plastik", "kebijakan"],
+    jawaban:
+      "Pemprov Bali memiliki 2 regulasi penting penanganan sampah:\n1. Pergub Bali No. 97/2018: Melarang penggunaan kantong plastik, styrofoam, dan sedotan plastik di toko modern, pasar, dan restoran.\n2. Pergub Bali No. 47/2019: Mewajibkan pengelolaan sampah berbasis sumber di tingkat rumah tangga, desa dinas, dan desa adat (lewat awig-awig/pararem serta TPS3R).\n3. Target Pemprov Bali: Gerakan Bali 100% Memilah Sampah mulai 1 Juli 2026.",
+  },
+  {
+    judul: "AI Waste Scanner & Eco Map Bali Eling Luu",
+    cocok: ["scanner", "kamera", "ai scanner", "peta", "eco map", "lapor luu", "fitur"],
+    jawaban:
+      "Platform Bali Eling Luu dilengkapi fitur cerdas untuk membantumu mengambil tindakan nyata:\n• AI Waste Scanner: Buka kamera untuk mendeteksi sampah seketika, lengkap dengan langkah pemilahan dan rekomendasi penyaluran.\n• Bali Eco Map: Peta geospasial interaktif titik TPS3R, Bank Sampah, dan Drop Box B3 se-Bali.\n• Lapor Luu: Fitur partisipasi warga (Bali Smart Society) untuk memotret dan memetakan titik sampah liar.",
   },
 ];
 

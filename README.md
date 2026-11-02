@@ -1,25 +1,88 @@
 # Bali Eling Luu 🌿
+### AI-Powered Environmental Action Platform — Solver for Bali
 
-Website edukasi pemilahan sampah dan pelestarian lingkungan di Bali.
-Dibangun dengan **HTML + Tailwind CSS (CDN) + JavaScript vanilla** — tanpa backend, tanpa build step, gratis di-hosting statis.
+Platform digital berbasis Artificial Intelligence (AI) yang menghubungkan edukasi pemilahan sampah, pengenalan sampah budaya & rumah tangga via AI Vision, direktori geospasial TPS3R/Bank Sampah se-Bali, dan aksi nyata masyarakat.
 
-> Tagline: *Jaga Alam, Lestarikan Bali.*
+> **Tagline:** *Dari Kesadaran Menjadi Tindakan Nyata untuk Bali.*  
+> **Tema Kompetisi:** *AI Web Innovation Challenge — Bali Digifest 2026 (Build with AI, Solver for Bali)*  
+> **Bidang:** Bali Smart Society, UMKM & Bisnis Lingkungan, Pendidikan.
 
 ---
 
-## Fitur
+## 🚀 Fitur Unggulan & Pilar Inovasi
 
-- **Splash screen** — foto alam Bali + logo, otomatis fade ke halaman utama
-- **Hero pencarian** — cari jenis sampah atau pilih kategori
-- **4 kategori sampah** — Organik, Anorganik, Residu, B3/Khusus
-- **6 tips lingkungan**
-- **4 artikel lengkap** (`artikel.html?id=…`) — pemilahan, wisata, pantai, B3; teks asli di `data_artikel.js` + halaman arsip
-- **Asisten Eling** — hibrida: basis pengetahuan lokal (instan, offline) + AI sungguhan via Puter.js untuk pertanyaan di luar topik, dengan izin sekali dari pengunjung dan ingatan percakapan
-- **Panduan Memilah** (`panduan.html`) — 4 kartu kategori + langkah praktis, tampilan app-like dengan bottom nav
-- **Detail Jenis Sampah** (`edukasi.html`) — pengertian, contoh, cara menangani; 4 kategori dalam satu halaman lewat parameter `?jenis=`
-- **Dashboard Pengguna** (`dashboard.html`) — sambutan, statistik dampak harian, tips harian,
-  dan 6 jenis tempat penerima sampah
-- **Responsive** — desktop 1440px & mobile 390px; bottom nav hanya di mobile
+### 1. AI Waste Scanner (Fitur Inti AI Vision)
+- **Deteksi Kamera & Upload Gambar:** Memindai sampah langsung dari kamera smartphone atau unggahan galeri foto.
+- **Pengenalan Sampah Khas Bali & Budaya:** Mengenali material khusus seperti **Canang Sari / Sisa Banten**, **Sisa Dupa & Abu**, **Botol Kaca Arak**, **Danyuk / Sabut Kelapa**, serta sampah plastik/kardus/B3 umum.
+- **AI Confidence & Langkah Tindakan:** Memberikan akurasi prediksi (misal: 96%), klasifikasi wadah warna, serta panduan praktis 3-langkah pemilahan.
+- **Penyaluran Fasilitas Terdekat:** Langsung merekomendasikan apakah material harus disalurkan ke Kompos Mandiri, TPS3R, atau Bank Sampah terdekat.
+- **Mode Demo Cepat (Quick Test Juri):** Disediakan tombol simulasi instan untuk demonstrasi juri tanpa perlu mengambil foto fisik saat presentasi.
+
+### 2. Bali Eco Map (Solusi Geospasial Interaktif)
+- **Peta Interaktif Leaflet.js & OpenStreetMap:** 100% open-source, ringan, cepat, tanpa biaya API key Google Maps.
+- **Basis Data Titik Nyata Se-Bali:** Sebaran TPS 3R, Bank Sampah Unit, TOSS Center, dan Drop Box B3 terverifikasi di Kota Denpasar, Kab. Badung, Gianyar, Tabanan, dan Klungkung.
+- **Filter Wilayah & Kategori:** Pengguna dapat menyaring berdasarkan Kabupaten/Kota dan jenis penerimaan sampah.
+- **Rute Google Maps Langsung:** Tiap pin dilengkapi tombol langsung membuka petunjuk arah navigasi Google Maps.
+- **Deteksi Lokasi Pengguna (Geolocation):** Menemukan fasilitas pengolahan sampah dalam radius terdekat dari lokasi perangkat.
+
+### 3. Eco Action & Gamifikasi "Palemahan" (Habit Building & Retensi)
+- **Tantangan Harian (Daily Quests):** Misi pemilahan sampah harian berlandaskan kearifan lokal **Tri Hita Karana (Palemahan)**.
+- **Sistem Level & Lencana Kehormatan:** Peningkatan level dari *Krama Peduli*, *Satria Palemahan*, hingga *Pahlawan Asri Bali*.
+- **Streak Tracker (🔥):** Menghitung keaktifan hari memilah berturut-turut untuk mendorong retensi kunjungan harian.
+- **Penyimpanan Persisten:** Log aktivitas dan poin tersimpan otomatis di browser (`localStorage`).
+
+### 4. Lapor Luu (Partisipasi Warga — Bali Smart Society)
+- **Pelaporan Sampah Liar:** Warga dan wisatawan dapat melaporkan titik tumpukan sampah pantai, got tersumbat, atau timbulan liar di jalanan Bali.
+- **Feed Komunitas Transparan:** Status penanganan publik yang jelas (*Diterima*, *Diteruskan ke DLHK*, *Dalam Penanganan Banjar*, *Selesai*).
+
+### 5. Eling AI Assistant (Regulasi & Budaya Bali)
+- **Pengetahuan Regulasi Daerah:** Memahami **Pergub Bali No. 97/2018** (Pembatasan Plastik Sekali Pakai), **Pergub Bali No. 47/2019** (Pengelolaan Sampah Berbasis Sumber di Desa Adat), serta target **Bali 100% Memilah Sampah 1 Juli 2026**.
+- **Panduan Santun:** Menjawab dengan pemahaman adat Bali serta ramah bagi wisatawan mancanegara.
+
+---
+
+## 📂 Struktur File Proyek
+
+```
+Bali Eling Luu/
+├── index.html           # Landing page utama (Hero AI Scanner, Bali Eco Map, Lapor Luu, Tips)
+├── dashboard.html       # Dashboard pengguna (Gamifikasi Palemahan, Daily Quests, Log Dampak)
+├── panduan.html         # Panduan komprehensif 4 kategori sampah
+├── edukasi.html         # Detail materi edukasi sampah (?jenis=organik|anorganik|residu|b3)
+├── artikel.html         # Artikel mendalam pelestarian lingkungan
+├── ai_scanner.js        # Engine AI Waste Scanner, UI modal, kamera, dan analitik vision
+├── data_lokasi_peta.js  # Database titik koordinat TPS3R, Bank Sampah, Drop Box B3 se-Bali
+├── peta.js              # Inisialisasi peta Leaflet.js, custom pin, popup rute, dan filter
+├── eco_action.js        # Logika Gamifikasi Palemahan, Quests, XP, dan formulir Lapor Luu
+├── data_sampah.js       # Basis data sampah (termasuk canang, banten, dupa, kelapa, regulasi)
+├── chat.js              # Logika Asisten Eling AI (Local Rules + Puter.js fallback)
+├── data_statistik.js    # Data statistik timbulan sampah Bali (SIPSN & Pemprov Bali)
+├── data_artikel.js      # Konten artikel edukasi
+└── assets/              # Foto budaya, alam Bali, dan aset logo
+```
+
+---
+
+## 🛠️ Cara Menjalankan Secara Lokal
+
+Buka terminal di direktori proyek dan jalankan:
+
+```bash
+python3 -m http.server 8000
+```
+
+Buka peramban di `http://localhost:8000`.
+
+---
+
+## 🏆 Kesiapan Kompetisi (Competition Readiness Checklist)
+
+- [x] **AI sebagai Fitur Inti:** AI Waste Scanner & Asisten Lingkungan berbasis aturan & vision.
+- [x] **Kesesuaian Tema Solver for Bali:** Mengatasi sampah upacara, pariwisata, dan mendukung Pergub 47 & 97.
+- [x] **Solusi Nyata Geospasial:** Peta interaktif fasilitas TPS3R dan Bank Sampah riil di Bali.
+- [x] **Retensi Pengguna:** Daily Quests, streak harian, dan sistem lencana adat Palemahan.
+- [x] **Mobile Responsive:** 100% responsif di layar ponsel cerdas (viewport 375px - 430px) hingga desktop.
+
 
 ## Struktur
 

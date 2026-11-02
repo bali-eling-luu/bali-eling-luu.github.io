@@ -142,7 +142,10 @@
         </ul>
 
         <div class="flex items-center gap-2.5">
-          <a href="index.html#panduan" class="hidden rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-forest lg:block">Mulai Belajar</a>
+          <button type="button" onclick="window.openBaliElingScanner()" class="rounded-xl bg-primary px-4 py-2.5 text-xs sm:text-sm font-extrabold text-white shadow-md shadow-primary/25 transition hover:bg-forest flex items-center gap-1.5 active:scale-[0.98]">
+            <span>📷 Scan AI</span>
+          </button>
+          <a href="index.html#peta" class="hidden rounded-xl border border-line bg-white px-4 py-2.5 text-xs sm:text-sm font-bold text-forest transition hover:border-primary lg:block">Eco Map</a>
           <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menu" class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-forest transition hover:border-primary lg:hidden">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           </button>
@@ -318,6 +321,7 @@
     </nav>
 
     <script src="data_sampah.js"></script>
+    <script src="ai_scanner.js"></script>
     <script src="chat.js"></script>
     <script>
       document.getElementById("menuBtn").addEventListener("click", function () {
