@@ -565,9 +565,14 @@
     } catch (err) {
       console.warn("AI scanning fallback triggered:", err);
       if (laser) laser.classList.add("hidden");
-      // Fallback cerdas agar pengguna tetap dapat informasi bermanfaat
-      const fallbackItem = KNOWLEDGE_BASE_BALI[1]; // Botol PET
-      renderHasilPindai(fallbackItem, "Deteksi Heuristik", 92);
+      // Model gagal dijalankan (mis. CDN terblokir) — tampil jujur, bukan tebakan
+      const offlineItem = buildBelumYakinItem("model AI tidak tersedia");
+      offlineItem.nama = "AI Sedang Tidak Tersedia";
+      offlineItem.ikon = "⚠️";
+      offlineItem.warna = "#D64545";
+      offlineItem.labelKategori = "Gagal Menjalankan AI";
+      offlineItem.deskripsi = "Neural network gagal dimuat (koneksi CDN bermasalah). Kamu tetap bisa memilah manual mengikuti panduan di bawah.";
+      renderHasilPindai(offlineItem, "Model Load Error", null);
     }
   }
 
@@ -608,14 +613,52 @@
   }
 
   /**
+   * Cocokkan keyword sebagai KATA UTUH (termasuk bentuk jamak).
+   * Mencegah salah cocok seperti "volcano" mengandung "can" → kaleng.
+   */
+  function matchKeyword(text, keywords) {
+    if (!text) return null;
+    for (const kw of keywords) {
+      const esc = String(kw).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      if (new RegExp(`\\b${esc}(s|es)?\\b`, "i").test(text)) return kw;
+    }
+    return null;
+  }
+
+  /**
+   * Kartu hasil jujur saat AI belum cukup yakin mengenali objek
+   * (daripada menampilkan tebakan yang salah dengan keyakinan palsu).
+   */
+  function buildBelumYakinItem(topClass) {
+    return {
+      id: "belum-yakin",
+      nama: "Sampah Belum Terdeteksi Yakin",
+      kategori: "lainnya",
+      labelKategori: "Perlu Pindai Ulang",
+      warna: "#6B7A70",
+      ikon: "🔎",
+      deskripsi: `AI mendeteksi objek mirip "${topClass}" namun keyakinannya masih rendah. Ambil foto lebih dekat agar hasilnya akurat.`,
+      tindakan: [
+        "Pindai lebih dekat — objek harus memenuhi sebagian besar layar kamera.",
+        "Pastikan pencahayaan cukup dan latar belakang tidak terlalu ramai.",
+        "Coba sudut berbeda, atau gunakan 'Unggah Foto' dari galeri."
+      ],
+      fasilitasRekomendasi: "Sementara itu, pilah umum: organik → kompos, anorganik → Bank Sampah Unit",
+      nilaiEkonomi: "Sampah yang dipilah benar tetap bernilai di Bank Sampah Bali.",
+      regulasi: "Pergub Bali No. 47/2019 (Pilah Sampah dari Sumbernya)",
+      keywords: []
+    };
+  }
+
+  /**
    * Memetakan Hasil Prediksi Deep Learning ke Regulasi & Kategori Sampah Bali
    */
   function mapPredictionsToBaliWaste(predictions, filenameHint, colorProfile) {
     const hint = String(filenameHint || "").toLowerCase();
 
-    // 1. Cek Hint Nama File / Keyword
+    // 1. Cek Hint Nama File / Keyword (kata utuh)
     for (const item of KNOWLEDGE_BASE_BALI) {
-      if (item.keywords.some((k) => hint.includes(k))) {
+      if (matchKeyword(hint, item.keywords)) {
         return { item, topClass: item.nama, confidence: 97 };
       }
     }
@@ -626,23 +669,23 @@
       return { item: canang, topClass: "Sarana Upacara / Canang", confidence: 96 };
     }
 
-    // 3. Cocokkan dari Prediksi MobileNet
-    if (Array.isArray(predictions) && predictions.length > 0) {
-      for (const pred of predictions) {
-        const cName = String(pred.className || "").toLowerCase();
-        for (const item of KNOWLEDGE_BASE_BALI) {
-          if (item.keywords.some((kw) => cName.includes(kw))) {
-            const conf = Math.min(99, Math.max(90, Math.round((pred.probability || 0.85) * 100) + 10));
-            return { item, topClass: pred.className.split(",")[0], confidence: conf };
-          }
+    // 3. Cocokkan dari Prediksi MobileNet (abaikan prediksi dengan keyakinan < 5% = noise)
+    const strongPreds = (Array.isArray(predictions) ? predictions : [])
+      .filter((p) => p && typeof p.probability === "number" && p.probability >= 0.05);
+
+    for (const pred of strongPreds) {
+      const cName = String(pred.className || "").toLowerCase();
+      for (const item of KNOWLEDGE_BASE_BALI) {
+        if (matchKeyword(cName, item.keywords)) {
+          const conf = Math.min(99, Math.max(90, Math.round((pred.probability || 0.85) * 100) + 10));
+          return { item, topClass: pred.className.split(",")[0], confidence: conf };
         }
       }
     }
 
-    // 4. Default cerdas jika objek tidak dikenal persis: Botol Plastik PET (paling umum)
-    const defaultItem = KNOWLEDGE_BASE_BALI[1];
-    const topClass = predictions?.[0]?.className ? predictions[0].className.split(",")[0] : "Material Anorganik";
-    return { item: defaultItem, topClass: topClass, confidence: 93 };
+    // 4. Belum ada kecocokan yakin → tampilkan kartu jujur + saran pindai ulang
+    const topClass = predictions?.[0]?.className ? predictions[0].className.split(",")[0] : "objek tidak dikenal";
+    return { item: buildBelumYakinItem(topClass), topClass, confidence: null };
   }
 
   /**
@@ -673,9 +716,9 @@
             <span class="inline-block px-3 py-1 rounded-full text-xs font-black text-white shadow-sm" style="background-color: ${data.warna}">
               ${data.labelKategori}
             </span>
-            <p class="text-[11px] font-bold text-emerald-600 mt-1 flex items-center justify-end gap-1">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Akurasi: ${confidence}%</span>
+            <p class="text-[11px] font-bold ${confidence != null ? "text-emerald-600" : "text-amber-600"} mt-1 flex items-center justify-end gap-1">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">${confidence != null ? '<polyline points="20 6 9 17 4 12"/>' : '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>'}</svg>
+              <span>${confidence != null ? `Akurasi: ${confidence}%` : "Keyakinan rendah"}</span>
             </p>
           </div>
         </div>
