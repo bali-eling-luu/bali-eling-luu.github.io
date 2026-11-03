@@ -1087,23 +1087,43 @@
                 Jaga Alam, Lestarikan Bali.
               </h2>
               <p class="mt-5 max-w-2xl leading-relaxed text-cream/80">
-                Bali Eling Luu adalah platform edukasi lingkungan yang fokus
-                pada pemilahan sampah, pengurangan plastik, dan kebiasaan ramah
-                lingkungan — untuk masyarakat, wisatawan, dan pelajar di Bali.
+                Bali Eling Luu adalah <strong class="text-terra">AI-Powered Environmental Action Platform</strong> — 
+                platform digital cerdas yang menghubungkan edukasi, pemilahan sampah, 
+                komunitas desa adat, direktori fasilitas lingkungan, dan aksi nyata dalam satu ekosistem terpadu.
+                Dari kesadaran menjadi tindakan nyata untuk Bali.
               </p>
-              <a
-                href="panduan.html"
-                class="mt-8 inline-block rounded-xl bg-cream px-7 py-3.5 text-sm font-bold text-forest transition hover:bg-white"
-              >
-                Pelajari Lebih Lanjut
-              </a>
+              <p class="mt-3 max-w-2xl text-sm leading-relaxed text-cream/70">
+                Berlandaskan filosofi kearifan lokal <em>Tri Hita Karana</em> (Palemahan — keharmonisan manusia dengan alam semesta) 
+                serta implementasi <strong>Pergub Bali No. 47/2019</strong> &amp; <strong>Pergub Bali No. 97/2018</strong>.
+              </p>
+              <div class="mt-8 flex flex-wrap gap-3">
+                <button type="button" onclick="if(typeof openBaliElingScanner==='function')openBaliElingScanner()" class="rounded-xl bg-terra px-6 py-3.5 text-sm font-bold text-forest transition hover:bg-terra/80 shadow-md">
+                  📷 Coba AI Scanner
+                </button>
+                <a href="#peta" class="rounded-xl bg-cream px-6 py-3.5 text-sm font-bold text-forest transition hover:bg-white shadow-md">
+                  🗺️ Buka Eco Map Bali
+                </a>
+                <a href="dashboard.html" class="rounded-xl border border-cream/40 px-6 py-3.5 text-sm font-bold text-cream transition hover:bg-cream/10">
+                  📊 Dashboard Aksi &amp; Poin
+                </a>
+              </div>
             </div>
           </div>
         </section>
+        <!-- ============ BOTTOM NAV (MOBILE) ============ -->
+        <nav class="fixed bottom-0 left-0 z-40 w-full border-t border-line bg-white/95 backdrop-blur lg:hidden" aria-label="Navigasi bawah">
+          <ul class="mx-auto grid max-w-shell grid-cols-5">
+            <li><a href="#beranda" class="flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
+            <li><button type="button" onclick="if(typeof openBaliElingScanner==='function')openBaliElingScanner()" class="flex w-full flex-col items-center gap-0.5 py-2.5 text-[10px] font-semibold text-terra"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M4 16v2a2 2 0 0 0 2 2h2M16 4h2a2 2 0 0 1 2 2v2M16 20h2a2 2 0 0 0 2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>Scan AI</button></li>
+            <li><a href="#peta" class="flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-semibold text-muted hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Eco Map</a></li>
+            <li><a href="#lapor" class="flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-semibold text-muted hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Lapor</a></li>
+            <li><a href="dashboard.html" class="flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-semibold text-muted hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 21v-6M8 21v-4M12 21V9M3 3v18h18"/></svg>Aksi</a></li>
+          </ul>
+        </nav>
       </main>
 
       <!-- ============ FOOTER ============ -->
-      <footer class="border-t border-line bg-white">
+      <footer class="border-t border-line bg-white pb-16 lg:pb-0">
         <div
           class="mx-auto grid max-w-shell gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4"
         >
@@ -1120,44 +1140,40 @@
               >
             </div>
             <p class="mt-4 text-sm leading-relaxed text-muted">
-              Platform edukasi pemilahan sampah dan pelestarian lingkungan di
-              Bali.
+              AI-Powered Environmental Action Platform — dari kesadaran menjadi tindakan nyata untuk pelestarian lingkungan Bali.
             </p>
           </div>
 
           <nav aria-label="Navigasi footer">
-            <p class="text-sm font-bold text-ink">Navigasi</p>
+            <p class="text-sm font-bold text-ink">Navigasi Utama</p>
             <ul class="mt-4 space-y-2.5 text-sm text-muted">
               <li><a class="hover:text-primary" href="#beranda">Beranda</a></li>
-              <li>
-                <a class="hover:text-primary" href="panduan.html"
-                  >Panduan Sampah</a
-                >
-              </li>
-              <li>
-                <a class="hover:text-primary" href="#tips">Tips Lingkungan</a>
-              </li>
-              <li><a class="hover:text-primary" href="#artikel">Artikel</a></li>
+              <li><button type="button" onclick="if(typeof openBaliElingScanner==='function')openBaliElingScanner()" class="hover:text-terra font-semibold text-left">📷 AI Waste Scanner</button></li>
+              <li><a class="hover:text-primary" href="#peta">🗺️ Bali Eco Map (TPS3R &amp; Bank Sampah)</a></li>
+              <li><a class="hover:text-primary" href="panduan.html">Panduan Sampah</a></li>
+              <li><a class="hover:text-primary" href="#lapor">📢 Lapor Luu (Aduan Warga)</a></li>
+              <li><a class="hover:text-primary" href="dashboard.html">📊 Dashboard &amp; Aksi Palemahan</a></li>
             </ul>
           </nav>
 
           <div>
-            <p class="text-sm font-bold text-ink">Sumber Edukasi</p>
+            <p class="text-sm font-bold text-ink">Rujukan Regulasi &amp; Data</p>
             <ul class="mt-4 space-y-2.5 text-sm text-muted">
-              <li>
-                <a class="hover:text-primary" href="https://www.menlhk.go.id" target="_blank" rel="noopener"
-                  >KLHK</a
-                >
-              </li>
               <li>
                 <a class="hover:text-primary" href="https://dlh.baliprov.go.id" target="_blank" rel="noopener"
                   >Dinas Lingkungan Hidup Bali</a
                 >
               </li>
               <li>
-                <a class="hover:text-primary" href="dashboard.html"
-                  >Direktori Bank Sampah</a
+                <a class="hover:text-primary" href="https://sipsn.menlhk.go.id" target="_blank" rel="noopener"
+                  >SIPSN — Data Sampah KLHK</a
                 >
+              </li>
+              <li>
+                <span class="text-xs text-muted block">Pergub Bali No. 47/2019 (Pilah Berbasis Sumber)</span>
+              </li>
+              <li>
+                <span class="text-xs text-muted block">Pergub Bali No. 97/2018 (Batasi Sampah Plastik)</span>
               </li>
             </ul>
           </div>
@@ -1170,13 +1186,16 @@
                   >halo@balielingluu.id</a
                 >
               </li>
+              <li class="pt-2">
+                <span class="inline-block rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-bold text-primary">Bali Digifest 2026 Ready</span>
+              </li>
             </ul>
           </div>
         </div>
 
         <div class="border-t border-line">
           <p class="mx-auto max-w-shell px-5 py-5 text-xs text-muted">
-            © 2026 Bali Eling Luu. Jaga Alam, Lestarikan Bali.
+            © 2026 Bali Eling Luu — AI-Powered Environmental Action Platform. Jaga Alam, Lestarikan Bali.
           </p>
         </div>
       </footer>

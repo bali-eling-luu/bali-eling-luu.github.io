@@ -100,12 +100,13 @@
         <ul class="hidden items-center gap-7 text-sm font-medium text-muted lg:flex">
           <li><a class="link-underline transition hover:text-primary" href="index.html#beranda">Beranda</a></li>
           <li><a class="link-underline transition hover:text-primary" href="panduan.html">Panduan Sampah</a></li>
-          <li><a class="link-underline transition hover:text-primary" href="index.html#tips">Tips Lingkungan</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="index.html#peta">Eco Map Bali</a></li>
           <li><a class="link-underline font-bold text-primary" href="artikel.html" aria-current="page">Artikel</a></li>
-          <li><a class="link-underline transition hover:text-primary" href="index.html#tentang">Tentang Kami</a></li>
+          <li><a class="link-underline transition hover:text-primary" href="dashboard.html">Aksi &amp; Dashboard</a></li>
         </ul>
 
         <div class="flex items-center gap-2.5">
+          <button type="button" onclick="if(typeof openBaliElingScanner==='function')openBaliElingScanner()" class="hidden rounded-xl bg-terra px-4 py-2.5 text-sm font-bold text-forest transition hover:bg-terra/80 lg:block shadow-sm">📷 Scan AI</button>
           <a href="panduan.html" class="hidden rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white transition hover:bg-forest lg:block">Mulai Belajar</a>
           <button type="button" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="menu" class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-white text-forest transition hover:border-primary lg:hidden">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -116,9 +117,9 @@
       <ul id="menu" class="hidden border-t border-line bg-cream px-5 py-2 text-sm font-medium text-muted lg:hidden">
         <li><a class="block py-3" href="index.html">Beranda</a></li>
         <li><a class="block py-3" href="panduan.html">Panduan Sampah</a></li>
-        <li><a class="block py-3" href="index.html#tips">Tips Lingkungan</a></li>
+        <li><a class="block py-3" href="index.html#peta">🗺️ Eco Map Bali</a></li>
         <li><a class="block py-3 font-bold text-primary" href="artikel.html">Artikel</a></li>
-        <li><a class="block py-3" href="index.html#tentang">Tentang Kami</a></li>
+        <li><a class="block py-3" href="dashboard.html">📊 Aksi &amp; Dashboard</a></li>
       </ul>
     </header>
 
@@ -141,16 +142,18 @@
 
     <!-- ===== BOTTOM NAV (mobile) ===== -->
     <nav class="fixed bottom-0 left-0 z-40 w-full border-t border-line bg-white/95 backdrop-blur lg:hidden" aria-label="Navigasi bawah">
-      <ul class="mx-auto grid max-w-shell grid-cols-4">
-        <li><a href="index.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
-        <li><a href="panduan.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Jenis Sampah</a></li>
-        <li><a href="dashboard.html" class="flex flex-col items-center gap-1 py-3 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Lokasi</a></li>
-        <li><a href="artikel.html" aria-current="page" class="flex flex-col items-center gap-1 py-3 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>Artikel</a></li>
+      <ul class="mx-auto grid max-w-shell grid-cols-5">
+        <li><a href="index.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Beranda</a></li>
+        <li><button type="button" onclick="if(typeof openBaliElingScanner==='function')openBaliElingScanner()" class="flex w-full flex-col items-center gap-1 py-2.5 text-[10px] font-semibold text-terra"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M4 16v2a2 2 0 0 0 2 2h2M16 4h2a2 2 0 0 1 2 2v2M16 20h2a2 2 0 0 0 2-2v-2"/><circle cx="12" cy="12" r="3"/></svg>Scan AI</button></li>
+        <li><a href="panduan.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Panduan</a></li>
+        <li><a href="index.html#peta" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-semibold text-muted transition hover:text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Eco Map</a></li>
+        <li><a href="artikel.html" aria-current="page" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-primary"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>Artikel</a></li>
       </ul>
     </nav>
 
     <script src="data_sampah.js"></script>
     <script src="data_artikel.js"></script>
+    <script src="ai_scanner.js"></script>
     <script src="chat.js"></script>
     <script>
       document.getElementById("menuBtn").addEventListener("click", function () {
