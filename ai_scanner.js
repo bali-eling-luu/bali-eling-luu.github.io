@@ -604,8 +604,12 @@
         else if (g > r && g > b && g > 70) greenCount++;
       }
 
+      // Kalibrasi dari foto nyata: canang sari punya kuning gumitir ≥ 1,5% piksel,
+      // sementara objek non-canang (botol, kardus, baterai) maksimal 0,7%.
+      const yellowPct = yellowOrRedCount / totalPixels;
+      const greenPct = greenCount / totalPixels;
       return {
-        hasCeremonyFloral: (yellowOrRedCount / totalPixels) > 0.08 && (greenCount / totalPixels) > 0.08
+        hasCeremonyFloral: yellowPct >= 0.015 && greenPct >= 0.01
       };
     } catch (e) {
       return { hasCeremonyFloral: false };
