@@ -151,8 +151,47 @@
       nilaiEkonomi: "Bisa dijadikan bahan kerajinan upcycling atau bahan bakar alternatif (RDF).",
       regulasi: "Target Pengurangan Plastik Sekali Pakai Pemprov Bali",
       keywords: ["sachet", "bungkus", "snack", "chiki", "kopi", "multilayer", "plastik tipis", "residu"]
+    },
+    {
+      id: "kelapa-batok",
+      nama: "Kelapa, Batok & Daun Kelapa",
+      kategori: "organik",
+      labelKategori: "Organik (Bisa Diolah)",
+      warna: "#17803D",
+      ikon: "🥥",
+      deskripsi: "Batok kelapa, serabut, dan daun kering yang umum di rumah tangga & pura Bali.",
+      tindakan: [
+        "Batok kosong dikumpulkan kering, jangan dibakar sembarangan (asap hitam).",
+        "Serabut & daun kering bisa jadi bahan kompos atau bahan bakar arang batok.",
+        "Sisa air & daging kelapa masuk organik dapur, bukan dicampur plastik."
+      ],
+      fasilitasRekomendasi: "Kompos Banjar / Pengrajin Arang Batok / TPS3R Desa Adat",
+      nilaiEkonomi: "Batok kering bernilai untuk arang & kerajinan; serabut untuk media tanam.",
+      regulasi: "Pergub Bali No. 47/2019 (Pengelolaan Sampah Organik Berbasis Sumber)",
+      keywords: ["kelapa", "batok", "serabut", "daun kelapa", "nyiur", "coconut"]
+    },
+    {
+      id: "kaleng-minuman",
+      nama: "Kaleng Minuman & Aluminium",
+      kategori: "anorganik",
+      labelKategori: "Anorganik Daur Ulang",
+      warna: "#D9A441",
+      ikon: "🥫",
+      deskripsi: "Kaleng aluminium bekas minuman, susu kaleng, atau makanan kaleng.",
+      tindakan: [
+        "Kosongkan dan bilas kaleng agar tidak berbau dan tidak menarik hama.",
+        "Jangan dilipat supaya mudah dipilah di bank sampah dan bernilai lebih.",
+        "Pisahkan tutup logam dan sisa label plastik bila memungkinkan."
+      ],
+      fasilitasRekomendasi: "Bank Sampah Unit / Pengepul Logam Terdekat",
+      nilaiEkonomi: "Logam bernilai jual paling stabil di bank sampah (per kg).",
+      regulasi: "Mendukung Ekonomi Sirkular & Pergub Bali No. 97/2018",
+      keywords: ["kaleng", "aluminium", "aluminum", "can", "soda", "minuman kaleng", "tuna"]
     }
   ];
+
+  // Expose knowledge base ke scope global agar mapper AI bisa akses
+  window.KNOWLEDGE_BASE_BALI = KNOWLEDGE_BASE_BALI;
 
   // Sampel demo instan untuk dewan juri (Live Demo mode)
   const CONTOH_DEMO_JURI = [
@@ -581,6 +620,39 @@ const ROBOFLOW = {
   WORKFLOW_ID: "general-segmentation-api",
 };
 
+// Kelas yang dikirim ke SAM3 (zero-shot segmentation) — disesuaikan
+// kategori sampah rumah tangga & tradisional Bali.
+const RF_CLASSES = [
+  "canang sari offering",
+  "flower and leaf offering",
+  "organic food waste",
+  "coconut shell",
+  "incense sticks",
+  "plastic bottle",
+  "glass bottle",
+  "aluminum can",
+  "cardboard box",
+  "plastic sachet wrapper",
+  "plastic bag",
+  "paper",
+  "battery",
+  "styrofoam",
+];
+
+// Kelas AI → id entri knowledge base Bali
+const CLASS_TO_BALI_ID = [
+  { key: ["canang", "offering", "banten", "janur"], hit: "canang-sari" },
+  { key: ["food waste", "sisa makanan", "organic", "sayur"], hit: "sisa-makanan" },
+  { key: ["coconut", "kelapa", "batok", "serabut"], hit: "kelapa-batok" },
+  { key: ["incense", "dupa", "hio"], hit: "dupa-bekas" },
+  { key: ["glass bottle", "botol kaca", "arak", "beling"], hit: "botol-kaca-arak" },
+  { key: ["plastic bottle", "pet", "botol plastik"], hit: "botol-pet" },
+  { key: ["cardboard", "kardus", "karton", "box"], hit: "kardus-karton" },
+  { key: ["aluminum can", "kaleng", "logam"], hit: "kaleng-minuman" },
+  { key: ["sachet", "wrapper", "multilayer", "bungkus"], hit: "plastik-kemasan-sachet" },
+  { key: ["battery", "baterai", "aki"], hit: "baterai-elektronik" },
+];
+
 function runRoboflowVisionAPI(dataUrl, sourceType) {
   const scanOut = document.getElementById("scannerResult");
   if (scanOut) {
@@ -592,71 +664,182 @@ function runRoboflowVisionAPI(dataUrl, sourceType) {
       </div>`;
   }
 
-  // Roboflow endpoint:
-  // - Serverless Cloud API uses inference server POST JSON.
-  // - Di beberapa workflow UI, model_id dipakai sebagai `model_id`.
-  // ponytail: jika format workflow berbeda, ganti `model_id` sesuai Roboflow response/workflow.
-  const model_id = `${ROBOFLOW.WORKSPACE}/${ROBOFLOW.WORKFLOW_ID}/1`;
+  // Roboflow Serverless Cloud API — Workflow endpoint:
+  // POST https://serverless.roboflow.com/{workspace}/workflows/{workflow_id}
+  const endpoint = `https://serverless.roboflow.com/${ROBOFLOW.WORKSPACE}/workflows/${ROBOFLOW.WORKFLOW_ID}`;
+
+  // dataUrl "data:image/jpeg;base64,xxxx" → cukup bagian base64-nya saja.
+  const base64 = String(dataUrl).includes(",")
+    ? String(dataUrl).split(",")[1]
+    : String(dataUrl);
 
   const payload = {
-    image: dataUrl,
-    model_id,
-    // Beberapa deployment butuh api_key header; client-side JSON tetap dipakai dulu.
     api_key: ROBOFLOW.API_KEY,
+    // annotated_image (base64 besar) tidak dibutuhkan, buang agar response ringan.
+    excluded_fields: ["annotated_image"],
+    inputs: {
+      image: { type: "base64", value: base64 },
+      classes: RF_CLASSES,
+    },
   };
 
-  fetch("https://serverless.roboflow.com", {
+  fetch(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   })
-    .then((r) => {
-      if (!r.ok) throw new Error(`Roboflow HTTP ${r.status}`);
-      return r.json();
-    })
-    .then((result) => {
-      console.log("Roboflow result:", result);
-      const wasteItem = mapToBaliWaste(result);
-      displayScanResult(wasteItem, result);
+    .then((r) => r.json().then((data) => ({ ok: r.ok, status: r.status, data })))
+    .then(({ ok, status, data }) => {
+      if (!ok) {
+        throw new Error(data?.message || data?.error || `HTTP ${status}`);
+      }
+      console.log("Roboflow result:", data);
+      const preds = data?.outputs?.[0]?.predictions?.predictions || [];
+      const mapped = mapToBaliWaste(preds);
+
+      if (!mapped) {
+        displayScanResult({
+          id: "unknown",
+          nama: "Sampah belum terdeteksi",
+          kategori: "lainnya",
+          warna: "#6B7A70",
+          ikon: "🔎",
+          deskripsi: "AI belum menemukan objek sampah yang cocok di gambar ini.",
+          tindakan: [
+            "Pindai lebih dekat, objek harus memenuhi sebagian besar frame.",
+            "Pastikan pencahayaan cukup dan latar belakang tidak ramai.",
+            "Coba ambil ulang dari sudut lain atau gunakan Unggah Foto."
+          ],
+        }, null);
+        return;
+      }
+
+      displayScanResult(mapped.item, {
+        kelasAI: mapped.label,
+        keyakinan: mapped.confidence,
+      });
     })
     .catch((err) => {
       console.error("Roboflow scan error:", err);
-      displayScanResult({ id: "unknown", nama: "Tidak diketahui", kategori: "lainnya", warna: "#6B7A70", ikon: "❓" }, null);
+      displayScanResult({
+        id: "error",
+        nama: "Gagal menghubungi AI",
+        kategori: "error",
+        warna: "#D64545",
+        ikon: "⚠️",
+        deskripsi: "Koneksi ke Roboflow Vision API gagal: " + (err.message || "error tidak diketahui"),
+        tindakan: [
+          "Periksa koneksi internet lalu tekan Pindai dengan AI lagi.",
+          "Jika berulang, coba gambar lain dengan ukuran lebih kecil.",
+          "Server AI kadang butuh warm-up — ulangi sekali lagi."
+        ],
+      }, null);
     });
 }
 
-function mapToBaliWaste(aiResult) {
-  // Minimal mapping: ambil label/top class dari response.
-  // roboflow output beda-beda: cari dari `predictions`, `output`, atau `label`.
-  const label = (aiResult?.label || aiResult?.predictions?.[0]?.class || aiResult?.predictions?.[0]?.class_name || "").toLowerCase();
+function mapToBaliWaste(predictions) {
+  const list = Array.isArray(predictions) ? predictions : [];
+  if (!list.length) return null;
 
-  const categories = [
-    { key: ["canang", "banten", "janur"], hit: "canang-sari" },
-    { key: ["pet", "pet1", "botol"], hit: "botol-pet" },
-    { key: ["dupa", "incense", "abu"], hit: "dupa-bekas" },
-    { key: ["kardus", "karton", "box"], hit: "kardus-karton" },
-    { key: ["battery", "baterai", "aki", "lampu"], hit: "baterai-elektronik" },
-    { key: ["kaca", "arak", "beling"], hit: "botol-kaca-arak" },
-    { key: ["sachet", "multilayer"], hit: "plastik-kemasan-sachet" },
-    { key: ["kelapa"], hit: "kelapa" },
-  ];
+  // Ambil prediksi dengan confidence tertinggi.
+  const top = list.reduce((best, p) =>
+    (p?.confidence || 0) > (best?.confidence || 0) ? p : best, list[0]);
 
-  let idTarget = "unknown";
-  for (const c of categories) {
+  const label = String(top?.class || top?.class_name || "").toLowerCase();
+  const confidence = typeof top?.confidence === "number" ? top.confidence : null;
+  if (!label) return null;
+
+  let idTarget = null;
+  for (const c of CLASS_TO_BALI_ID) {
     if (c.key.some((k) => label.includes(k))) {
       idTarget = c.hit;
       break;
     }
   }
 
-  // KNOWLEDGE_BASE_BALI ada di file atas.
-  const item = (typeof KNOWLEDGE_BASE_BALI !== "undefined")
-    ? KNOWLEDGE_BASE_BALI.find((x) => x.id === idTarget)
-    : null;
+  const kb = window.KNOWLEDGE_BASE_BALI || [];
+  const item = idTarget ? kb.find((x) => x.id === idTarget) : null;
+  if (item) return { item, label, confidence };
 
-  return item || { id: "unknown", nama: "Tidak diketahui", kategori: "lainnya", warna: "#6B7A70", ikon: "❓" };
+  // Fallback: label AI dikenali tapi belum punya entri khusus Bali —
+  // tetap tampilkan hasil + panduan umum sesuai kategori.
+  return { item: genericItemFor(label), label, confidence };
+}
+
+function guessKategori(label) {
+  if (/(food|organic|leaf|flower|coconut|wood|garden|sayur|buah)/.test(label)) return "organik";
+  if (/(battery|electronic|e-waste|baterai)/.test(label)) return "b3";
+  if (/(tissue|nappy|diaper|ceramic|dirt|residue)/.test(label)) return "residu";
+  if (/(styrofoam|sachet|wrapper|plastic bag|multilayer|gelas plastik)/.test(label)) return "residu";
+  return "anorganik";
+}
+
+function genericItemFor(label) {
+  const kategori = guessKategori(label);
+  const guide = {
+    organik: {
+      ikon: "🌱",
+      warna: "#17803D",
+      labelKategori: "Organik (Mudah Terurai)",
+      tindakan: [
+        "Pisahkan dari plastik dan kemasan sebelum dibuang.",
+        "Masukkan ke komposter, lubang biopori, atau TPS3R desa/banjar.",
+        "Jangan dibakar atau ditumpuk terlalu lama agar tidak berbau."
+      ],
+      fasilitas: "Komposter Mandiri / Biopori / TPS3R Desa Adat",
+      regulasi: "Pergub Bali No. 47/2019 (Pilah Sampah dari Sumbernya)"
+    },
+    anorganik: {
+      ikon: "♻️",
+      warna: "#D9A441",
+      labelKategori: "Anorganik (Dapat Didaur Ulang)",
+      tindakan: [
+        "Bilas dan keringkan agar tidak berbau dan tetap bernilai.",
+        "Pisahkan per jenis (plastik, logam, kertas, kaca) bila memungkinkan.",
+        "Setor ke Bank Sampah unit terdekat atau pengepul daur ulang."
+      ],
+      fasilitas: "Bank Sampah Unit / Pengepul Daur Ulang",
+      regulasi: "Mendukung Ekonomi Sirkular — Pergub Bali No. 97/2018"
+    },
+    residu: {
+      ikon: "🗑️",
+      warna: "#6B7A70",
+      labelKategori: "Residu (Sulit Daur Ulang)",
+      tindakan: [
+        "Pastikan sudah kering dan tidak berisi sisa makanan.",
+        "Kumpulkan terpisah agar tidak mencemari sampah anorganik bernilai.",
+        "Salurkan ke TPS terpadu / tempat residu sesuai aturan desa adat."
+      ],
+      fasilitas: "TPS Terpadu / Tempat Residu Setempat",
+      regulasi: "Pengelolaan Residu Berbasis Sumber"
+    },
+    b3: {
+      ikon: "⚠️",
+      warna: "#D64545",
+      labelKategori: "B3 (Berbahaya & Beracun)",
+      tindakan: [
+        "JANGAN dibakar, ditimbun, atau dicampur sampah biasa.",
+        "Simpan wadah tertutup khusus limbah berbahaya di rumah.",
+        "Setor ke Drop Box B3 di DLHK / kantor camat / TPS3R."
+      ],
+      fasilitas: "Drop Box Sampah B3 (DLHK / Kantor Camat / TPS3R)",
+      regulasi: "PP No. 22/2021 tentang Pengelolaan Limbah B3"
+    }
+  }[kategori];
+
+  return {
+    id: "generic",
+    nama: `Objek terdeteksi: ${label}`,
+    kategori,
+    labelKategori: guide.labelKategori,
+    warna: guide.warna,
+    ikon: guide.ikon,
+    deskripsi: `AI mendeteksi objek berjenis "${label}". Panduan umum sesuai kategori ${kategori} berikut berlaku.`,
+    tindakan: guide.tindakan,
+    fasilitasRekomendasi: guide.fasilitas,
+    regulasi: guide.regulasi,
+    keywords: [label]
+  };
 }
 
 function displayScanResult(wasteItem, raw) {
@@ -679,6 +862,8 @@ function displayScanResult(wasteItem, raw) {
           <h4 class="text-base font-extrabold text-forest truncate">${wasteItem.nama || "Tidak diketahui"}</h4>
           <span class="text-[10px] font-bold uppercase px-2 py-1 rounded-full" style="background:${badgeColor}22; color:${badgeColor}; border:1px solid ${badgeColor}55;">${wasteItem.kategori || "lainnya"}</span>
         </div>
+        ${raw?.kelasAI ? `<div class="mt-1 text-[11px] text-muted">Deteksi AI: <b class="text-forest">${escapeHtml(raw.kelasAI)}</b>${typeof raw.keyakinan === "number" ? ` · keyakinan <b class="text-forest">${Math.round(raw.keyakinan * 100)}%</b>` : ""}</div>` : ""}
+        ${wasteItem.deskripsi ? `<div class="mt-1 text-xs text-muted">${escapeHtml(wasteItem.deskripsi)}</div>` : ""}
         ${keywords.length ? `<div class="mt-1 text-[11px] text-muted">Keyword: ${keywords.join(", ")}</div>` : ""}
         ${tindakan.length ? `
           <div class="mt-3">
@@ -690,7 +875,7 @@ function displayScanResult(wasteItem, raw) {
         ` : ""}
         ${wasteItem.regulasi ? `<div class="mt-3 text-[11px] text-muted">Regulasi: ${wasteItem.regulasi}</div>` : ""}
         ${wasteItem.fasilitasRekomendasi ? `<div class="mt-1 text-[11px] text-muted">Saran fasilitas: ${wasteItem.fasilitasRekomendasi}</div>` : ""}
-        ${raw ? `<div class="mt-3 text-[10px] text-ink/60">debug: ${escapeHtml(JSON.stringify(raw).slice(0, 200))}...</div>` : ""}
+        ${raw && raw.error ? `<div class="mt-3 text-[10px] text-ink/60">debug: ${escapeHtml(String(raw.error).slice(0, 200))}</div>` : ""}
       </div>
     </div>`;
 }
