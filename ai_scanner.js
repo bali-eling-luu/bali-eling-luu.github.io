@@ -194,39 +194,12 @@
 
   window.KNOWLEDGE_BASE_BALI = KNOWLEDGE_BASE_BALI;
 
-  // Preset demo instan untuk kemudahan demonstrasi dewan juri
-  const CONTOH_DEMO_JURI = [
-    {
-      nama: "Canang Sari (Khas Bali)",
-      icon: "🌸",
-      idTarget: "canang-sari",
-      simulasiUrl: "assets/photo04.webp"
-    },
-    {
-      nama: "Botol Plastik PET",
-      icon: "🧴",
-      idTarget: "botol-pet",
-      simulasiUrl: "assets/photo02.webp"
-    },
-    {
-      nama: "Kardus Karton Box",
-      icon: "📦",
-      idTarget: "kardus-karton",
-      simulasiUrl: "assets/photo01.webp"
-    },
-    {
-      nama: "Baterai & Limbah B3",
-      icon: "⚠️",
-      idTarget: "baterai-elektronik",
-      simulasiUrl: "assets/photo03.webp"
-    }
-  ];
-
   // State internal AI Engine
   let scannerStream = null;
   let tfModel = null;
   let isModelLoading = false;
   let currentScanDataUrl = null;
+  let currentScanFileName = null;
 
   /**
    * Pemuatan Model AI TensorFlow.js MobileNet secara Dinamis (On-Demand)
@@ -376,22 +349,16 @@
               </button>
             </div>
 
-            <!-- Mode Cepat untuk Dewan Juri / Uji Instan -->
+            <!-- Tombol Utama: Pindai dengan AI (pengganti Uji Cepat) -->
             <div class="pt-3 border-t border-line">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-forest flex items-center gap-1.5">
-                  <span>⚡ Uji Cepat (Simulasi Demo Juri)</span>
-                </span>
-                <span class="text-[10px] text-muted">klik sampel langsung</span>
-              </div>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                ${CONTOH_DEMO_JURI.map(item => `
-                  <button type="button" class="quick-demo-btn p-2.5 rounded-xl border border-line bg-cream hover:border-primary hover:bg-white text-left transition flex items-center gap-2 group active:scale-[0.97]" data-target="${item.idTarget}" data-img="${item.simulasiUrl}">
-                    <span class="text-xl group-hover:scale-110 transition">${item.icon}</span>
-                    <span class="text-xs font-bold text-forest leading-tight">${item.nama}</span>
-                  </button>
-                `).join("")}
-              </div>
+              <button type="button" id="scanNowBtn" class="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-primary text-white hover:bg-forest transition shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M4 8V6a2 2 0 0 1 2-2h2M4 16v2a2 2 0 0 0 2 2h2m8-18h2a2 2 0 0 1 2 2v2m0 8v2a2 2 0 0 1-2 2h-2"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <span>🤖 Pindai dengan AI</span>
+              </button>
+              <p class="text-[11px] text-muted text-center mt-1.5">Neural network berjalan langsung di perangkat kamu — cepat, gratis, & privat</p>
             </div>
 
             <!-- Container Hasil Analisis AI -->
@@ -421,7 +388,7 @@
     const cameraControls = document.getElementById("cameraControls");
     const captureBtn = document.getElementById("captureBtn");
     const fileInput = document.getElementById("scannerFileInput");
-    const quickDemoBtns = document.querySelectorAll(".quick-demo-btn");
+    const scanNowBtn = document.getElementById("scanNowBtn");
 
     function openModal() {
       modal.classList.remove("opacity-0", "pointer-events-none");
@@ -468,7 +435,7 @@
         startCamBtn.classList.replace("bg-forest", "bg-danger");
       } catch (err) {
         console.warn(err);
-        alert("Tidak dapat mengakses kamera: " + (err.message || "Izin ditolak. Silakan gunakan tombol 'Unggah Foto' atau opsi 'Uji Cepat'."));
+        alert("Tidak dapat mengakses kamera: " + (err.message || "Izin ditolak. Silakan gunakan tombol 'Unggah Foto'."));
         startCamBtn.innerHTML = `<span>Buka Kamera</span>`;
       }
     });
@@ -487,6 +454,7 @@
       const dataUrl = captureFrame();
       stopCamera();
       currentScanDataUrl = dataUrl;
+      currentScanFileName = null;
       previewImg.src = dataUrl;
       previewImg.classList.remove("hidden");
       placeholder.classList.add("hidden");
@@ -502,6 +470,7 @@
       const reader = new FileReader();
       reader.onload = (event) => {
         currentScanDataUrl = event.target.result;
+        currentScanFileName = file.name;
         previewImg.src = currentScanDataUrl;
         previewImg.classList.remove("hidden");
         placeholder.classList.add("hidden");
@@ -511,22 +480,17 @@
         };
       };
       reader.readAsDataURL(file);
+      e.target.value = "";
     });
 
-    // Quick demo buttons untuk dewan juri
-    quickDemoBtns.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        stopCamera();
-        const targetId = btn.getAttribute("data-target");
-        const imgSrc = btn.getAttribute("data-img");
-        
-        previewImg.src = imgSrc;
-        previewImg.classList.remove("hidden");
-        placeholder.classList.add("hidden");
-        
-        // Panggil analisis dengan target ID spesifik
-        runAIImageAnalysis(previewImg, targetId, targetId);
-      });
+    // Tombol utama "Pindai dengan AI" (pengganti mode Uji Cepat)
+    scanNowBtn.addEventListener("click", () => {
+      const hasImage = previewImg && previewImg.src && !previewImg.classList.contains("hidden") && previewImg.complete && previewImg.naturalWidth > 0;
+      if (!hasImage) {
+        alert("Belum ada foto untuk dipindai. Silakan 'Buka Kamera' atau 'Unggah Foto' dulu, lalu tekan Pindai dengan AI.");
+        return;
+      }
+      runAIImageAnalysis(previewImg, currentScanFileName);
     });
 
     window.openBaliElingScanner = openModal;
@@ -556,7 +520,7 @@
   /**
    * Eksekusi Analisis Vision AI (TensorFlow.js + Heuristic Reasoning Khusus Bali)
    */
-  async function runAIImageAnalysis(imgElement, hintText, forcedTargetId) {
+  async function runAIImageAnalysis(imgElement, hintText) {
     const resultDiv = document.getElementById("scannerResult");
     const laser = document.getElementById("scannerLaser");
 
@@ -574,17 +538,6 @@
     `;
 
     const statusEl = document.getElementById("aiStatusText");
-
-    // Jika forced target id tersedia (dari tombol juri)
-    if (forcedTargetId) {
-      setTimeout(() => {
-        if (laser) laser.classList.add("hidden");
-        const item = KNOWLEDGE_BASE_BALI.find((k) => k.id === forcedTargetId) || KNOWLEDGE_BASE_BALI[0];
-        const conf = Math.floor(Math.random() * 5) + 95; // 95 - 99%
-        renderHasilPindai(item, "Vision Recognition", conf);
-      }, 700);
-      return;
-    }
 
     try {
       // 1. Coba gunakan TensorFlow MobileNet
