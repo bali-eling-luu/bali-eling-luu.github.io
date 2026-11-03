@@ -259,6 +259,12 @@
               </label>
             </div>
 
+            <!-- Tombol Pindai AI Eksplisit -->
+            <button type="button" id="scanNowBtn" class="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-primary text-white hover:bg-forest transition shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <span>Pindai dengan AI</span>
+            </button>
+
             <!-- Tombol Jepret (saat kamera aktif) -->
             <div id="cameraControls" class="hidden">
               <button type="button" id="captureBtn" class="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-primary text-white hover:bg-forest transition shadow-lg shadow-primary/25 flex items-center justify-center gap-2">
@@ -267,8 +273,8 @@
               </button>
             </div>
 
-            <!-- Demo Cepat Untuk Penilaian Juri -->
-            <div class="pt-2 border-t border-line">
+            <!-- Demo Cepat (non-aktif sementara) -->
+            <div class="hidden pt-2 border-t border-line">
               <p class="text-xs font-bold uppercase tracking-wider text-muted mb-2.5 flex items-center justify-between">
                 <span>⚡ Mode Demo Cepat (Quick Test Juri)</span>
                 <span class="text-[10px] text-primary lowercase font-medium">klik untuk simulasi</span>
@@ -307,8 +313,10 @@
     const placeholder = document.getElementById("scannerPlaceholder");
     const cameraControls = document.getElementById("cameraControls");
     const captureBtn = document.getElementById("captureBtn");
+    const scanNowBtn = document.getElementById("scanNowBtn");
     const fileInput = document.getElementById("scannerFileInput");
     const quickDemoBtns = document.querySelectorAll(".quick-demo-btn");
+    let currentScanDataUrl = null;
 
     function openModal() {
       modal.classList.remove("opacity-0", "pointer-events-none");
@@ -357,38 +365,54 @@
       }
     });
 
-    // Tangkap gambar dari video
-    captureBtn.addEventListener("click", () => {
+    function captureFrame() {
       const canvas = document.createElement("canvas");
       canvas.width = video.videoWidth || 640;
       canvas.height = video.videoHeight || 480;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL("image/jpeg");
+      return canvas.toDataURL("image/jpeg");
+    }
 
-      stopCamera();
+    function scanImage(dataUrl, sourceType) {
+      currentScanDataUrl = dataUrl;
       previewImg.src = dataUrl;
       previewImg.classList.remove("hidden");
       placeholder.classList.add("hidden");
-      
-      runRoboflowVisionAPI(dataUrl, "scan");
+      runRoboflowVisionAPI(dataUrl, sourceType);
+    }
+
+    // Tangkap gambar dari video lalu langsung pindai
+    captureBtn.addEventListener("click", () => {
+      const dataUrl = captureFrame();
+      stopCamera();
+      scanImage(dataUrl, "kamera");
     });
 
-    // Upload file foto
+    // Upload file foto lalu langsung pindai
     fileInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
       stopCamera();
       const reader = new FileReader();
-      reader.onload = (event) => {
-        previewImg.src = event.target.result;
-        previewImg.classList.remove("hidden");
-        placeholder.classList.add("hidden");
-
-        runRoboflowVisionAPI(event.target.result, "upload");
-      };
+      reader.onload = (event) => scanImage(event.target.result, "unggah");
       reader.readAsDataURL(file);
+    });
+
+    // Tombol Pindai AI eksplisit
+    scanNowBtn.addEventListener("click", () => {
+      if (scannerStream && video.videoWidth) {
+        const dataUrl = captureFrame();
+        stopCamera();
+        scanImage(dataUrl, "kamera");
+        return;
+      }
+      if (currentScanDataUrl) {
+        runRoboflowVisionAPI(currentScanDataUrl, "pindai ulang");
+        return;
+      }
+      alert("Ambil foto dengan kamera atau unggah gambar dulu, baru tekan Pindai dengan AI.");
     });
 
     // Quick demo buttons
@@ -560,6 +584,7 @@ const ROBOFLOW = {
 function runRoboflowVisionAPI(dataUrl, sourceType) {
   const scanOut = document.getElementById("scannerResult");
   if (scanOut) {
+    scanOut.classList.remove("hidden");
     scanOut.innerHTML = `\
       <div class="text-xs text-muted mb-2">AI sedang memindai (${sourceType})...</div>
       <div class="h-2 w-full bg-ink/10 rounded-full overflow-hidden">
@@ -637,6 +662,7 @@ function mapToBaliWaste(aiResult) {
 function displayScanResult(wasteItem, raw) {
   const resultDiv = document.getElementById("scannerResult");
   if (!resultDiv || !wasteItem) return;
+  resultDiv.classList.remove("hidden");
 
   const tindakan = Array.isArray(wasteItem.tindakan) ? wasteItem.tindakan.slice(0, 3) : [];
   const keywords = Array.isArray(wasteItem.keywords) ? wasteItem.keywords.slice(0, 4) : [];
