@@ -37,9 +37,13 @@ BASE = Path(__file__).parent
 IMG_EXT = {".jpg", ".jpeg", ".png", ".webp"}
 
 # peta kelas sumber -> kelas Bali Eling Luu
+# Sumber utama: mostafaabla/garbage-classification (12 kelas, 15.515 foto, 250 MB)
 KAGGLE_MAP = {
     "battery": "baterai-b3",
     "biological": "sisa-makanan",
+    "brown-glass": "botol-kaca-arak",
+    "green-glass": "botol-kaca-arak",
+    "white-glass": "botol-kaca-arak",
     "cardboard": "kardus-karton",
     "glass": "botol-kaca-arak",
     "metal": "kaleng-minuman",
@@ -102,7 +106,7 @@ def download_kaggle(limit: int):
         print("❌ Butuh: pip install kagglehub")
         print("   Lalu jalankan lagi.")
         return 0
-    path = kagglehub.dataset_download("siddharthdani/garbage-classification")
+    path = kagglehub.dataset_download("mostafaabla/garbage-classification")
     print(f"   folder cache: {path}")
     return apply_map(Path(path), KAGGLE_MAP, limit)
 
