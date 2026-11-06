@@ -324,7 +324,7 @@
       fasilitasRekomendasi: "TPS3R / TPA bagian Residu",
       nilaiEkonomi: "Tidak dapat didaur ulang.",
       regulasi: "Protokol Higiene Limbah Domestik",
-      keywords: ["tisu", "tissue", "popok", "diapers", "pembalut", "sanitary", "toilet"]
+      keywords: ["tisu", "tissue", "popok", "diapers", "pembalut", "sanitary", "toilet", "sampah-higiene", "higiene"]
     },
     {
       id: "sandal-sepatu",
@@ -586,6 +586,8 @@
 
   /* ============================================================
    * 3. TF.JS — ON-DEMAND LOADING
+   *    Prioritas: model khusus Teachable Machine (model/model.json)
+   *    Fallback: MobileNet ImageNet umum bila model khusus gagal
    * ============================================================ */
   async function loadTensorFlowModel(onProgress) {
     if (tfModel) return tfModel;
@@ -597,13 +599,30 @@
     if (onProgress) onProgress("Memuat pustaka TensorFlow.js…");
     try {
       if (!window.tf) await injectScript("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js");
+
+      // 1) MODEL KHUSUS Teachable Machine (akurat untuk sampah Bali)
+      if (onProgress) onProgress("Memuat model sampah khusus Bali…");
+      try {
+        if (!window.tmImage) {
+          await injectScript("https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js");
+        }
+        // path relatif dari index.html (GitHub Pages)
+        tfModel = await window.tmImage.load("model/model.json", "model/metadata.json");
+        console.log("✅ Teachable Machine model siap (12 kelas sampah Bali).");
+        tfModel._isCustom = true;
+        return tfModel;
+      } catch (e) {
+        console.warn("Model khusus gagal, fallback ke MobileNet umum:", e);
+      }
+
+      // 2) FALLBACK MobileNet ImageNet
       if (!window.mobilenet) {
         if (onProgress) onProgress("Menyiapkan MobileNet Vision Model…");
         await injectScript("https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js");
       }
       if (onProgress) onProgress("Menginisialisasi neural network…");
       tfModel = await window.mobilenet.load({ version: 2, alpha: 1.0 });
-      console.log("✅ TensorFlow MobileNet siap.");
+      console.log("✅ TensorFlow MobileNet siap (fallback).");
       return tfModel;
     } catch (err) {
       console.warn("TF CDN bermasalah:", err);
@@ -750,9 +769,26 @@
   function scoreCandidates(predictions, filenameHint, visual) {
     const hint = String(filenameHint || "").toLowerCase();
     const preds = Array.isArray(predictions) ? predictions : [];
+    const cfg = (typeof window !== "undefined" && window.MODEL_CONFIG) || null;
+    const labelToId = cfg && cfg.labelToId ? cfg.labelToId : null;
     const scored = KNOWLEDGE_BASE_BALI.map((item) => {
       let score = 0, matchedVia = "—";
-      // MobileNet — cari probability tertinggi yang cocok
+      // Model khusus: cocokkan label Teachable Machine langsung, tanpa keyword
+      if (labelToId) {
+        for (const p of preds) {
+          if (!p || typeof p.probability !== "number" || p.probability < 0.03) continue;
+          const cls = String(p.className || "").split(",")[0].trim();
+          const mappedId = labelToId[cls];
+          if (mappedId === item.id && p.probability > score) {
+            score = p.probability;
+            matchedVia = cls;
+          }
+        }
+        // Sudah ada sinyal langsung dari model khusus → pakai itu saja
+        if (score > 0) return { item, score, matchedVia, raw: score };
+      }
+      // Fallback keyword MobileNet (bila model khusus gagal)
+      // Perhatian: coba dulu cocokkan keyword (fokus pada label langsung), hindari bias umum
       for (const p of preds) {
         if (!p || typeof p.probability !== "number" || p.probability < 0.03) continue;
         if (matchKeyword(String(p.className || "").toLowerCase(), item.keywords)) {
@@ -769,7 +805,6 @@
         score += 0.30;
         matchedVia = "profil warna bunga & janur";
       }
-      // Botol PET biru muda? heuristik ringan: banyak putih/biru + botol keyword sudah cukup
       if (item.id === "botol-pet" && visual && visual.bluePct > 0.08 && visual.whitePct > 0.05 && score > 0) {
         score += 0.08;
       }
@@ -1210,7 +1245,13 @@
 
       let predictions = [];
       if (model && imgElement.complete && imgElement.naturalWidth > 0) {
-        predictions = await model.classify(imgElement, 5);
+        // Model khusus Teachable Machine: predict() langsung
+        if (model._isCustom && typeof model.predict === "function") {
+          const raw = await model.predict(imgElement);
+          predictions = raw.slice().sort((a, b) => b.probability - a.probability);
+        } else {
+          predictions = await model.classify(imgElement, 5);
+        }
       }
 
       if (statusEl) statusEl.textContent = "Menganalisis warna & kualitas foto…";
