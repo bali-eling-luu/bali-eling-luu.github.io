@@ -2,3 +2,9 @@
 Thumbs.db
 *.log
 node_modules/
+# Foto dataset pelatihan — jangan di-push (bisa 1GB+), cukup folder & kodenya
+dataset/**/*.jpg
+dataset/**/*.jpeg
+dataset/**/*.png
+dataset/**/*.webp
+!dataset/*/.gitkeep
