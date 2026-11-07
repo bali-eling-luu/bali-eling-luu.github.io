@@ -103,7 +103,7 @@ Integrasi provider pulsa resmi, verifikasi mitra otomatis (QR/gps), notifikasi, 
 - Dashboard user: `docs/screenshots/06-dashboard.jpg`
 
 ## 19. URL production
-https://bali-eling-luu-katak-beracun.vercel.app
+https://bali-eling-luu.vercel.app
 
 Deploy Vercel: container FrankenPHP (`Dockerfile.vercel` + `Caddyfile` + `vercel.json`),
 PostgreSQL Supabase (schema `bali_eling_luu`). Detail environment variable ada di
