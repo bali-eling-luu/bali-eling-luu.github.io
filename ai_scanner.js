@@ -944,7 +944,7 @@
             <div class="relative w-full aspect-video sm:aspect-[4/3] rounded-2xl overflow-hidden bg-ink/5 border-2 border-dashed border-line flex flex-col items-center justify-center text-center p-4" id="scannerViewport">
               <video id="scannerVideo" class="hidden absolute inset-0 w-full h-full object-cover" autoplay playsinline muted></video>
               <img id="scannerPreviewImg" class="hidden absolute inset-0 w-full h-full object-contain bg-black/90" alt="Preview Sampah">
-              <div id="scannerLaser" class="hidden absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_18px_#10b981] animate-pulse z-10"></div>
+              <div id="scannerLaser" class="hidden absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_18px_#10b981] z-10"></div>
               <!-- Sudut bingkai -->
               <div class="pointer-events-none absolute inset-3 z-20 hidden" id="framingGuide">
                 <span class="absolute left-0 top-0 h-6 w-6 border-l-[3px] border-t-[3px] border-white/90 rounded-tl-md"></span>
@@ -983,7 +983,7 @@
 
             <div id="cameraControls" class="hidden">
               <button type="button" id="captureBtn" class="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-primary text-white hover:bg-forest transition shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
-                <span class="w-3 h-3 rounded-full bg-white animate-ping"></span><span>Pindai Sampah Ini Sekarang</span>
+                <span>Pindai Sampah Ini Sekarang</span>
               </button>
             </div>
 
