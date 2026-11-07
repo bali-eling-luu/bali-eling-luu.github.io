@@ -819,10 +819,14 @@
     const preds = Array.isArray(predictions) ? predictions : [];
     const topClass = preds[0]?.className ? preds[0].className.split(",")[0] : "objek tidak dikenal";
     const topProb = typeof preds[0]?.probability === "number" ? preds[0].probability : 0;
+    // P0: ambang naik untuk model khusus (0.45) — jangan paksa sampah bila model tidak yakin.
+    // Model 12 kelas tanpa kelas non-waste bisa memaksa objek luar kelas; ambang ini mekanisme unknown.
+    const cfg = (typeof window !== "undefined" && window.MODEL_CONFIG) || null;
+    const minScore = cfg && cfg.minConfidence ? cfg.minConfidence : 0.18;
 
     // Verifikasi BUKAN SAMPAH — hanya bila model sangat yakin itu makhluk/kendaraan hidup
     const isNonWastePred = preds.some(p => p && p.probability >= 0.35 && matchKeyword(String(p.className || "").toLowerCase(), NON_WASTE_KEYWORDS));
-    if (isNonWastePred && best.score < 0.18) {
+    if (isNonWastePred && best.score < minScore) {
       return {
         item: buildBukanSampahItem(topClass),
         topClass, confidence: Math.round(topProb * 100),
@@ -832,18 +836,18 @@
       };
     }
 
-    // Ambang minimal: skor gabungan >= 0.18 → dianggap sampah teridentifikasi
-    if (best.score >= 0.18) {
-      // Kalibrasi confidence: gabungkan probability mentah + bonus, batasi 99%
-      const conf = Math.min(97, Math.round(best.score * 100));
+    if (best.score >= minScore) {
+      // P0: confidence = raw softmax model (bukan skor bonus) — tampil sebagai keyakinan, bukan akurasi.
+      const rawProb = best.raw > 0 ? best.raw : best.score;
+      const conf = Math.min(99, Math.round(rawProb * 100));
       const alternatif = scored.slice(1, 4).filter(c => c.score > 0.08);
       return {
         item: best.item,
         topClass: best.matchedVia || topClass,
         confidence: conf,
-        status: conf >= 70 ? "yakin" : (conf >= 40 ? "cukup" : "rendah"),
+        status: conf >= 70 ? "yakin" : (conf >= 50 ? "cukup" : "rendah"),
         candidates: alternatif,
-        why: `Sinyal terkuat: "${best.matchedVia}" (skor ${best.score.toFixed(2)}).`
+        why: `Keyakinan model: "${best.matchedVia}" ${conf}% (softmax, bukan jaminan akurasi).`
       };
     }
 
@@ -1286,12 +1290,13 @@
   }
 
   function confidenceBadge(status, confidence) {
-    if (status === "yakin") return `<span class="text-emerald-700 font-black">● Sangat Yakin — ${confidence}%</span>`;
-    if (status === "cukup") return `<span class="text-amber-700 font-black">● Cukup Yakin — ${confidence}%</span>`;
-    if (status === "rendah") return `<span class="text-orange-700 font-black">● Keyakinan Rendah — ${confidence}%</span>`;
+    // P0: label jujur — softmax confidence model, bukan akurasi lapangan.
+    if (status === "yakin") return `<span class="text-emerald-700 font-black">● Keyakinan Model ${confidence}%</span>`;
+    if (status === "cukup") return `<span class="text-amber-700 font-black">● Keyakinan Model ${confidence}% (sedang)</span>`;
+    if (status === "rendah") return `<span class="text-orange-700 font-black">● Keyakinan Model ${confidence}% (rendah)</span>`;
     if (status === "bukan-sampah") return `<span class="text-emerald-700 font-black">● Bukan Sampah — ${confidence}%</span>`;
     if (status === "katalog" || status === "manual") return `<span class="text-muted font-black">● Info Katalog</span>`;
-    return `<span class="text-amber-700 font-black">● Perlu Pindai Ulang</span>`;
+    return `<span class="text-amber-700 font-black">● Belum Yakin — ambil foto lebih dekat</span>`;
   }
 
   function renderHasilPindai(data, meta = {}) {

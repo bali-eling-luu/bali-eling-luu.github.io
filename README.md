@@ -13,14 +13,15 @@ Platform digital berbasis Artificial Intelligence (AI) yang menghubungkan edukas
 
 ### 1. AI Waste Scanner (Fitur Inti AI Vision)
 - **Deteksi Kamera & Upload Gambar:** Memindai sampah langsung dari kamera smartphone atau unggahan galeri foto.
-- **Pengenalan Sampah Khas Bali & Budaya:** Mengenali material khusus seperti **Canang Sari / Sisa Banten**, **Sisa Dupa & Abu**, **Botol Kaca Arak**, **Danyuk / Sabut Kelapa**, serta sampah plastik/kardus/B3 umum.
-- **AI Confidence & Langkah Tindakan:** Memberikan akurasi prediksi (misal: 96%), klasifikasi wadah warna, serta panduan praktis 3-langkah pemilahan.
+- **Model Khusus 12 Kelas (Teachable Machine):** `model/model.json` + `weights.bin` (2.1 MB) — Canang Sari, Botol PET, Botol Kaca Arak, Kaleng, Kardus, Sisa Makanan, Daun & Ranting, Kresek, Plastik Sachet, Styrofoam, Sampah Higiene, Baterai B3. Fallback ke MobileNet ImageNet bila model gagal dimuat.
+- **Keyakinan Model, Bukan Akurasi Klaim:** Angka yang tampil adalah softmax confidence model (0-99%), bukan akurasi lapangan yang divalidasi. Model 12 kelas **belum memiliki kelas non-waste/absen** — ambang keyakinan 45% dipakai sebagai mekanisme *unknown*; foto non-sampah tetap bisa salah klasifikasi.
+- **Langkah Tindakan & Wadah Warna:** Panduan praktis pemilahan + klasifikasi wadah warna sesuai kategori Bali.
 - **Penyaluran Fasilitas Terdekat:** Langsung merekomendasikan apakah material harus disalurkan ke Kompos Mandiri, TPS3R, atau Bank Sampah terdekat.
-- **Mode Demo Cepat (Quick Test Juri):** Disediakan tombol simulasi instan untuk demonstrasi juri tanpa perlu mengambil foto fisik saat presentasi.
+- **Katalog Manual 25 Jenis:** Telusuri & cari manual tanpa foto tetap tersedia.
 
 ### 2. Bali Eco Map (Solusi Geospasial Interaktif)
 - **Peta Interaktif Leaflet.js & OpenStreetMap:** 100% open-source, ringan, cepat, tanpa biaya API key Google Maps.
-- **Basis Data Titik Nyata Se-Bali:** Sebaran TPS 3R, Bank Sampah Unit, TOSS Center, dan Drop Box B3 terverifikasi di Kota Denpasar, Kab. Badung, Gianyar, Tabanan, dan Klungkung.
+- **Basis Data 18 Titik, 9 Kabupaten/Kota:** TPS 3R (12), Bank Sampah (4), TOSS (1), Drop Box B3 (1) di Denpasar, Badung, Gianyar, Tabanan, Klungkung, Bangli, Buleleng, Jembrana, dan Karangasem. 13 titik ditandai terverifikasi bawaan proyek (belum audit independen), 5 titik baru berstatus *Belum diverifikasi — konfirmasi jadwal*.
 - **Filter Wilayah & Kategori:** Pengguna dapat menyaring berdasarkan Kabupaten/Kota dan jenis penerimaan sampah.
 - **Rute Google Maps Langsung:** Tiap pin dilengkapi tombol langsung membuka petunjuk arah navigasi Google Maps.
 - **Deteksi Lokasi Pengguna (Geolocation):** Menemukan fasilitas pengolahan sampah dalam radius terdekat dari lokasi perangkat.

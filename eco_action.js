@@ -86,14 +86,21 @@
     }
   ];
 
-  // Helper State LocalStorage
+  // Helper State LocalStorage (P0: mulai dari 0 — bukan angka demo)
   function getStoredState() {
     return {
-      xp: parseInt(localStorage.getItem("eling_total_xp") || "140"),
-      streak: parseInt(localStorage.getItem("eling_streak_days") || "3"),
-      completedQuests: JSON.parse(localStorage.getItem("eling_completed_quests") || '["quest-2"]'),
+      xp: parseInt(localStorage.getItem("eling_total_xp") || "0", 10),
+      streak: parseInt(localStorage.getItem("eling_streak_days") || "0", 10),
+      completedQuests: JSON.parse(localStorage.getItem("eling_completed_quests") || '[]'),
       reports: JSON.parse(localStorage.getItem("eling_community_reports") || JSON.stringify(DEFAULT_REPORTS))
     };
+  }
+
+  // Escape HTML untuk input pengguna (P0: cegah XSS di Lapor Luu)
+  function esc(s) {
+    return String(s ?? "")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
 
   function getLevelInfo(xp) {
@@ -283,11 +290,11 @@
                   </span>
                   <span class="text-[10px] text-muted">${r.tanggal}</span>
                 </div>
-                <h5 class="text-xs font-bold text-forest leading-snug">${r.judul}</h5>
-                <p class="text-[11px] text-muted leading-relaxed">${r.deskripsi}</p>
+                <h5 class="text-xs font-bold text-forest leading-snug">${esc(r.judul)}</h5>
+                <p class="text-[11px] text-muted leading-relaxed">${esc(r.deskripsi)}</p>
                 <div class="pt-2 border-t border-line/60 flex items-center justify-between text-[11px] text-muted font-medium">
-                  <span>📍 ${r.lokasi}</span>
-                  <span class="text-forest font-bold">Oleh ${r.pelapor}</span>
+                  <span>📍 ${esc(r.lokasi)}</span>
+                  <span class="text-forest font-bold">Oleh ${esc(r.pelapor)}</span>
                 </div>
               </div>
             `).join("")}

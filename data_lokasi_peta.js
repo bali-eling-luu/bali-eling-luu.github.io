@@ -21,6 +21,8 @@ const FASILITAS_BALI = [
     pengelola: "Pemerintah Desa Pemecutan Kaja & KSM",
     telepon: "0812-3891-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Mengolah sisa makanan dan canang menjadi kompos organik berkualitas untuk ruang hijau desa."
   },
   {
@@ -39,6 +41,8 @@ const FASILITAS_BALI = [
     pengelola: "BUMDes Kertalangu",
     telepon: "0819-9943-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Percontohan pengelolaan sampah berbasis sumber terpadu dan pembibitan tanaman."
   },
   {
@@ -57,6 +61,8 @@ const FASILITAS_BALI = [
     pengelola: "Komunitas Warga Banjar Tegeh Sari",
     telepon: "0857-3712-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Menerima tabungan sampah anorganik yang dikonversi ke saldo kas atau tabungan emas."
   },
   {
@@ -75,6 +81,8 @@ const FASILITAS_BALI = [
     pengelola: "DLHK Kota Denpasar",
     telepon: "(0361) 223333",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Titik resmi penyerahan limbah berbahaya dan beracun dari rumah tangga sebelum dimusnahkan."
   },
   {
@@ -93,6 +101,8 @@ const FASILITAS_BALI = [
     pengelola: "Krama Banjar Kedaton & PKK",
     telepon: "0813-3765-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Aktif melayani penimbangan sampah anorganik warga untuk menunjang iuran banjar."
   },
 
@@ -113,6 +123,8 @@ const FASILITAS_BALI = [
     pengelola: "Pengurus Lingkungan Dalung & Ibu-ibu PKK",
     telepon: "0812-4681-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Role model bank sampah perumahan di Badung dengan pencatatan digital saldo sampah."
   },
   {
@@ -131,6 +143,8 @@ const FASILITAS_BALI = [
     pengelola: "Pemerintah Desa Mengwitani",
     telepon: "0878-6012-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Sentra pemrosesan residu upacara dan pengolahan pupuk organik di kawasan Badung Utara."
   },
   {
@@ -149,6 +163,8 @@ const FASILITAS_BALI = [
     pengelola: "Desa Adat Seminyak",
     telepon: "0811-3829-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Mengelola sampah industri pariwisata (villa, restoran, kafe) di kawasan Seminyak-Kuta."
   },
   {
@@ -167,6 +183,8 @@ const FASILITAS_BALI = [
     pengelola: "Koperasi Lingkungan Jimbaran",
     telepon: "0819-1634-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Dilengkapi fasilitas budidaya maggot BSF untuk menghabiskan sampah organik basah."
   },
 
@@ -187,6 +205,8 @@ const FASILITAS_BALI = [
     pengelola: "Yayasan Temesi Bersih & Pemdes",
     telepon: "(0361) 948123",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Pelopor pengolahan kompos berbasis CDM di Bali yang telah beroperasi selama belasan tahun."
   },
   {
@@ -205,6 +225,8 @@ const FASILITAS_BALI = [
     pengelola: "Desa Adat Padangtegal",
     telepon: "0812-3901-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Contoh sukses desa adat mandiri sampah yang mengolah 80%+ sampahnya tanpa lari ke TPA."
   },
 
@@ -225,6 +247,8 @@ const FASILITAS_BALI = [
     pengelola: "DLHKP Kabupaten Klungkung",
     telepon: "(0366) 21123",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Inovasi unggulan Bali: Tempat Olah Sampah Setempat menjadi bahan bakar briket pelet biomassa."
   },
 
@@ -245,6 +269,8 @@ const FASILITAS_BALI = [
     pengelola: "Kelurahan Dajan Peken",
     telepon: "0877-6123-xxxx",
     terverifikasi: true,
+    sumberVerifikasi: "Data bawaan proyek (belum diaudit independen)",
+    tanggalVerifikasi: "",
     deskripsi: "Melayani pemilahan sampah perkotaan Tabanan dengan sistem jemput terpilah."
   },
 
@@ -265,6 +291,8 @@ const FASILITAS_BALI = [
     pengelola: "DLHK Kabupaten Bangli",
     telepon: "(0366) 938077",
     terverifikasi: false,
+    sumberVerifikasi: "Belum diverifikasi — konfirmasi DLHK/desa setempat",
+    tanggalVerifikasi: "",
     deskripsi: "Titik pilah sampah kota Bangli — jam & jadwal idealnya konfirmasi dulu ke DLHK."
   },
 
@@ -285,6 +313,8 @@ const FASILITAS_BALI = [
     pengelola: "Komunitas Bank Sampah Singaraja",
     telepon: "0812-0000-xxxx",
     terverifikasi: false,
+    sumberVerifikasi: "Belum diverifikasi — konfirmasi DLHK/desa setempat",
+    tanggalVerifikasi: "",
     deskripsi: "Bank sampah kota Singaraja — jadwal & kontak idealnya konfirmasi ke pengelola banjar."
   },
   {
@@ -303,6 +333,8 @@ const FASILITAS_BALI = [
     pengelola: "Pemerintah Desa Sangsit",
     telepon: "0878-0000-xxxx",
     terverifikasi: false,
+    sumberVerifikasi: "Belum diverifikasi — konfirmasi DLHK/desa setempat",
+    tanggalVerifikasi: "",
     deskripsi: "Pengolahan kompos & pilah sampah kawasan Sawan — konfirmasi jadwal ke desa."
   },
 
@@ -323,6 +355,8 @@ const FASILITAS_BALI = [
     pengelola: "DLHK Kabupaten Jembrana",
     telepon: "(0365) 32212",
     terverifikasi: false,
+    sumberVerifikasi: "Belum diverifikasi — konfirmasi DLHK/desa setempat",
+    tanggalVerifikasi: "",
     deskripsi: "Fasilitas pilah kota Negara — konfirmasi jam terima & kontak DLHK setempat."
   },
 
@@ -343,6 +377,8 @@ const FASILITAS_BALI = [
     pengelola: "DLHK Kabupaten Karangasem",
     telepon: "(0363) 21412",
     terverifikasi: false,
+    sumberVerifikasi: "Belum diverifikasi — konfirmasi DLHK/desa setempat",
+    tanggalVerifikasi: "",
     deskripsi: "Melayani kota Amlapura untuk pilah organik & anorganik — konfirmasi ke DLHK."
   }
 ];
