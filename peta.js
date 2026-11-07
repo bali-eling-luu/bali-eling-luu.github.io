@@ -87,7 +87,7 @@
             <span style="background-color: ${item.warna}; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; text-transform: uppercase;">
               ${item.kategoriLabel}
             </span>
-            <span style="font-size: 11px; color: #17803d; font-weight: 700;">✓ Terverifikasi</span>
+            <span style="font-size: 11px; color: ${item.terverifikasi ? "#17803d" : "#6b7a70"}; font-weight: 700;">${item.terverifikasi ? "✓ Terverifikasi" : "Perlu Konfirmasi Jadwal"}</span>
           </div>
           <h4 style="font-size: 14px; font-weight: 800; color: #14532d; margin: 0 0 4px 0; line-height: 1.25;">
             ${item.nama}

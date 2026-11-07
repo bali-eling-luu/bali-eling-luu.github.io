@@ -246,6 +246,104 @@ const FASILITAS_BALI = [
     telepon: "0877-6123-xxxx",
     terverifikasi: true,
     deskripsi: "Melayani pemilahan sampah perkotaan Tabanan dengan sistem jemput terpilah."
+  },
+
+  // KABUPATEN BANGLI
+  {
+    id: "bgl-01",
+    nama: "TPS 3R Bangli Kota",
+    kabupaten: "Bangli",
+    kecamatan: "Bangli",
+    kategori: "tps3r",
+    kategoriLabel: "TPS 3R (Kompos & Pilah)",
+    warna: "#17803D",
+    alamat: "Br. Selat, Kelurahan Bangli, Kab. Bangli",
+    lat: -8.4519,
+    lng: 115.3539,
+    jamBuka: "Senin - Sabtu: 07.00 - 14.00 WITA",
+    terima: ["Organik", "Anorganik", "Residu Terpilah"],
+    pengelola: "DLHK Kabupaten Bangli",
+    telepon: "(0366) 938077",
+    terverifikasi: false,
+    deskripsi: "Titik pilah sampah kota Bangli — jam & jadwal idealnya konfirmasi dulu ke DLHK."
+  },
+
+  // KABUPATEN BULELENG
+  {
+    id: "blg-01",
+    nama: "Bank Sampah Singaraja Kota",
+    kabupaten: "Buleleng",
+    kecamatan: "Buleleng",
+    kategori: "bank_sampah",
+    kategoriLabel: "Bank Sampah (Tabungan)",
+    warna: "#D9A441",
+    alamat: "Br. Anyar, Kelurahan Kampung Kajanan, Singaraja",
+    lat: -8.1123,
+    lng: 115.0861,
+    jamBuka: "Sabtu & Minggu: 08.00 - 12.00 WITA",
+    terima: ["Plastik PET", "Kardus", "Kertas", "Kaleng", "Botol Kaca"],
+    pengelola: "Komunitas Bank Sampah Singaraja",
+    telepon: "0812-0000-xxxx",
+    terverifikasi: false,
+    deskripsi: "Bank sampah kota Singaraja — jadwal & kontak idealnya konfirmasi ke pengelola banjar."
+  },
+  {
+    id: "blg-02",
+    nama: "TPS 3R Sangsit",
+    kabupaten: "Buleleng",
+    kecamatan: "Sawan",
+    kategori: "tps3r",
+    kategoriLabel: "TPS 3R & Kompos",
+    warna: "#17803D",
+    alamat: "Desa Sangsit, Kecamatan Sawan, Buleleng",
+    lat: -8.1765,
+    lng: 115.1420,
+    jamBuka: "Senin - Sabtu: 07.00 - 15.00 WITA",
+    terima: ["Organik", "Anorganik", "Seresah"],
+    pengelola: "Pemerintah Desa Sangsit",
+    telepon: "0878-0000-xxxx",
+    terverifikasi: false,
+    deskripsi: "Pengolahan kompos & pilah sampah kawasan Sawan — konfirmasi jadwal ke desa."
+  },
+
+  // KABUPATEN JEMBRANA
+  {
+    id: "jem-01",
+    nama: "TPS 3R Negara Kota",
+    kabupaten: "Jembrana",
+    kecamatan: "Negara",
+    kategori: "tps3r",
+    kategoriLabel: "TPS 3R (Kompos & Pilah)",
+    warna: "#17803D",
+    alamat: "Kelurahan Baler Bale Agung, Negara, Jembrana",
+    lat: -8.3574,
+    lng: 114.6237,
+    jamBuka: "Senin - Sabtu: 07.00 - 14.00 WITA",
+    terima: ["Organik", "Anorganik", "Plastik"],
+    pengelola: "DLHK Kabupaten Jembrana",
+    telepon: "(0365) 32212",
+    terverifikasi: false,
+    deskripsi: "Fasilitas pilah kota Negara — konfirmasi jam terima & kontak DLHK setempat."
+  },
+
+  // KABUPATEN KARANGASEM
+  {
+    id: "krs-01",
+    nama: "TPS 3R Amlapura Kota",
+    kabupaten: "Karangasem",
+    kecamatan: "Karangasem",
+    kategori: "tps3r",
+    kategoriLabel: "TPS 3R & Kompos",
+    warna: "#17803D",
+    alamat: "Kelurahan Padang Kerta, Amlapura, Karangasem",
+    lat: -8.4478,
+    lng: 115.6083,
+    jamBuka: "Senin - Sabtu: 07.00 - 14.00 WITA",
+    terima: ["Organik", "Anorganik", "Banten & Janur"],
+    pengelola: "DLHK Kabupaten Karangasem",
+    telepon: "(0363) 21412",
+    terverifikasi: false,
+    deskripsi: "Melayani kota Amlapura untuk pilah organik & anorganik — konfirmasi ke DLHK."
   }
 ];
 
