@@ -1133,7 +1133,17 @@
         startCamBtn.classList.replace("bg-forest", "bg-red-600");
       } catch (err) {
         console.warn(err);
-        alert("Tidak dapat mengakses kamera: " + (err.message || "Izin ditolak. Silakan gunakan 'Unggah Foto'."));
+        console.error("Kamera gagal:", err && err.message);
+        // BUG-008: tampil inline (bukan hanya alert) + tombol unggah sebagai fallback
+        let box = document.getElementById("scannerCameraError");
+        const msg = (err && err.message) ? err.message : "Izin ditolak";
+        if (!box) {
+          box = document.createElement("div");
+          box.id = "scannerCameraError";
+          box.className = "rounded-xl border border-amber-300 bg-amber-50 text-amber-900 text-xs p-3";
+          placeholder.parentNode.insertBefore(box, placeholder.nextSibling);
+        }
+        box.innerHTML = `⚠️ <b>Kamera tidak aktif</b> (${escapeHTML(msg)}). Tenang, kamu bisa pakai tombol <b>Unggah Foto</b> di atas / seret foto ke area ini — hasil AI-nya sama.`;
         startCamBtn.innerHTML = `<span>Buka Kamera</span>`;
       }
     });
@@ -1350,6 +1360,8 @@
 
         <div class="${verdict.bg} text-white text-xs sm:text-sm font-extrabold rounded-xl px-3 py-2 text-center">${verdict.teks}</div>
 
+        <p class="text-[10px] text-muted leading-snug">Keyakinan = softmax model AI, bukan jaminan akurasi lapangan. Bila ragu, cek katalog manual di bawah.</p>
+
         ${quality && quality.qualityNote ? `<p class="text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">📸 Tips foto: ${escapeHTML(quality.qualityNote)}</p>` : ""}
 
         <div class="flex items-start justify-between gap-3 pb-3 border-b border-line">
@@ -1445,7 +1457,7 @@
     }
     try {
       let log = JSON.parse(localStorage.getItem("eling_aksi_log") || "[]");
-      let xp = parseInt(localStorage.getItem("eling_total_xp") || "120", 10);
+      let xp = parseInt(localStorage.getItem("eling_total_xp") || "0", 10);
       log.unshift({
         sampah: nama,
         kategori: kategori,

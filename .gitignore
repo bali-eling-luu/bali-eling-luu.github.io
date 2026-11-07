@@ -2,6 +2,7 @@
 Thumbs.db
 *.log
 node_modules/
+__pycache__/
 # Foto dataset pelatihan — jangan di-push (bisa 1GB+), cukup folder & kodenya
 dataset/**/*.jpg
 dataset/**/*.jpeg
