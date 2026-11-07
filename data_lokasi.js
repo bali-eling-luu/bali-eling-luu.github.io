@@ -12,7 +12,7 @@
 const JENIS_TEMPAT = [
   {
     nama: "Bank Sampah",
-    ikon: "🏦",
+    ikon: "",
     warna: "#17803D",
     terima: ["Plastik", "Kertas", "Kardus", "Logam"],
     cara:
@@ -22,7 +22,7 @@ const JENIS_TEMPAT = [
   },
   {
     nama: "TPS 3R (Reduce, Reuse, Recycle)",
-    ikon: "♻️",
+    ikon: "",
     warna: "#17803D",
     terima: ["Organik", "Anorganik", "Residu"],
     cara:
@@ -32,7 +32,7 @@ const JENIS_TEMPAT = [
   },
   {
     nama: "Drop Box Sampah B3",
-    ikon: "⚠️",
+    ikon: "",
     warna: "#D64545",
     terima: ["Baterai", "Lampu", "Elektronik kecil", "Obat kadaluarsa"],
     cara:
@@ -42,7 +42,7 @@ const JENIS_TEMPAT = [
   },
   {
     nama: "TPS Terpadu",
-    ikon: "🗂️",
+    ikon: "",
     warna: "#6B7A70",
     terima: ["Organik", "Anorganik", "Residu"],
     cara:
@@ -52,7 +52,7 @@ const JENIS_TEMPAT = [
   },
   {
     nama: "Pengepul / Loak",
-    ikon: "⚖️",
+    ikon: "",
     warna: "#D9A441",
     terima: ["Plastik", "Logam", "Kardus", "Kaca"],
     cara:
@@ -62,7 +62,7 @@ const JENIS_TEMPAT = [
   },
   {
     nama: "Komunitas Daur Ulang",
-    ikon: "🤝",
+    ikon: "",
     warna: "#14532D",
     terima: ["Plastik", "Kain", "Elektronik"],
     cara:

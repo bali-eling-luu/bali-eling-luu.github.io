@@ -187,7 +187,7 @@
         })
         .join("") +
       "</ul>" +
-      '<p class="eling-kartu-peringatan">⚠️ ' +
+      '<p class="eling-kartu-peringatan"> ' +
       esc(k.peringatan) +
       "</p>" +
       "</div>"

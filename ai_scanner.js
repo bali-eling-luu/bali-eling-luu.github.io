@@ -24,7 +24,7 @@
       kategori: "organik",
       labelKategori: "Organik (Tradisi Upacara Bali)",
       warna: "#17803D",
-      ikon: "🌸",
+      ikon: "",
       deskripsi: "Sisa sarana persembahan upacara: janur, bunga, porosan, dan canang.",
       material: "Janur, bunga gumitir, daun, bambu, porosan",
       waktuUrai: "2–6 minggu",
@@ -46,7 +46,7 @@
       kategori: "anorganik",
       labelKategori: "Anorganik Daur Ulang",
       warna: "#D9A441",
-      ikon: "🧴",
+      ikon: "",
       deskripsi: "Botol plastik transparan bekas air mineral, soda, jus, atau teh kemasan.",
       material: "Plastik PET transparan (kode 1)",
       waktuUrai: "450 tahun",
@@ -68,7 +68,7 @@
       kategori: "anorganik",
       labelKategori: "Anorganik (Guna Ulang / Daur Ulang)",
       warna: "#D9A441",
-      ikon: "🍾",
+      ikon: "",
       deskripsi: "Botol kaca sirup, kecap, arak Bali tradisional, atau toples selai.",
       material: "Kaca sodalime (botol guna ulang)",
       waktuUrai: "1.000.000 tahun",
@@ -90,7 +90,7 @@
       kategori: "anorganik",
       labelKategori: "Anorganik Daur Ulang Logam",
       warna: "#D9A441",
-      ikon: "🥫",
+      ikon: "",
       deskripsi: "Kaleng bekas minuman soda, kopi, susu, atau makanan olahan.",
       material: "Aluminium / baja ringan",
       waktuUrai: "80–200 tahun",
@@ -112,7 +112,7 @@
       kategori: "anorganik",
       labelKategori: "Anorganik Daur Ulang",
       warna: "#D9A441",
-      ikon: "📦",
+      ikon: "",
       deskripsi: "Kardus bekas belanja online, karton makanan kering, atau box paket.",
       material: "Serat kertas karton (corrugated)",
       waktuUrai: "2–6 bulan",
@@ -134,7 +134,7 @@
       kategori: "organik",
       labelKategori: "Organik Mudah Terurai",
       warna: "#17803D",
-      ikon: "🥗",
+      ikon: "",
       deskripsi: "Sisa sayuran, nasi, kulit buah, atau ampas makanan rumah tangga & resto.",
       material: "Bahan organik basah",
       waktuUrai: "3 hari – 2 minggu",
@@ -156,7 +156,7 @@
       kategori: "organik",
       labelKategori: "Organik Mudah Terurai",
       warna: "#17803D",
-      ikon: "🍂",
+      ikon: "",
       deskripsi: "Daun gugur, ranting, dan sisa tanaman pekarangan / taman.",
       material: "Serat tumbuhan kering",
       waktuUrai: "6–12 bulan",
@@ -178,7 +178,7 @@
       kategori: "organik",
       labelKategori: "Organik Keras (Bisa Diolah)",
       warna: "#17803D",
-      ikon: "🥥",
+      ikon: "",
       deskripsi: "Batok/danyuk, serabut, dan daun sisa masak & banten.",
       material: "Tempurung kelapa & serat sabut",
       waktuUrai: "6–24 bulan",
@@ -200,7 +200,7 @@
       kategori: "residu",
       labelKategori: "Residu / Abu Organik",
       warna: "#6B7A70",
-      ikon: "🪵",
+      ikon: "",
       deskripsi: "Tangkai bambu dupa terbakar & abu sisa persembahyangan.",
       material: "Bambu, serbuk kayu, perekat",
       waktuUrai: "3–6 bulan",
@@ -222,7 +222,7 @@
       kategori: "residu",
       labelKategori: "Residu / Multilayer Plastic",
       warna: "#6B7A70",
-      ikon: "🍟",
+      ikon: "",
       deskripsi: "Bungkus biskuit, sachet kopi, bungkus mie instan berlapis foil.",
       material: "Plastik + foil aluminium (multilayer)",
       waktuUrai: "450 tahun",
@@ -244,7 +244,7 @@
       kategori: "residu",
       labelKategori: "Residu / Plastik Sekali Pakai",
       warna: "#6B7A70",
-      ikon: "🛍️",
+      ikon: "",
       deskripsi: "Kantong kresek tipis sekali pakai dari belanja atau bungkus makanan.",
       material: "Plastik LDPE tipis",
       waktuUrai: "10–20 tahun (pecah jadi mikroplastik)",
@@ -266,7 +266,7 @@
       kategori: "residu",
       labelKategori: "Residu (Sulit Didaur Ulang)",
       warna: "#6B7A70",
-      ikon: "🫧",
+      ikon: "",
       deskripsi: "Kotak styrofoam makanan, kemasan elektronik, atau gabus pengganjal.",
       material: "Polystyrene mengembang (EPS)",
       waktuUrai: "500 tahun",
@@ -288,7 +288,7 @@
       kategori: "residu",
       labelKategori: "Residu (Item Kecil Sulit Dipilah)",
       warna: "#6B7A70",
-      ikon: "🥤",
+      ikon: "",
       deskripsi: "Sedotan sekali pakai dari minuman kemasan / resto.",
       material: "Plastik PP / PE",
       waktuUrai: "200 tahun+",
@@ -310,7 +310,7 @@
       kategori: "residu",
       labelKategori: "Residu Menular (Higiene)",
       warna: "#6B7A70",
-      ikon: "🧻",
+      ikon: "",
       deskripsi: "Tisu bekas, popok bayi, pembalut, dan sejenisnya yang sudah terkontaminasi.",
       material: "Serat selulosa + polimer penyerap",
       waktuUrai: "1–3 tahun",
@@ -332,7 +332,7 @@
       kategori: "residu",
       labelKategori: "Residu (Bahan Campuran)",
       warna: "#6B7A70",
-      ikon: "🩴",
+      ikon: "",
       deskripsi: "Sandal karet, sepatu aus, atau alas kaki campur sol & lem.",
       material: "Karet / EVA + kulit sintetis + lem",
       waktuUrai: "80 tahun",
@@ -354,7 +354,7 @@
       kategori: "b3",
       labelKategori: "B3 (Bahan Berbahaya & Beracun)",
       warna: "#C2410C",
-      ikon: "🔋",
+      ikon: "",
       deskripsi: "Baterai jam, aki, lampu hemat energi, atau elektronik kecil mengandung logam berat.",
       material: "Pb, Cd, Hg, Li, Ni",
       waktuUrai: "Tidak terurai — mencemari air & tanah",
@@ -376,7 +376,7 @@
       kategori: "b3",
       labelKategori: "B3 (Mengandung Merkuri)",
       warna: "#C2410C",
-      ikon: "💡",
+      ikon: "",
       deskripsi: "Tabung TL, bohlam uap, dan lampu mengandung merkuri.",
       material: "Kaca fosfor + uap merkuri",
       waktuUrai: "Tidak terurai",
@@ -398,7 +398,7 @@
       kategori: "b3",
       labelKategori: "B3 / Farmasi Berbahaya",
       warna: "#C2410C",
-      ikon: "💊",
+      ikon: "",
       deskripsi: "Pil, kapsul, sirup, atau salep kedaluwarsa dan sisa obat.",
       material: "Zat aktif farmasi",
       waktuUrai: "Tidak terurai sempurna",
@@ -420,7 +420,7 @@
       kategori: "b3",
       labelKategori: "B3 / Limbah Minyak",
       warna: "#C2410C",
-      ikon: "🛢️",
+      ikon: "",
       deskripsi: "Sisa minyak goreng dari dapur & usaha makanan.",
       material: "Minyak jelantah (lemak teroksidasi)",
       waktuUrai: "Bertahan di air bertahun-tahun",
@@ -442,7 +442,7 @@
       kategori: "b3",
       labelKategori: "E-Waste / B3 Elektronik",
       warna: "#C2410C",
-      ikon: "📱",
+      ikon: "",
       deskripsi: "HP, laptop, kabel, charger, mainan elektronik, dan perlengkapan IT rusak.",
       material: "Plastik ABS + logam + timbal + baterai Li",
       waktuUrai: "Ribuan tahun (logam berat awet)",
@@ -464,7 +464,7 @@
       kategori: "b3",
       labelKategori: "B3 Medis",
       warna: "#C2410C",
-      ikon: "💉",
+      ikon: "",
       deskripsi: "Jarum suntik, spuit bekas, dan alat medis tajam sekali pakai.",
       material: "Plastik + baja tajam",
       waktuUrai: "Tidak terurai",
@@ -486,7 +486,7 @@
       kategori: "b3",
       labelKategori: "B3 Bertekanan",
       warna: "#C2410C",
-      ikon: "🧴",
+      ikon: "",
       deskripsi: "Parfum, deodoran, hair spray, dan aerosol bertekanan.",
       material: "Kaleng baja + gas propelan (butane)",
       waktuUrai: "80–200 tahun",
@@ -508,7 +508,7 @@
       kategori: "anorganik",
       labelKategori: "Tekstil (Anorganik)",
       warna: "#D9A441",
-      ikon: "👕",
+      ikon: "",
       deskripsi: "Baju/kaos, kain perca, dan tekstil yang sudah tidak terpakai.",
       material: "Kapas, polyester, campuran sintetis",
       waktuUrai: "3–40 tahun (sintetis paling awet)",
@@ -530,7 +530,7 @@
       kategori: "anorganik",
       labelKategori: "Anorganik (Perhatian Keamanan)",
       warna: "#D9A441",
-      ikon: "🔸",
+      ikon: "",
       deskripsi: "Gelas, piring, atau kaca yang pecah.",
       material: "Kaca sodalime",
       waktuUrai: "1.000.000 tahun",
@@ -552,7 +552,7 @@
       kategori: "anorganik",
       labelKategori: "Anorganik Daur Ulang (Bila Bersih)",
       warna: "#D9A441",
-      ikon: "🥤",
+      ikon: "",
       deskripsi: "Gelas es teh / kopi plastik sekali pakai.",
       material: "Plastik PP / PET tipis",
       waktuUrai: "450 tahun",
@@ -574,7 +574,7 @@
       kategori: "bukan",
       labelKategori: "Bukan Limbah (P0: kelas ke-13 dilatih)",
       warna: "#17803D",
-      ikon: "🌿",
+      ikon: "",
       deskripsi: "Objek yang bukan sampah rumah tangga (hewan, kendaraan, barang masih dipakai).",
       material: "Benda hidup / kendaraan / barang guna",
       waktuUrai: "—",
@@ -591,6 +591,28 @@
       keywords: ["bukan-sampah", "bukan sampah"]
     }
   ];
+
+  // Ikon SVG kategori (minimal emoji) — stroke 24px, konsisten dgn Tailwind di halaman
+  const ICONS = {
+    leaf: '<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/></svg>',
+    recycle: '<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 19a4 4 0 0 1-2-7.5M17 5a4 4 0 0 1 2 7.5M12 2v4M12 18v4M4.5 9 8 7.5M19.5 15 16 16.5"/></svg>',
+    trash: '<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>',
+    alert: '<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>',
+    search: '<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+    check: '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',
+    map: '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+    copy: '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+    refresh: '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.3M21 3v6h-6"/></svg>',
+    list: '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+    scroll: '<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/></svg>'
+  };
+  function catIcon(kategori) {
+    if (kategori === "organik") return ICONS.leaf;
+    if (kategori === "anorganik") return ICONS.recycle;
+    if (kategori === "b3") return ICONS.alert;
+    if (kategori === "bukan") return ICONS.check;
+    return ICONS.trash;
+  }
 
   window.KNOWLEDGE_BASE_BALI = KNOWLEDGE_BASE_BALI;
 
@@ -630,7 +652,7 @@
         }
         // path relatif dari index.html (GitHub Pages)
         tfModel = await window.tmImage.load("model/model.json", "model/metadata.json");
-        console.log("✅ Teachable Machine model siap (12 kelas sampah Bali).");
+        console.log("Teachable Machine model siap (13 kelas sampah Bali).");
         tfModel._isCustom = true;
         return tfModel;
       } catch (e) {
@@ -644,7 +666,7 @@
       }
       if (onProgress) onProgress("Menginisialisasi neural network…");
       tfModel = await window.mobilenet.load({ version: 2, alpha: 1.0 });
-      console.log("✅ TensorFlow MobileNet siap (fallback).");
+      console.log("TensorFlow MobileNet siap (fallback).");
       return tfModel;
     } catch (err) {
       console.warn("TF CDN bermasalah:", err);
@@ -748,7 +770,7 @@
   function buildBelumYakinItem(topClass) {
     return {
       id: "belum-yakin", nama: "Sampah Belum Terdeteksi Yakin", kategori: "lainnya",
-      labelKategori: "Perlu Pindai Ulang", warna: "#6B7A70", ikon: "🔎",
+      labelKategori: "Perlu Pindai Ulang", warna: "#6B7A70", ikon: "",
       deskripsi: `AI menangkap "${topClass || "objek tidak dikenal"}" tapi belum yakin ini sampah yang mana.`,
       material: "—", waktuUrai: "—", bahaya: "—", wadah: "Hijau/Kuning/Abu-abu (lihat katalog)",
       tindakan: [
@@ -767,7 +789,7 @@
   function buildBukanSampahItem(topClass) {
     return {
       id: "bukan-sampah", nama: "Bukan Sampah", kategori: "bukan",
-      labelKategori: "Bukan Limbah", warna: "#17803D", ikon: "🌿",
+      labelKategori: "Bukan Limbah", warna: "#17803D", ikon: "",
       deskripsi: `Objek pada foto lebih mirip "${topClass}" — bukan sampah rumah tangga. Tidak perlu dibuang ke tempat sampah.`,
       material: "Benda hidup / kendaraan / barang yang masih dipakai",
       waktuUrai: "—", bahaya: "Tidak ada", wadah: "Jangan dibuang",
@@ -961,21 +983,21 @@
 
             <div id="cameraControls" class="hidden">
               <button type="button" id="captureBtn" class="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-primary text-white hover:bg-forest transition shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
-                <span class="w-3 h-3 rounded-full bg-white animate-ping"></span><span>📸 Pindai Sampah Ini Sekarang</span>
+                <span class="w-3 h-3 rounded-full bg-white animate-ping"></span><span>Pindai Sampah Ini Sekarang</span>
               </button>
             </div>
 
             <div class="pt-3 border-t border-line">
               <button type="button" id="scanNowBtn" class="w-full py-3.5 px-6 rounded-xl font-extrabold text-sm bg-primary text-white hover:bg-forest transition shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 8V6a2 2 0 0 1 2-2h2M4 16v2a2 2 0 0 0 2 2h2m8-18h2a2 2 0 0 1 2 2v2m0 8v2a2 2 0 0 1-2 2h-2"/><circle cx="12" cy="12" r="3"/></svg>
-                <span>🤖 Pindai dengan AI</span>
+                <span>Pindai dengan AI</span>
               </button>
               <p class="text-[11px] text-muted text-center mt-1.5">Neural network berjalan di perangkat kamu — cepat, gratis, & privat. Opsional: seret & letakkan foto ke area kamera.</p>
             </div>
 
             <!-- Cari manual -->
             <div class="rounded-2xl border border-line bg-cream/60 p-3">
-              <label class="text-xs font-bold text-forest" for="scannerManualInput">🔍 Tidak sempat foto? Ketik nama barangnya:</label>
+              <label class="text-xs font-bold text-forest" for="scannerManualInput">Tidak sempat foto? Ketik nama barangnya:</label>
               <div class="flex gap-2 mt-2">
                 <input id="scannerManualInput" type="text" placeholder="mis. botol aqua, canang, kardus, baterai…" class="flex-1 rounded-xl border border-line px-3 py-2.5 text-sm focus:outline-none focus:border-primary">
                 <button type="button" id="scannerManualBtn" class="rounded-xl bg-forest px-4 py-2.5 text-xs font-bold text-white hover:bg-deep">Cek</button>
@@ -995,7 +1017,7 @@
             <!-- Katalog -->
             <div class="pt-3 border-t border-line">
               <div class="flex items-center justify-between gap-2 mb-2">
-                <h4 class="text-xs font-extrabold uppercase tracking-wider text-forest">📂 Telusuri Semua Jenis Sampah</h4>
+                <h4 class="text-xs font-extrabold uppercase tracking-wider text-forest">Telusuri Semua Jenis Sampah</h4>
                 <span class="text-[10px] text-muted">ketuk untuk detailnya</span>
               </div>
               <div id="scannerCatalog" class="grid grid-cols-3 sm:grid-cols-4 gap-2"></div>
@@ -1016,7 +1038,7 @@
     if (!el) return;
     el.innerHTML = KNOWLEDGE_BASE_BALI.map((it) => `
       <button type="button" data-cat-id="${it.id}" class="rounded-xl border border-line bg-white hover:border-primary hover:shadow-md transition p-2.5 text-left group">
-        <div class="text-lg">${it.ikon}</div>
+        <div class="grid h-9 w-9 place-items-center rounded-xl text-white" style="background-color:${it.warna}">${catIcon(it.kategori)}</div>
         <p class="text-[11px] font-bold text-forest leading-tight mt-1">${it.nama}</p>
         <p class="text-[10px] font-semibold" style="color:${it.warna}">${it.labelKategori}</p>
       </button>
@@ -1044,7 +1066,7 @@
     if (!riwayatPindai.length) { wrap.classList.add("hidden"); return; }
     wrap.classList.remove("hidden");
     el.innerHTML = riwayatPindai.map((r, i) => `
-      <button type="button" data-hist="${i}" class="rounded-full border border-line bg-white hover:border-primary px-2.5 py-1 text-[11px] font-semibold text-forest transition">${r.ikon} ${escapeHTML(r.nama)}</button>
+      <button type="button" data-hist="${i}" class="rounded-full border border-line bg-white hover:border-primary px-2.5 py-1 text-[11px] font-semibold text-forest transition">${escapeHTML(r.nama)}</button>
     `).join("");
     el.querySelectorAll("[data-hist]").forEach((b) => {
       b.addEventListener("click", () => {
@@ -1118,7 +1140,7 @@
     startCamBtn.addEventListener("click", async () => {
       try {
         if (scannerStream) { stopCamera(); return; }
-        startCamBtn.innerHTML = `<span>⏳ Membuka Kamera…</span>`;
+        startCamBtn.innerHTML = `<span>Membuka Kamera…</span>`;
         scannerStream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 }, height: { ideal: 720 } },
           audio: false
@@ -1129,7 +1151,7 @@
         placeholder.classList.add("hidden");
         if (framing) framing.classList.remove("hidden");
         cameraControls.classList.remove("hidden");
-        startCamBtn.innerHTML = `<span>🛑 Tutup Kamera</span>`;
+        startCamBtn.innerHTML = `<span>Tutup Kamera</span>`;
         startCamBtn.classList.replace("bg-forest", "bg-red-600");
       } catch (err) {
         console.warn(err);
@@ -1143,7 +1165,7 @@
           box.className = "rounded-xl border border-amber-300 bg-amber-50 text-amber-900 text-xs p-3";
           placeholder.parentNode.insertBefore(box, placeholder.nextSibling);
         }
-        box.innerHTML = `⚠️ <b>Kamera tidak aktif</b> (${escapeHTML(msg)}). Tenang, kamu bisa pakai tombol <b>Unggah Foto</b> di atas / seret foto ke area ini — hasil AI-nya sama.`;
+        box.innerHTML = `<b>Kamera tidak aktif</b> (${escapeHTML(msg)}). Tenang, kamu bisa pakai tombol <b>Unggah Foto</b> di atas / seret foto ke area ini — hasil AI-nya sama.`;
         startCamBtn.innerHTML = `<span>Buka Kamera</span>`;
       }
     });
@@ -1225,7 +1247,7 @@
         return;
       }
       manualResults.innerHTML = hits.map((it) => `
-        <button type="button" data-mid="${it.id}" class="rounded-full border border-line bg-white hover:border-primary px-3 py-1.5 text-xs font-bold text-forest transition">${it.ikon} ${it.nama}</button>
+        <button type="button" data-mid="${it.id}" class="rounded-full border border-line bg-white hover:border-primary px-3 py-1.5 text-xs font-bold text-forest transition">${it.nama}</button>
       `).join("");
       manualResults.querySelectorAll("[data-mid]").forEach((b) => {
         b.addEventListener("click", () => {
@@ -1316,7 +1338,7 @@
       if (laser) laser.classList.add("hidden");
       const offlineItem = buildBelumYakinItem("model AI tidak tersedia");
       offlineItem.nama = "AI Sedang Tidak Tersedia";
-      offlineItem.ikon = "⚠️"; offlineItem.warna = "#C2410C";
+      offlineItem.ikon = ""; offlineItem.warna = "#C2410C";
       offlineItem.labelKategori = "Gagal Menjalankan AI";
       offlineItem.deskripsi = "Neural network gagal dimuat (koneksi CDN bermasalah). Gunakan katalog manual di bawah untuk tetap memilah.";
       renderHasilPindai(offlineItem, { aiLabel: "Model Load Error", confidence: null, status: "offline", why: "CDN TensorFlow tidak bisa diakses.", candidates: [], quality: null });
@@ -1343,9 +1365,9 @@
     const candidates = meta.candidates || [];
     const quality = meta.quality;
     const verdict =
-      status === "bukan-sampah" ? { teks: "✅ Bukan Sampah — aman, jangan dibuang", bg: "bg-emerald-600" } :
-      status === "belum-yakin" || status === "offline" ? { teks: "🔎 Belum yakin — perlu pindai ulang / pilih manual", bg: "bg-amber-500" } :
-      { teks: "♻️ Sampah terdeteksi — ini cara memilahnya", bg: "bg-primary" };
+      status === "bukan-sampah" ? { teks: "Bukan Sampah — aman, jangan dibuang", bg: "bg-emerald-600" } :
+      status === "belum-yakin" || status === "offline" ? { teks: "Belum yakin — perlu pindai ulang / pilih manual", bg: "bg-amber-500" } :
+      { teks: "Sampah terdeteksi — ini cara memilahnya", bg: "bg-primary" };
 
     const spec = [
       { label: "Material", value: data.material || "—" },
@@ -1362,12 +1384,12 @@
 
         <p class="text-[10px] text-muted leading-snug">Keyakinan = softmax model AI, bukan jaminan akurasi lapangan. Bila ragu, cek katalog manual di bawah.</p>
 
-        ${quality && quality.qualityNote ? `<p class="text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">📸 Tips foto: ${escapeHTML(quality.qualityNote)}</p>` : ""}
+        ${quality && quality.qualityNote ? `<p class="text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">Tips foto: ${escapeHTML(quality.qualityNote)}</p>` : ""}
 
         <div class="flex items-start justify-between gap-3 pb-3 border-b border-line">
           <div class="min-w-0">
             <div class="flex items-center gap-2">
-              <span class="text-2xl sm:text-3xl">${data.ikon}</span>
+              <span class="grid h-12 w-12 place-items-center rounded-2xl text-white shrink-0" style="background-color:${data.warna}">${catIcon(data.kategori)}</span>
               <div>
                 <h4 class="text-base sm:text-lg font-black text-forest leading-tight">${data.nama}</h4>
                 <p class="text-[11px] text-muted mt-0.5">AI Class: <strong class="text-forest">${escapeHTML(aiLabel)}</strong></p>
@@ -1378,7 +1400,7 @@
             ${candidates.length ? `
               <div class="mt-2 flex flex-wrap gap-1.5">
                 <span class="text-[10px] font-bold text-muted uppercase tracking-wide w-full">Alternatif AI:</span>
-                ${candidates.map(c => `<span class="text-[11px] font-semibold rounded-full border border-line bg-cream px-2 py-0.5">${c.item.ikon} ${c.item.nama} (${Math.round(c.score * 100)}%)</span>`).join("")}
+                ${candidates.map(c => `<span class="text-[11px] font-semibold rounded-full border border-line bg-cream px-2 py-0.5">${c.item.nama} (${Math.round(c.score * 100)}%)</span>`).join("")}
               </div>
             ` : ""}
           </div>
@@ -1394,7 +1416,7 @@
         </div>
 
         <div>
-          <h5 class="text-xs font-bold uppercase tracking-wider text-forest mb-2">📋 Langkah Penanganan Benar:</h5>
+          <h5 class="text-xs font-bold uppercase tracking-wider text-forest mb-2">Langkah Penanganan Benar:</h5>
           <ol class="space-y-1.5 text-xs text-ink/90">
             ${data.tindakan.map((t, i) => `<li class="flex items-start gap-2"><span class="font-extrabold text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5" style="background-color:${data.warna}">${i + 1}</span><span>${t}</span></li>`).join("")}
           </ol>
@@ -1412,14 +1434,14 @@
         </div>
 
         <div class="p-2.5 rounded-xl bg-amber-50/80 border border-amber-200 text-[11px] text-amber-900 flex items-center gap-2">
-          <span>📜</span><span><strong>Rujukan:</strong> ${data.regulasi}</span>
+          <span></span><span><strong>Rujukan:</strong> ${data.regulasi}</span>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
-          <button type="button" class="py-2.5 px-2 rounded-xl text-xs font-bold bg-primary text-white hover:bg-forest transition text-center shadow-md shadow-primary/20" onclick="catatAksiPilah('${data.id}', '${escapeHTML(data.nama).replace(/'/g, "&#039;")}', '${data.kategori}')">✅ Catat (+30 XP)</button>
-          <button type="button" id="salinHasilBtn" class="py-2.5 px-2 rounded-xl text-xs font-bold border border-line bg-cream text-forest hover:border-primary">📋 Salin Hasil</button>
-          <a href="index.html#peta" onclick="document.getElementById('closeScannerBtn').click()" class="py-2.5 px-2 rounded-xl text-xs font-bold border border-line bg-cream text-forest hover:border-primary text-center flex items-center justify-center">🗺️ Cari TPS3R</a>
-          <button type="button" id="pindaiLagiBtn" class="py-2.5 px-2 rounded-xl text-xs font-bold border border-line bg-white text-forest hover:border-primary">🔄 Pindai Lagi</button>
+          <button type="button" class="py-2.5 px-2 rounded-xl text-xs font-bold bg-primary text-white hover:bg-forest transition text-center shadow-md shadow-primary/20" onclick="catatAksiPilah('${data.id}', '${escapeHTML(data.nama).replace(/'/g, "&#039;")}', '${data.kategori}')">Catat (+30 XP)</button>
+          <button type="button" id="salinHasilBtn" class="py-2.5 px-2 rounded-xl text-xs font-bold border border-line bg-cream text-forest hover:border-primary">Salin Hasil</button>
+          <a href="index.html#peta" onclick="document.getElementById('closeScannerBtn').click()" class="py-2.5 px-2 rounded-xl text-xs font-bold border border-line bg-cream text-forest hover:border-primary text-center flex items-center justify-center">Cari TPS3R</a>
+          <button type="button" id="pindaiLagiBtn" class="py-2.5 px-2 rounded-xl text-xs font-bold border border-line bg-white text-forest hover:border-primary">Pindai Lagi</button>
         </div>
       </div>
     `;
@@ -1428,9 +1450,9 @@
     const salinBtn = document.getElementById("salinHasilBtn");
     if (salinBtn) {
       salinBtn.addEventListener("click", () => {
-        const text = `${data.ikon} ${data.nama} — ${data.labelKategori}\nMaterial: ${data.material} | Lama terurai: ${data.waktuUrai} | Bahaya: ${data.bahaya} | Wadah: ${data.wadah}\nPenyaluran: ${data.fasilitasRekomendasi}\nLangkah: ${data.tindakan.join(" ")}`;
+        const text = `${data.nama} — ${data.labelKategori}\nMaterial: ${data.material} | Lama terurai: ${data.waktuUrai} | Bahaya: ${data.bahaya} | Wadah: ${data.wadah}\nPenyaluran: ${data.fasilitasRekomendasi}\nLangkah: ${data.tindakan.join(" ")}`;
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(() => alert("Hasil pindai tersalin ✅")).catch(() => prompt("Salin hasil berikut:", text));
+          navigator.clipboard.writeText(text).then(() => alert("Hasil pindai tersalin")).catch(() => prompt("Salin hasil berikut:", text));
         } else { prompt("Salin hasil berikut:", text); }
       });
     }
@@ -1467,7 +1489,7 @@
       xp += 30;
       localStorage.setItem("eling_aksi_log", JSON.stringify(log.slice(0, 20)));
       localStorage.setItem("eling_total_xp", xp.toString());
-      alert(`Sukses! Aksi memilah "${nama}" tercatat. Kamu dapat +30 XP Palemahan! 🌿`);
+      alert("Sukses! Aksi memilah \""+nama+"\" tercatat. Kamu dapat +30 XP Palemahan.");
     } catch (e) { console.warn(e); }
   };
 

@@ -13,7 +13,7 @@
       deskripsi: "Pisahkan bunga & janur dari plastik pembungkus semut serta koin sesari.",
       xp: 30,
       kategori: "Organik & Budaya",
-      ikon: "🌸"
+      ikon: ""
     },
     {
       id: "quest-2",
@@ -21,7 +21,7 @@
       deskripsi: "Gunakan tas kain belanja sendiri saat berbelanja di pasar atau minimarket.",
       xp: 25,
       kategori: "Pergub 97/2018",
-      ikon: "🛍️"
+      ikon: ""
     },
     {
       id: "quest-3",
@@ -29,7 +29,7 @@
       deskripsi: "Hindari membeli air mineral gelas/botol plastik sekali pakai hari ini.",
       xp: 20,
       kategori: "Pencegahan Residu",
-      ikon: "💧"
+      ikon: ""
     },
     {
       id: "quest-4",
@@ -37,7 +37,7 @@
       deskripsi: "Gunakan AI Waste Scanner untuk memahami cara pengelolaan sampah di sekitarmu.",
       xp: 30,
       kategori: "Edukasi Cerdas",
-      ikon: "📷"
+      ikon: ""
     },
     {
       id: "quest-5",
@@ -45,7 +45,7 @@
       deskripsi: "Kumpulkan anorganik bersih untuk disetorkan ke Bank Sampah banjar.",
       xp: 35,
       kategori: "Ekonomi Sirkular",
-      ikon: "📦"
+      ikon: ""
     }
   ];
 
@@ -105,11 +105,11 @@
 
   function getLevelInfo(xp) {
     if (xp >= 350) {
-      return { level: 3, gelar: "Ksatria Palemahan Bali", badge: "🛡️", nextXp: 500, progres: 85 };
+      return { level: 3, gelar: "Ksatria Palemahan Bali", badge: "Lv3", nextXp: 500, progres: 85 };
     } else if (xp >= 150) {
-      return { level: 2, gelar: "Satria Palemahan", badge: "🌿", nextXp: 350, progres: Math.min(100, Math.round(((xp - 150) / 200) * 100)) };
+      return { level: 2, gelar: "Satria Palemahan", badge: "Lv2", nextXp: 350, progres: Math.min(100, Math.round(((xp - 150) / 200) * 100)) };
     } else {
-      return { level: 1, gelar: "Krama Peduli", badge: "🌱", nextXp: 150, progres: Math.min(100, Math.round((xp / 150) * 100)) };
+      return { level: 1, gelar: "Krama Peduli", badge: "Lv1", nextXp: 150, progres: Math.min(100, Math.round((xp / 150) * 100)) };
     }
   }
 
@@ -129,7 +129,7 @@
         <div class="flex items-center justify-between pb-5 border-b border-line">
           <div class="flex items-center gap-3.5">
             <span class="grid h-14 w-14 place-items-center rounded-2xl bg-primary/12 text-2xl shadow-inner">
-              ${lvl.badge}
+              <span class="h-7 w-7 grid place-items-center rounded-full bg-primary text-white text-xs font-black">Lv</span>
             </span>
             <div>
               <div class="flex items-center gap-2">
@@ -142,7 +142,7 @@
 
           <div class="text-right">
             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-900 font-extrabold text-xs">
-              <span>🔥</span>
+              <span class="font-black">Streak</span>
               <span>${state.streak} Hari Berturut</span>
             </span>
           </div>
@@ -234,7 +234,7 @@
               Temukan sampah meluap di pantai, got tersumbat, atau tumpukan liar di pinggir jalan Bali? Laporkan langsung bersama titik koordinat agar dapat ditindaklanjuti komunitas & petugas.
             </p>
             <div class="p-4 rounded-2xl bg-cream border border-line text-xs text-ink/80 space-y-1.5">
-              <p class="font-bold text-forest">💡 Prinsip Keterbukaan & Integritas:</p>
+              <p class="font-bold text-forest"> Prinsip Keterbukaan & Integritas:</p>
               <p>Laporan yang masuk akan dikurasi dan dipetakan ke komunitas relawan banjar terdekat demi keasrian alam Bali.</p>
             </div>
           </div>
@@ -269,7 +269,7 @@
             </div>
 
             <button type="submit" id="btnSubmitLapor" class="w-full py-3.5 rounded-xl font-bold text-xs sm:text-sm bg-danger text-white hover:bg-red-700 transition shadow-md shadow-danger/20 flex items-center justify-center gap-2">
-              <span>📢 Kirim Laporan Publik (+50 XP)</span>
+              <span> Kirim Laporan Publik (+50 XP)</span>
             </button>
           </form>
         </div>
@@ -293,7 +293,7 @@
                 <h5 class="text-xs font-bold text-forest leading-snug">${esc(r.judul)}</h5>
                 <p class="text-[11px] text-muted leading-relaxed">${esc(r.deskripsi)}</p>
                 <div class="pt-2 border-t border-line/60 flex items-center justify-between text-[11px] text-muted font-medium">
-                  <span>📍 ${esc(r.lokasi)}</span>
+                  <span> ${esc(r.lokasi)}</span>
                   <span class="text-forest font-bold">Oleh ${esc(r.pelapor)}</span>
                 </div>
               </div>

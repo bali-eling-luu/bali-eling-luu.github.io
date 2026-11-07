@@ -16,7 +16,7 @@
       html: `
         <div style="background-color: ${warna}; width: 34px; height: 34px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; border: 2.5px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
           <div style="transform: rotate(45deg); color: #ffffff; font-size: 15px; font-weight: bold;">
-            📍
+            
           </div>
         </div>
       `,
@@ -100,7 +100,7 @@
             <p style="margin: 2px 0 0 0; color: #4b5a51;"><strong>Terima:</strong> ${item.terima.join(", ")}</p>
           </div>
           <a href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank" rel="noopener noreferrer" style="display: block; text-align: center; background: #17803d; color: #fff; text-decoration: none; font-size: 11.5px; font-weight: 700; padding: 6px 10px; border-radius: 8px; margin-top: 6px;">
-            🗺️ Rute Google Maps →
+             Rute Google Maps →
           </a>
         </div>
       `;
@@ -193,13 +193,13 @@
               fillOpacity: 0.9
             }).addTo(mapInstance);
 
-            userMarker.bindPopup("<b>📍 Lokasimu Saat Ini</b>").openPopup();
+            userMarker.bindPopup("<b> Lokasimu Saat Ini</b>").openPopup();
             mapInstance.setView([userLat, userLng], 14, { animate: true });
-            btnLokasiSaya.innerHTML = `<span>📍 Lokasimu Ditemukan</span>`;
+            btnLokasiSaya.innerHTML = `<span> Lokasimu Ditemukan</span>`;
           },
           (err) => {
             alert("Gagal mendeteksi lokasi: " + (err.message || "Izin lokasi ditolak."));
-            btnLokasiSaya.innerHTML = `<span>📍 Cari Lokasi Saya</span>`;
+            btnLokasiSaya.innerHTML = `<span> Cari Lokasi Saya</span>`;
           }
         );
       });

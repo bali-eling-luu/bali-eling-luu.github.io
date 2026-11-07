@@ -3,7 +3,7 @@
 const KATEGORI = {
   organik: {
     nama: "Organik",
-    ikon: "🍂",
+    ikon: "Organik",
     warna: "#17803D",
     ringkas: "Sampah yang mudah terurai secara alami.",
     definisi:
@@ -27,7 +27,7 @@ const KATEGORI = {
 
   anorganik: {
     nama: "Anorganik",
-    ikon: "♻️",
+    ikon: "Anorganik",
     warna: "#D9A441",
     ringkas: "Material yang berpotensi dipakai ulang atau didaur ulang.",
     definisi:
@@ -51,7 +51,7 @@ const KATEGORI = {
 
   residu: {
     nama: "Residu",
-    ikon: "🗑️",
+    ikon: "Residu",
     warna: "#6B7A70",
     ringkas: "Tidak dapat diproses lewat jalur daur ulang yang tersedia.",
     definisi:
@@ -75,7 +75,7 @@ const KATEGORI = {
 
   b3: {
     nama: "B3 / Sampah Khusus",
-    ikon: "⚠️",
+    ikon: "B3",
     warna: "#C2410C",
     ringkas: "Perlu penanganan khusus, jangan dicampur sampah biasa.",
     definisi:
@@ -429,9 +429,9 @@ const TOPIK = [
 
 /* Sapaan & jawaban fallback */
 const SAPAAN = {
-  halo: "Halo! 👋 Saya Eling, asisten Bali Eling Luu. Tanyakan soal jenis sampah, cara memilah, atau penanganan limbah — saya siap bantu.",
+  halo: "Halo!  Saya Eling, asisten Bali Eling Luu. Tanyakan soal jenis sampah, cara memilah, atau penanganan limbah — saya siap bantu.",
   makasih:
-    "Sama-sama! Senang bisa bantu. Kalau ada pertanyaan lain soal sampah, tanya saja. 🌿",
+    "Sama-sama! Senang bisa bantu. Kalau ada pertanyaan lain soal sampah, tanya saja.",
   default:
     "Maaf, saya belum punya data tentang itu. Coba tanyakan salah satu ini:",
 };
