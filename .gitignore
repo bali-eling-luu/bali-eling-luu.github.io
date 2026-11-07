@@ -24,3 +24,7 @@ Homestead.yaml
 Thumbs.db
 tailwindcss.exe
 /database/*.sqlite
+.vercel
+.env
+.env.*
+!.env.example
