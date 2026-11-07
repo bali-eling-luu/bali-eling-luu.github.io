@@ -8,3 +8,6 @@ dataset/**/*.jpeg
 dataset/**/*.png
 dataset/**/*.webp
 !dataset/*/.gitkeep
+audit_kit/
+dataset_test/
+dataset_test_fresh/

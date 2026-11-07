@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit Kit — Evaluasi Lengkap Bali Eling Luu</title>
+<style>body{font-family:system-ui;padding:24px;max-width:1000px;margin:auto}table{border-collapse:collapse;font-size:11px;margin:12px 0}td,th{border:1px solid #ddd;padding:4px 6px;text-align:center}th{background:#f0f0f0}.diag{background:#d1fae5;font-weight:700}.off{background:#fee2e2}.btn{padding:10px 18px;border-radius:10px;background:#17803d;color:#fff;font-weight:800;border:0;cursor:pointer}pre{font-size:11px}</style>
+</head><body>
+<h2>Audit Kit — Evaluasi Model 13 Kelas (P0/P1)</h2>
+<p>Pilih folder <code>dataset_test_fresh/</code> (test segar, overlap hash 0) atau folder test lain. Laporan: confusion matrix, akurasi/profil per kelas (precision, recall, F1, support), macro-averaged, dan evaluasi mekanisme <b>unknown &lt;45%</b> + <b>bukan-sampah</b>.</p>
+<input type="file" id="dir" webkitdirectory multiple accept="image/*">
+<button class="btn" id="run">Jalankan Uji</button>
+<p id="status">Menunggu folder…</p>
+<div id="out"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.5/dist/teachablemachine-image.min.js"></script>
+<script>
+const MIN_CONF=0.45; // ambang unknown scanner
+document.getElementById("run").onclick=async()=>{
+  const allFiles=[...document.getElementById("dir").files].filter(f=>f.type.startsWith("image/"));
+  const files=allFiles.filter(f=>{
+    const parts=f.webkitRelativePath.split("/");
+    return parts.length>=3; // folder/kelas/nama.jpg
+  });
+  const skipped=allFiles.length-files.length;
+  if(!files.length){document.getElementById("status").textContent="Belum ada file di subfolder kelas — pilih folder induk berisi subfolder per kelas.";return;}
+  const model=await tmImage.load("model/model.json","model/metadata.json");
+  const labels=model.getClasses();
+  const cm={}; labels.forEach(a=>{cm[a]={}; labels.forEach(b=>cm[a][b]=0);});
+  let correct=0, unknownCount=0, i=0;
+  const errs=[];
+  for(const f of files){
+    const parts=f.webkitRelativePath.split("/");
+    const trueCls=parts[1];
+    if(!cm[trueCls]){continue;}
+    const url=URL.createObjectURL(f);
+    const img=new Image(); img.src=url;
+    await new Promise((res,rej)=>{img.onload=res; img.onerror=rej;});
+    const pred=(await model.predict(img)).slice().sort((a,b)=>b.probability-a.probability);
+    const topProb=pred[0].probability;
+    const isUnknown=topProb<MIN_CONF;
+    if(isUnknown) unknownCount++;
+    const predCls=isUnknown?"unknown":pred[0].className;
+    // unknown dihitung sebagai salah (tidak masuk CM diagonal), tapi dicatat terpisah
+    if(!isUnknown){cm[trueCls][predCls]++;}
+    else {errs.push(`UNKNOWN ${f.name}: ${trueCls} → (${pred[0].className} ${Math.round(topProb*100)}% <45%)`);}
+    if(predCls===trueCls){correct++;}
+    else if(!isUnknown){errs.push(`${f.name}: ${trueCls} → ${predCls} (${Math.round(topProb*100)}%)`);}
+    i++; document.getElementById("status").textContent=`${i}/${files.length} — benar ${correct} (${Math.round(correct/i*100)}%)${unknownCount?" • unknown:"+unknownCount:""}`;
+    URL.revokeObjectURL(url);
+  }
+  const acc=files.length?correct/files.length:0;
+  // metrik per kelas
+  const rows=labels.map(c=>{
+    const tp=cm[c][c];
+    const support=labels.reduce((s,b)=>s+cm[c][b],0);
+    const predicted=labels.reduce((s,a)=>s+cm[a][c],0);
+    const recall=support?tp/support:0;
+    const precision=predicted?tp/predicted:0;
+    const f1=(precision+recall)?2*precision*recall/(precision+recall):0;
+    return {c,tp,support,predicted,recall,precision,f1};
+  });
+  const macroP=rows.reduce((s,r)=>s+r.precision,0)/rows.length;
+  const macroR=rows.reduce((s,r)=>s+r.recall,0)/rows.length;
+  const macroF1=rows.reduce((s,r)=>s+r.f1,0)/rows.length;
+  const nonwaste=rows.find(r=>r.c==="bukan-sampah");
+  let html=`<h3>Hasil (denominator = ${files.length} file valid, ${skipped} file dilewati)</h3>`;
+  html+=`<p><b>Akurasi hold-out: ${Math.round(acc*100)}%</b> (${correct}/${files.length}) • Unknown &lt;45%: ${unknownCount} • Macro F1 ${macroF1.toFixed(3)}</p>`;
+  html+=`<p>Target P0: akurasi ≥80% dan bukan-sampah recall ≥80% → <b>${acc>=0.8&&nonwaste&&nonwaste.recall>=0.8?"TERPENUHI":"BELUM"}</b></p>`;
+  html+="<table><tr><th>Kelas</th><th>Support</th><th>TP</th><th>Precision</th><th>Recall</th><th>F1</th></tr>";
+  rows.forEach(r=>{html+=`<tr><td>${r.c}</td><td>${r.support}</td><td>${r.tp}</td><td>${r.precision.toFixed(3)}</td><td>${r.recall.toFixed(3)}</td><td>${r.f1.toFixed(3)}</td></tr>`;});
+  html+=`<tr><td><b>Macro avg</b></td><td></td><td></td><td>${macroP.toFixed(3)}</td><td>${macroR.toFixed(3)}</td><td>${macroF1.toFixed(3)}</td></tr></table>`;
+  html+="<h3>Confusion Matrix (unknown tidak masuk matriks, dihitung salah di akurasi)</h3>";
+  html+="<table><tr><th>Asli \\ Prediksi</th>"+labels.map(l=>`<th>${l.slice(0,8)}</th>`).join("")+"</tr>";
+  labels.forEach(a=>{html+="<tr><th>"+a+"</th>"+labels.map(b=>`<td class="${a===b?"diag":"off"}">${cm[a][b]}</td>`).join("")+"</tr>";});
+  html+="</table><h3>Salah & Unknown ("+errs.length+")</h3><pre>"+errs.slice(0,80).join("\n")+"</pre>";
+  document.getElementById("out").innerHTML=html;
+  document.getElementById("status").textContent=`Selesai. Akurasi ${Math.round(acc*100)}% (macro F1 ${macroF1.toFixed(3)})`;
+};
+</script></body></html>
