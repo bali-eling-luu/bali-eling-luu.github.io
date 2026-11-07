@@ -1,4 +1,4 @@
-# Dataset Sampah Bali Eling Luu — 12 Kelas Inti
+# Dataset Sampah Bali Eling Luu — 13 Kelas Inti (12 sampah + bukan-sampah)
 
 Model khusus sampah (Opsi B) dilatih dari foto asli di folder ini.
 
@@ -20,7 +20,7 @@ dataset/
 ```
 
 ## Target
-- **150–300 foto per kelas** (total ±2.000 foto untuk 12 kelas)
+- **150–300 foto per kelas** (total ±2.000 foto untuk 13 kelas)
 - Foto asli: dapur, halaman, jalan, siang/malam, latar berbeda
 - Boleh campur: bersih / kotor / basah / lecek — sesuai sampah nyata
 - Pisahkan 80% latih / 20% tes (Teachable Machine membagi otomatis saat export)

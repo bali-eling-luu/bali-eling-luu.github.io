@@ -11,7 +11,7 @@ const MODEL_CONFIG = {
   // metadataUrl: "model/metadata.json",
 
   // Label Teachable Machine → id katalog scanner
-  // Sesuaikan dengan TRAINING_GUIDE.md (12 kelas inti)
+  // Sesuaikan dengan TRAINING_GUIDE.md (13 kelas: 12 sampah + bukan-sampah P0)
   labelToId: {
     "canang-sari": "canang-sari",
     "botol-pet": "botol-pet",
@@ -24,7 +24,8 @@ const MODEL_CONFIG = {
     "plastik-sachet": "plastik-sachet",
     "styrofoam": "styrofoam",
     "sampah-higiene": "sampah-higiene",
-    "baterai-b3": "baterai-elektronik"
+    "baterai-b3": "baterai-elektronik",
+    "bukan-sampah": "bukan-sampah"
   },
 
   // Ambang keyakinan: di bawah ini → tampil "Belum Yakin" (jujur, bukan tebakan)

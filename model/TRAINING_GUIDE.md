@@ -9,12 +9,12 @@
 1. **Buat proyek**
    Buka https://teachablemachine.withgoogle.com/train/image → *Get Started* → *Image Project*
 
-2. **Tambah 12 Kelas Standar**
-   Klik *Add Class* 12×, namakan **persis** (harus sama dengan `model_config.js`):
+2. **Tambah 13 Kelas Standar (12 sampah + bukan-sampah P0)**
+   Klik *Add Class* 13×, namakan **persis** (harus sama dengan `model_config.js`):
    ```
    canang-sari, botol-pet, botol-kaca-arak, kaleng-minuman,
    kardus-karton, sisa-makanan, daun-ranting, kresek-plastik,
-   plastik-sachet, styrofoam, sampah-higiene, baterai-b3
+   plastik-sachet, styrofoam, sampah-higiene, baterai-b3, bukan-sampah
    ```
 
 3. **Upload foto**
@@ -52,7 +52,7 @@
 9. **Commit & push**
    ```bash
    git add model/ ai_scanner.js
-   git commit -m "feat(scanner): ganti MobileNet umum → model khusus sampah 12 kelas"
+   git commit -m "feat(scanner): ganti MobileNet umum → model khusus sampah 13 kelas"
    git push origin main
    ```
 

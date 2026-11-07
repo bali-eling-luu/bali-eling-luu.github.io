@@ -13,8 +13,8 @@ Platform digital berbasis Artificial Intelligence (AI) yang menghubungkan edukas
 
 ### 1. AI Waste Scanner (Fitur Inti AI Vision)
 - **Deteksi Kamera & Upload Gambar:** Memindai sampah langsung dari kamera smartphone atau unggahan galeri foto.
-- **Model Khusus 12 Kelas (Teachable Machine):** `model/model.json` + `weights.bin` (2.1 MB) — Canang Sari, Botol PET, Botol Kaca Arak, Kaleng, Kardus, Sisa Makanan, Daun & Ranting, Kresek, Plastik Sachet, Styrofoam, Sampah Higiene, Baterai B3. Fallback ke MobileNet ImageNet bila model gagal dimuat.
-- **Keyakinan Model, Bukan Akurasi Klaim:** Angka yang tampil adalah softmax confidence model (0-99%), bukan akurasi lapangan yang divalidasi. Model 12 kelas **belum memiliki kelas non-waste/absen** — ambang keyakinan 45% dipakai sebagai mekanisme *unknown*; foto non-sampah tetap bisa salah klasifikasi.
+- **Model Khusus 13 Kelas (Teachable Machine):** `model/model.json` + `weights.bin` (2.1 MB) — Canang Sari, Botol PET, Botol Kaca Arak, Kaleng, Kardus, Sisa Makanan, Daun & Ranting, Kresek, Plastik Sachet, Styrofoam, Sampah Higiene, Baterai B3, **plus bukan-sampah (P0 disiapkan, menunggu latih ulang)**. Fallback ke MobileNet ImageNet bila model gagal dimuat.
+- **Keyakinan Model, Bukan Akurasi Klaim:** Angka yang tampil adalah softmax confidence model (0-99%), bukan akurasi lapangan yang divalidasi. Ambang keyakinan 45% dipakai sebagai mekanisme *unknown*; kelas `bukan-sampah` sudah disiapkan (dataset 55 foto) untuk latih ulang 13 kelas.
 - **Langkah Tindakan & Wadah Warna:** Panduan praktis pemilahan + klasifikasi wadah warna sesuai kategori Bali.
 - **Penyaluran Fasilitas Terdekat:** Langsung merekomendasikan apakah material harus disalurkan ke Kompos Mandiri, TPS3R, atau Bank Sampah terdekat.
 - **Katalog Manual 25 Jenis:** Telusuri & cari manual tanpa foto tetap tersedia.

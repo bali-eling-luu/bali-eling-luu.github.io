@@ -567,6 +567,28 @@
       nilaiEkonomi: "Diterima bila bersih & kering (harga rendah).",
       regulasi: "Pergub Bali No. 97/2018",
       keywords: ["gelas", "aros", "cup", "plastic cup", "es teh", "kopi plastik"]
+    },
+    {
+      id: "bukan-sampah",
+      nama: "Bukan Sampah",
+      kategori: "bukan",
+      labelKategori: "Bukan Limbah (P0: kelas ke-13 dilatih)",
+      warna: "#17803D",
+      ikon: "🌿",
+      deskripsi: "Objek yang bukan sampah rumah tangga (hewan, kendaraan, barang masih dipakai).",
+      material: "Benda hidup / kendaraan / barang guna",
+      waktuUrai: "—",
+      bahaya: "Tidak ada",
+      wadah: "Jangan dibuang",
+      tindakan: [
+        "Bila masih berfungsi, simpan / pakai kembali.",
+        "Bila hewan, biarkan hidup.",
+        "Tidak perlu masuk wadah sampah."
+      ],
+      fasilitasRekomendasi: "Simpan / Gunakan Kembali",
+      nilaiEkonomi: "Mengurangi timbulan sampah.",
+      regulasi: "UU No. 18/2008 (prinsip Reduce)",
+      keywords: ["bukan-sampah", "bukan sampah"]
     }
   ];
 
@@ -841,11 +863,13 @@
       const rawProb = best.raw > 0 ? best.raw : best.score;
       const conf = Math.min(99, Math.round(rawProb * 100));
       const alternatif = scored.slice(1, 4).filter(c => c.score > 0.08);
+      // Model khusus kelas 13 bukan-sampah → status bukan-sampah (banner hijau, bukan "sampah terdeteksi")
+      const status = best.item.id === "bukan-sampah" ? "bukan-sampah" : (conf >= 70 ? "yakin" : (conf >= 50 ? "cukup" : "rendah"));
       return {
         item: best.item,
         topClass: best.matchedVia || topClass,
         confidence: conf,
-        status: conf >= 70 ? "yakin" : (conf >= 50 ? "cukup" : "rendah"),
+        status,
         candidates: alternatif,
         why: `Keyakinan model: "${best.matchedVia}" ${conf}% (softmax, bukan jaminan akurasi).`
       };

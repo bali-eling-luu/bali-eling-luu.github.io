@@ -25,6 +25,7 @@ CLASSES = [
     "styrofoam",
     "sampah-higiene",
     "baterai-b3",
+    "bukan-sampah",
 ]
 
 
